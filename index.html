@@ -161,6 +161,9 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 .vibes-save-ind{font-size:11px;color:var(--ink4);height:14px;display:block;margin-top:3px;transition:color .2s;}
 .vibes-save-ind.ok{color:var(--gr);}
 
+/* Bottom nav hidden on desktop — must come BEFORE @media block */
+.mobile-bottom-nav { display: none; }
+
 /* ── MOBILE RESPONSIVE ─────────────────────────────── */
 @media (max-width: 768px) {
 
@@ -227,7 +230,7 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
   }
   .mobile-backdrop.show { display: block; }
 
-  /* Bottom nav bar */
+  /* Bottom nav bar — shown on mobile */
   .mobile-bottom-nav {
     display: flex !important;
     grid-row: 3;
@@ -235,6 +238,7 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
     background: var(--sf);
     border-top: 1px solid var(--bd);
     z-index: 40;
+    position: relative;
   }
   .mob-nav-btn {
     flex: 1;
@@ -243,7 +247,7 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
     align-items: center;
     justify-content: center;
     gap: 3px;
-    padding: 6px 4px;
+    padding: 8px 4px;
     border: none;
     background: none;
     cursor: pointer;
@@ -264,17 +268,13 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
   #toggleLeftBtn, #toggleRightBtn { display: none !important; }
 
   /* Job detail overlay — full screen on mobile */
-  .jd-overlay {
-    padding: 0 !important;
-  }
+  .jd-overlay { padding: 0 !important; }
   .jd-wrap {
     border-radius: 0 !important;
     height: 100dvh !important;
     max-height: 100dvh !important;
   }
-  .jd-right {
-    display: none !important; /* hide chat sidebar in mobile detail — too cramped */
-  }
+  .jd-right { display: none !important; }
   .jd-body { flex-direction: column; }
   .jd-left { border-right: none !important; }
   .jd-tabs { padding: 0 14px; }
@@ -288,9 +288,6 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
   /* Modals — full width on small screens */
   .modal { width: calc(100vw - 32px) !important; max-width: 100% !important; }
 }
-
-/* Bottom nav hidden on desktop */
-.mobile-bottom-nav { display: none; }
 
 .vta:focus{border-color:var(--ac);}
 .vsave{margin-top:7px;width:100%;}
@@ -630,7 +627,7 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
     name: 'fitted.',
     short_name: 'fitted.',
     description: 'Get a career tailor made for you',
-    start_url: '.',
+    start_url: '/fitted/',
     display: 'standalone',
     background_color: '#2f3e5c',
     theme_color: '#2f3e5c',
@@ -796,6 +793,13 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
       <input type="file" id="portfolioFileInput" accept="*/*" style="display:none" onchange="handlePortfolioUpload(this)">
       <div id="portfolioList"><div class="portfolio-empty">Nothing added yet.</div></div>
     </div>
+  </div>
+
+  <!-- Reset button — bottom of right panel -->
+  <div style="margin-top:auto;padding-top:20px;border-top:1px solid var(--bd);margin-top:24px;">
+    <button onclick="confirmResetData()" style="background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11.5px;color:var(--ink4);padding:4px 0;width:100%;text-align:left;transition:color .15s;" onmouseover="this.style.color='var(--a2)'" onmouseout="this.style.color='var(--ink4)'">
+      ↺ Reset all my data
+    </button>
   </div>
 </aside>
 </div>
@@ -1094,10 +1098,91 @@ const INDEED_JOBS = {
 };
 
 const RESUME_KEYWORDS = {
-  'Brand & Marketing':  ['brand','marketing','campaign','creative','content','storytelling','lifestyle','aesthetic','visual','launch','influencer','product','consumer'],
-  'Communications':     ['communications','comms','social media','community','engagement','writing','editorial','messaging','voice','copy','audience','newsletter'],
-  'Business Dev':       ['business development','partnerships','outreach','pipeline','prospecting','sales','b2b','clients','accounts','crm','revenue','growth'],
-  'General / Master':   ['brand','marketing','communications','content','social','creative','strategy','coordinator','associate','lifestyle','customer','retail'],
+  'Brand & Marketing':        ['brand','marketing','campaign','creative','content','storytelling','lifestyle','aesthetic','visual','launch','influencer','product','consumer','social media','canva','copywriting'],
+  'Communications':           ['communications','comms','social media','community','engagement','writing','editorial','messaging','voice','copy','audience','newsletter','pr','public relations'],
+  'Business Dev':             ['business development','partnerships','outreach','pipeline','prospecting','sales','b2b','clients','accounts','crm','revenue','growth','salesforce','cold outreach'],
+  'Tech & Operations':        ['operations','project management','sql','data','analysis','process','systems','tableau','asana','logistics','coordination','cross-functional','workflow','kpi'],
+  'Creative & Design':        ['design','graphic','adobe','figma','illustrator','photoshop','typography','brand identity','visual','art direction','creative','layout','portfolio','ux','ui'],
+  'Healthcare & Science':     ['clinical','patient','medical','healthcare','hipaa','emr','epic','laboratory','research','biology','chemistry','pharmacy','clinical trials','fda','protocol'],
+  'Legal & Policy':           ['legal','law','compliance','regulatory','policy','westlaw','contracts','litigation','counsel','government','legislation','research','analysis','brief'],
+  'Engineering & Architecture':['engineering','architecture','autocad','revit','structural','civil','mechanical','project','technical','design','construction','pe','cad','infrastructure'],
+  'Finance & Accounting':     ['finance','accounting','financial modeling','excel','bloomberg','gaap','investment','banking','analysis','budget','forecasting','quickbooks','audit','m&a'],
+  'Human Resources':          ['human resources','hr','recruiting','onboarding','talent','hris','workday','employee relations','benefits','compensation','dei','people operations','ats'],
+  'Nonprofit & Education':    ['nonprofit','education','program','community','outreach','grant','volunteer','social impact','advocacy','coordination','curriculum','teaching','impact'],
+  'Pharmacy & Research':      ['pharmacy','pharmacology','drug','clinical','research','fda','pubmed','patient counseling','medication','biochemistry','pharmaceutical','regulatory','lab'],
+  'General / Master':         ['brand','marketing','communications','content','social','creative','strategy','coordinator','associate','lifestyle','customer','retail','operations','analysis'],
+};
+
+
+// ══════════════════════════════════════════════════
+//  DEMO PROFILES — 12 personas, quiz-routed
+// ══════════════════════════════════════════════════
+const DEMO_PROFILES = {
+  'marketing': { resumeLabel:'Brand & Marketing', name:'Jamie Solis', title:'Marketing & Communications Associate', summary:'Recent communications graduate with internship experience in social media and brand marketing. Looking for entry-level brand or marketing coordinator roles.', education:'B.A. Communications — UC San Diego, 2023', skills:['Canva','Instagram','TikTok','Copywriting','Content Calendar Management','Email Marketing','Customer Communication'], jobs:[
+    {id:'d_m1',title:'Marketing Coordinator',company:'Glossier',location:'Remote',type:'Remote',pay:48,pl:'$45–52k/yr',match:71,tags:['remote','brand','marketing'],posted:'2 days ago',isNew:true,logo:'Gl',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-marketing-coordinator-glossier-jobs.html',desc:'Support brand and marketing campaigns, content scheduling, and community engagement.'},
+    {id:'d_m2',title:'Brand Coordinator',company:'Aritzia',location:'Remote',type:'Remote',pay:50,pl:'$46–55k/yr',match:68,tags:['remote','brand'],posted:'4 days ago',isNew:false,logo:'Az',lb:'#f0ece8',lf:'#4a3828',url:'https://www.indeed.com/q-brand-coordinator-aritzia-jobs.html',desc:'Coordinate brand initiatives and support marketing campaigns for a leading fashion brand.'},
+    {id:'d_m3',title:'Social Media Coordinator',company:'Reformation',location:'Los Angeles, CA',type:'Hybrid',pay:52,pl:'$48–56k/yr',match:74,tags:['hybrid','comms','marketing'],posted:'1 week ago',isNew:false,logo:'Rf',lb:'#f5ede6',lf:'#7a3d20',url:'https://www.indeed.com/q-social-media-coordinator-reformation-jobs.html',desc:'Own day-to-day social media for Instagram, TikTok, and Pinterest channels.'},
+    {id:'d_m4',title:'Content & Communications Associate',company:'Patagonia',location:'Remote',type:'Remote',pay:50,pl:'$47–53k/yr',match:66,tags:['remote','comms','brand'],posted:'3 days ago',isNew:true,logo:'Pa',lb:'#e8f0e8',lf:'#1a501a',url:'https://www.indeed.com/q-content-associate-patagonia-jobs.html',desc:'Support communications with content creation, editorial coordination, and brand storytelling.'},
+    {id:'d_m5',title:'Marketing Assistant',company:'Ralph Lauren',location:'New York, NY',type:'Hybrid',pay:55,pl:'$50–60k/yr',match:69,tags:['hybrid','brand','marketing'],posted:'5 days ago',isNew:false,logo:'RL',lb:'#1a1a1f',lf:'#f4f2ed',url:'https://www.indeed.com/q-marketing-assistant-ralph-lauren-jobs.html',desc:'Support marketing campaigns, asset management, and cross-functional coordination at an iconic luxury brand.'},
+  ]},
+  'business': { resumeLabel:'Business Dev', name:'Marcus Webb', title:'Business Development & Sales', summary:'Business graduate with 1 year of SDR experience and strong track record in outreach and pipeline management. Seeking a BDR or account executive role.', education:'B.S. Business Administration — Arizona State University, 2022', skills:['Salesforce CRM','Cold Outreach','LinkedIn Sales Navigator','Excel','Pipeline Management','Client Communication','Negotiation','HubSpot'], jobs:[
+    {id:'d_b1',title:'Business Development Representative',company:'Salesforce',location:'Remote',type:'Remote',pay:65,pl:'$60–70k/yr + commission',match:73,tags:['remote','bizdev'],posted:'1 day ago',isNew:true,logo:'Sf',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-business-development-representative-salesforce-jobs.html',desc:'Drive pipeline growth through strategic outbound prospecting and qualify enterprise accounts.'},
+    {id:'d_b2',title:'Account Executive',company:'HubSpot',location:'Remote',type:'Remote',pay:75,pl:'$70–80k/yr + OTE',match:68,tags:['remote','bizdev'],posted:'3 days ago',isNew:false,logo:'Hs',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-account-executive-hubspot-jobs.html',desc:'Own full sales cycle for SMB clients from discovery through close.'},
+    {id:'d_b3',title:'Partnerships Associate',company:'Stripe',location:'Remote',type:'Remote',pay:72,pl:'$65–78k/yr',match:65,tags:['remote','bizdev'],posted:'5 days ago',isNew:false,logo:'St',lb:'#eae8f5',lf:'#3a2880',url:'https://www.indeed.com/q-partnerships-associate-stripe-jobs.html',desc:'Identify, develop, and manage strategic technology and channel partnerships.'},
+    {id:'d_b4',title:'Sales Associate',company:'LinkedIn',location:'New York, NY',type:'Hybrid',pay:68,pl:'$62–75k/yr',match:67,tags:['hybrid','bizdev'],posted:'4 days ago',isNew:false,logo:'Li',lb:'#e8f0f8',lf:'#1a5080',url:'https://www.indeed.com/q-sales-associate-linkedin-jobs.html',desc:'Grow LinkedIn\'s talent solutions business by building relationships with HR leaders.'},
+  ]},
+  'tech': { resumeLabel:'Tech & Operations', name:'Priya Nair', title:'Senior Operations Manager', summary:'MBA-trained operations leader with 4+ years driving process improvement. Seeking director-level or senior ops leadership roles.', education:'B.S. Information Systems — Georgia Tech, 2019 | MBA — Emory Goizueta, 2023', skills:['SQL','Tableau','Asana','Process Improvement','Cross-Functional Leadership','Data Analysis','Excel (Advanced)','Lean Six Sigma'], jobs:[
+    {id:'d_t1',title:'Director of Operations',company:'Airbnb',location:'Remote',type:'Remote',pay:140,pl:'$130–155k/yr',match:72,tags:['remote'],posted:'2 days ago',isNew:true,logo:'Ab',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-director-operations-airbnb-jobs.html',desc:'Lead operational strategy and process optimization for the host experience team.'},
+    {id:'d_t2',title:'Senior Operations Manager',company:'Amazon',location:'Seattle, WA',type:'Hybrid',pay:125,pl:'$115–135k/yr',match:70,tags:['hybrid'],posted:'1 week ago',isNew:false,logo:'Am',lb:'#fdf3e3',lf:'#b8750a',url:'https://www.indeed.com/q-senior-operations-manager-amazon-jobs.html',desc:'Drive efficiency and continuous improvement across fulfillment operations.'},
+    {id:'d_t3',title:'Strategy & Operations Lead',company:'Google',location:'New York, NY',type:'Hybrid',pay:145,pl:'$135–160k/yr',match:68,tags:['hybrid'],posted:'4 days ago',isNew:false,logo:'Go',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-strategy-operations-lead-google-jobs.html',desc:'Design and implement operational frameworks that scale global initiatives.'},
+    {id:'d_t4',title:'Operations Program Manager',company:'Microsoft',location:'Remote',type:'Remote',pay:130,pl:'$120–140k/yr',match:66,tags:['remote'],posted:'3 days ago',isNew:false,logo:'Ms',lb:'#e8f0f8',lf:'#1a5080',url:'https://www.indeed.com/q-operations-program-manager-microsoft-jobs.html',desc:'Manage complex cross-functional operations programs for the cloud business unit.'},
+  ]},
+  'creative': { resumeLabel:'Brand & Marketing', name:'River Castillo', title:'Graphic Designer & Visual Creative', summary:'BFA-trained graphic designer with agency and freelance experience in brand identity and digital design. Seeking junior art director or brand designer roles.', education:'B.F.A. Graphic Design — RISD, 2024', skills:['Adobe Illustrator','Photoshop','InDesign','Figma','After Effects','Typography','Brand Identity','Art Direction'], jobs:[
+    {id:'d_c1',title:'Junior Art Director',company:'Ogilvy',location:'New York, NY',type:'Hybrid',pay:65,pl:'$60–72k/yr',match:73,tags:['hybrid','brand'],posted:'2 days ago',isNew:true,logo:'Og',lb:'#1a1a1f',lf:'#f4f2ed',url:'https://www.indeed.com/q-junior-art-director-ogilvy-jobs.html',desc:'Concept and execute campaigns for global clients across digital, print, and experiential channels.'},
+    {id:'d_c2',title:'Brand Designer',company:'Spotify',location:'Remote',type:'Remote',pay:80,pl:'$75–88k/yr',match:69,tags:['remote','brand'],posted:'5 days ago',isNew:false,logo:'Sp',lb:'#e8f5e8',lf:'#1a7a1a',url:'https://www.indeed.com/q-brand-designer-spotify-jobs.html',desc:'Shape Spotify\'s visual identity across campaigns, products, and brand moments.'},
+    {id:'d_c3',title:'Graphic Designer',company:'Pentagram',location:'New York, NY',type:'On-site',pay:62,pl:'$58–68k/yr',match:70,tags:[],posted:'1 week ago',isNew:false,logo:'Pg',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-graphic-designer-pentagram-jobs.html',desc:'Work on brand identity, publication, and environmental design projects.'},
+    {id:'d_c4',title:'Visual Designer',company:'Airbnb',location:'Remote',type:'Remote',pay:85,pl:'$78–92k/yr',match:65,tags:['remote','brand'],posted:'3 days ago',isNew:false,logo:'Ab',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-visual-designer-airbnb-jobs.html',desc:'Craft visual experiences for marketing campaigns and brand storytelling across global markets.'},
+  ]},
+  'healthcare-clinical': { resumeLabel:'Healthcare & Science', name:'Danielle Park', title:'Physician — Internal Medicine', summary:'Board-certified internal medicine physician completing residency. Exploring pharmaceutical industry, medical affairs, digital health, or hospital administration roles.', education:'B.S. Biology — U of Michigan, 2015 | M.D. — Johns Hopkins, 2019 | Residency — Mayo Clinic, 2022', skills:['Patient Care','Clinical Documentation','Epic EMR','Medical Research','HIPAA','Clinical Trials','PubMed','Medical Writing'], jobs:[
+    {id:'d_hc1',title:'Medical Science Liaison',company:'Pfizer',location:'Remote',type:'Remote',pay:160,pl:'$150–175k/yr',match:76,tags:['remote'],posted:'1 day ago',isNew:true,logo:'Pf',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-medical-science-liaison-pfizer-jobs.html',desc:'Serve as a scientific expert for healthcare professionals, communicating clinical data and supporting medical education.'},
+    {id:'d_hc2',title:'Clinical Operations Manager',company:'Johnson & Johnson',location:'New Brunswick, NJ',type:'Hybrid',pay:145,pl:'$135–158k/yr',match:70,tags:['hybrid'],posted:'4 days ago',isNew:false,logo:'JJ',lb:'#e8f0f8',lf:'#1a5080',url:'https://www.indeed.com/q-clinical-operations-manager-johnson-johnson-jobs.html',desc:'Lead clinical study execution and site management for J&J\'s pharmaceutical pipeline.'},
+    {id:'d_hc3',title:'Medical Director',company:'Teladoc Health',location:'Remote',type:'Remote',pay:200,pl:'$185–220k/yr',match:68,tags:['remote'],posted:'1 week ago',isNew:false,logo:'Td',lb:'#e8f5e8',lf:'#1a7a1a',url:'https://www.indeed.com/q-medical-director-teladoc-jobs.html',desc:'Provide clinical leadership for Teladoc\'s virtual care platform, setting clinical protocols.'},
+  ]},
+  'healthcare-support': { resumeLabel:'Healthcare & Science', name:'Chris Odum', title:'Certified Medical Assistant', summary:'CMA with 4 years of hands-on clinical experience in a high-volume family practice. Seeking advancement into care coordinator or practice management roles.', education:'A.S. Medical Assisting — Community College of Denver, 2020 | CMA — AAMA', skills:['Phlebotomy','Epic EHR','Patient Intake','Insurance Verification','Medication Reconciliation','Clinical Documentation','HIPAA','Care Coordination'], jobs:[
+    {id:'d_hs1',title:'Care Coordinator',company:'UCHealth',location:'Denver, CO',type:'On-site',pay:48,pl:'$44–52k/yr',match:74,tags:[],posted:'2 days ago',isNew:true,logo:'UC',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-care-coordinator-uchealth-jobs.html',desc:'Coordinate care transitions and patient follow-up for a primary care network.'},
+    {id:'d_hs2',title:'Medical Office Supervisor',company:'Kaiser Permanente',location:'Aurora, CO',type:'On-site',pay:55,pl:'$50–60k/yr',match:69,tags:[],posted:'5 days ago',isNew:false,logo:'KP',lb:'#e8f5e8',lf:'#1a7a1a',url:'https://www.indeed.com/q-medical-office-supervisor-kaiser-jobs.html',desc:'Oversee daily clinical operations, staff scheduling, and patient experience.'},
+    {id:'d_hs3',title:'Patient Services Coordinator',company:'DaVita',location:'Remote',type:'Remote',pay:45,pl:'$42–48k/yr',match:65,tags:['remote'],posted:'1 week ago',isNew:false,logo:'Dv',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-patient-services-coordinator-davita-jobs.html',desc:'Support patients with scheduling, insurance coordination, and care team communication.'},
+  ]},
+  'legal': { resumeLabel:'Legal & Policy', name:'Owen Fletcher', title:'Associate Attorney', summary:'Georgetown Law graduate with 2 years of litigation experience. Transitioning into in-house counsel, compliance, or policy roles.', education:'B.A. Political Science — Georgetown, 2018 | J.D. — Georgetown Law, 2021', skills:['Westlaw','LexisNexis','Contract Review','Legal Research','Regulatory Compliance','Policy Writing','Litigation Support','Negotiation'], jobs:[
+    {id:'d_l1',title:'In-House Counsel',company:'Apple',location:'Cupertino, CA',type:'Hybrid',pay:175,pl:'$165–190k/yr',match:72,tags:['hybrid'],posted:'2 days ago',isNew:true,logo:'Ap',lb:'#1a1a1f',lf:'#f4f2ed',url:'https://www.indeed.com/q-in-house-counsel-apple-jobs.html',desc:'Provide legal support on commercial contracts, regulatory matters, and strategic transactions.'},
+    {id:'d_l2',title:'Compliance Manager',company:'JPMorgan Chase',location:'New York, NY',type:'Hybrid',pay:155,pl:'$145–165k/yr',match:68,tags:['hybrid'],posted:'4 days ago',isNew:false,logo:'JP',lb:'#e8f0f8',lf:'#1a5080',url:'https://www.indeed.com/q-compliance-manager-jpmorgan-jobs.html',desc:'Lead compliance program oversight ensuring regulatory adherence across products and operations.'},
+    {id:'d_l3',title:'Policy Counsel',company:'Google',location:'Washington, DC',type:'Hybrid',pay:165,pl:'$155–180k/yr',match:66,tags:['hybrid'],posted:'1 week ago',isNew:false,logo:'Go',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-policy-counsel-google-jobs.html',desc:'Shape engagement with regulatory and legislative processes on behalf of Google.'},
+  ]},
+  'engineering': { resumeLabel:'Engineering & Architecture', name:'Sofia Reyes', title:'Structural Engineer', summary:'Licensed structural engineer with master\'s degree and 3+ years infrastructure experience. Seeking senior engineering or project management roles.', education:'B.S. Civil Engineering — UT Austin, 2019 | M.S. Structural Engineering — UT Austin, 2021 | PE License, 2023', skills:['AutoCAD','Revit','SAP2000','Structural Analysis','Project Management','Technical Documentation','Construction Administration'], jobs:[
+    {id:'d_e1',title:'Senior Structural Engineer',company:'Skanska',location:'Dallas, TX',type:'Hybrid',pay:115,pl:'$108–125k/yr',match:74,tags:['hybrid'],posted:'3 days ago',isNew:true,logo:'Sk',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-senior-structural-engineer-skanska-jobs.html',desc:'Lead structural engineering for complex commercial and infrastructure projects.'},
+    {id:'d_e2',title:'Project Engineer',company:'HDR Engineering',location:'Austin, TX',type:'Hybrid',pay:105,pl:'$98–115k/yr',match:70,tags:['hybrid'],posted:'5 days ago',isNew:false,logo:'HD',lb:'#e8f0e8',lf:'#1a501a',url:'https://www.indeed.com/q-project-engineer-hdr-jobs.html',desc:'Manage engineering deliverables and client coordination for transportation infrastructure projects.'},
+    {id:'d_e3',title:'Structural Design Engineer',company:'Thornton Tomasetti',location:'New York, NY',type:'On-site',pay:110,pl:'$102–120k/yr',match:67,tags:[],posted:'1 week ago',isNew:false,logo:'TT',lb:'#f5ede6',lf:'#7a3d20',url:'https://www.indeed.com/q-structural-engineer-thornton-tomasetti-jobs.html',desc:'Design structural systems for high-rise residential, commercial, and cultural buildings.'},
+  ]},
+  'finance': { resumeLabel:'Finance & Accounting', name:'David Kim', title:'Finance & Corporate Strategy', summary:'Wharton MBA with investment banking experience. Targeting VP-level roles in corporate finance, strategy, or business development.', education:'B.S. Finance — NYU Stern, 2018 | MBA — The Wharton School, 2023', skills:['Financial Modeling','M&A Analysis','Bloomberg Terminal','Excel (Advanced)','Strategic Planning','Valuation','Corporate Finance','Capital Markets'], jobs:[
+    {id:'d_f1',title:'VP Corporate Development',company:'Meta',location:'Menlo Park, CA',type:'Hybrid',pay:210,pl:'$195–230k/yr',match:73,tags:['hybrid'],posted:'2 days ago',isNew:true,logo:'Mb',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-vp-corporate-development-meta-jobs.html',desc:'Lead M&A strategy and execution, identifying and closing strategic acquisitions.'},
+    {id:'d_f2',title:'Director of Finance & Strategy',company:'Spotify',location:'New York, NY',type:'Hybrid',pay:195,pl:'$180–210k/yr',match:70,tags:['hybrid'],posted:'4 days ago',isNew:false,logo:'Sp',lb:'#e8f5e8',lf:'#1a7a1a',url:'https://www.indeed.com/q-director-finance-strategy-spotify-jobs.html',desc:'Partner with the executive team on long-range financial planning and strategic growth initiatives.'},
+    {id:'d_f3',title:'Senior Finance Manager',company:'Apple',location:'Cupertino, CA',type:'On-site',pay:185,pl:'$175–200k/yr',match:67,tags:[],posted:'1 week ago',isNew:false,logo:'Ap',lb:'#1a1a1f',lf:'#f4f2ed',url:'https://www.indeed.com/q-senior-finance-manager-apple-jobs.html',desc:'Lead financial planning and analysis for a major Apple business division.'},
+  ]},
+  'hr': { resumeLabel:'Human Resources', name:'Amara Johnson', title:'HR Coordinator', summary:'HR coordinator with 2 years of experience in recruiting, onboarding, and employee relations. Seeking an HR generalist or senior coordinator role.', education:'B.S. Psychology & HR Management — Michigan State University, 2022', skills:['Workday','ATS (Greenhouse)','Onboarding','Benefits Administration','Employee Relations','Recruiting','DEI Initiatives','HRIS'], jobs:[
+    {id:'d_hr1',title:'HR Generalist',company:'Airbnb',location:'Remote',type:'Remote',pay:85,pl:'$78–92k/yr',match:73,tags:['remote'],posted:'1 day ago',isNew:true,logo:'Ab',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-hr-generalist-airbnb-jobs.html',desc:'Support employee relations, performance management, and HR program delivery across global remote teams.'},
+    {id:'d_hr2',title:'Senior HR Coordinator',company:'Salesforce',location:'Remote',type:'Remote',pay:78,pl:'$72–85k/yr',match:70,tags:['remote'],posted:'4 days ago',isNew:false,logo:'Sf',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-senior-hr-coordinator-salesforce-jobs.html',desc:'Own HR operations including onboarding, offboarding, and compliance administration.'},
+    {id:'d_hr3',title:'Talent Acquisition Specialist',company:'Amazon',location:'Seattle, WA',type:'Hybrid',pay:80,pl:'$75–88k/yr',match:67,tags:['hybrid'],posted:'5 days ago',isNew:false,logo:'Am',lb:'#fdf3e3',lf:'#b8750a',url:'https://www.indeed.com/q-talent-acquisition-specialist-amazon-jobs.html',desc:'Lead full-cycle recruiting for technical and business roles across multiple business units.'},
+  ]},
+  'nonprofit': { resumeLabel:'General / Master', name:'Theo Martinez', title:'Program Coordinator', summary:'Career changer with retail management experience and completed AmeriCorps year. Seeking nonprofit program coordinator or community outreach roles.', education:'B.A. Sociology — Boston University, 2017 | AmeriCorps Service Year — City Year Boston, 2023', skills:['Program Coordination','Community Outreach','Volunteer Management','Grant Writing','Impact Reporting','Team Leadership','Event Planning','Budget Management'], jobs:[
+    {id:'d_n1',title:'Program Manager',company:'Teach For America',location:'Remote',type:'Remote',pay:65,pl:'$60–72k/yr',match:72,tags:['remote'],posted:'2 days ago',isNew:true,logo:'TF',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-program-manager-teach-for-america-jobs.html',desc:'Lead program design and implementation for a regional corps of educators.'},
+    {id:'d_n2',title:'Community Engagement Manager',company:'YMCA',location:'Boston, MA',type:'On-site',pay:58,pl:'$54–63k/yr',match:68,tags:[],posted:'5 days ago',isNew:false,logo:'YM',lb:'#e8f5e8',lf:'#1a7a1a',url:'https://www.indeed.com/q-community-engagement-manager-ymca-jobs.html',desc:'Design and oversee community programs and volunteer initiatives serving thousands annually.'},
+    {id:'d_n3',title:'Development Associate',company:'United Way',location:'Remote',type:'Remote',pay:55,pl:'$50–60k/yr',match:64,tags:['remote'],posted:'1 week ago',isNew:false,logo:'UW',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-development-associate-united-way-jobs.html',desc:'Support fundraising and donor relations through grant writing and campaign coordination.'},
+  ]},
+  'pharmacy': { resumeLabel:'Pharmacy & Research', name:'Nina Patel', title:'Clinical Pharmacist — Industry Transition', summary:'PharmD with 4 years clinical experience. Transitioning into pharmaceutical industry, medical affairs, or drug development.', education:'B.S. Biochemistry — Purdue, 2015 | Pharm.D. — UIC College of Pharmacy, 2019', skills:['Pharmacology','Drug Interaction Analysis','Patient Counseling','FDA Regulations','Clinical Trials','PubMed','Pharmacovigilance','Medical Writing','Regulatory Affairs'], jobs:[
+    {id:'d_ph1',title:'Medical Affairs Manager',company:'AbbVie',location:'Remote',type:'Remote',pay:155,pl:'$145–168k/yr',match:75,tags:['remote'],posted:'1 day ago',isNew:true,logo:'Av',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-medical-affairs-manager-abbvie-jobs.html',desc:'Bridge clinical and commercial teams by communicating scientific data and supporting HCP education.'},
+    {id:'d_ph2',title:'Clinical Research Manager',company:'Moderna',location:'Cambridge, MA',type:'Hybrid',pay:145,pl:'$135–158k/yr',match:71,tags:['hybrid'],posted:'3 days ago',isNew:false,logo:'Mo',lb:'#e8f0f8',lf:'#1a5080',url:'https://www.indeed.com/q-clinical-research-manager-moderna-jobs.html',desc:'Lead clinical trial operations and regulatory submissions from Phase I through approval.'},
+    {id:'d_ph3',title:'Regulatory Affairs Specialist',company:'FDA',location:'Silver Spring, MD',type:'Hybrid',pay:125,pl:'$118–135k/yr',match:68,tags:['hybrid'],posted:'1 week ago',isNew:false,logo:'Fd',lb:'#e8f5e8',lf:'#1a7a1a',url:'https://www.indeed.com/q-regulatory-affairs-specialist-fda-jobs.html',desc:'Review drug applications and ensure safety, efficacy, and regulatory compliance for new approvals.'},
+  ]},
 };
 
 // Kanban columns
@@ -2008,6 +2093,18 @@ function handleUpload(input){
     reEvaluateAllJobs();
     renderResumes();
     scheduleSave();
+
+    // If there's still a demo resume, prompt to remove it
+    const hasDemo = resumes.some(r=>r.isDemo);
+    if(hasDemo){
+      setTimeout(()=>{
+        const toast = document.createElement('div');
+        toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r);padding:14px 18px;font-size:13px;color:var(--ink2);box-shadow:0 4px 24px rgba(0,0,0,.12);z-index:300;display:flex;align-items:center;gap:12px;white-space:nowrap;animation:fadeIn .3s ease;';
+        toast.innerHTML = '✓ Resume uploaded! <button onclick="removeDemoResume();this.closest(\'div\').remove()" style="background:var(--ac);color:#fff;border:none;border-radius:var(--rs);padding:5px 12px;font-family:\'DM Sans\',sans-serif;font-size:12px;cursor:pointer;margin-left:4px;">Remove demo</button><button onclick="this.closest(\'div\').remove()" style="background:none;border:none;cursor:pointer;color:var(--ink4);font-size:16px;padding:0 0 0 6px;">×</button>';
+        document.body.appendChild(toast);
+        setTimeout(()=>{ if(toast.parentNode) toast.remove(); }, 8000);
+      }, 500);
+    }
   },2000);
   input.value='';
 }
@@ -2064,14 +2161,19 @@ function renderResumes(){
   const pencilIcon='<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M7.5 1.5L9.5 3.5L3.5 9.5H1.5V7.5L7.5 1.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>';
   rl.innerHTML=resumes.map(r=>{
     const isAct=activeR===r.id;
+    const demoTag = r.isDemo ? '<span style="font-size:10px;font-weight:600;background:var(--gds);color:var(--gd);padding:1px 6px;border-radius:10px;margin-left:5px;letter-spacing:.03em;">DEMO</span>' : '';
     return '<button class="ri'+(isAct?' act':'')+'" onclick="setResume('+r.id+')">'
       +'<div class="ri-top"><div class="rdot'+(isAct?' act':'')+'"></div>'
-      +'<div class="rname">'+(r.analyzing?'<span class="apill"><span class="spin">↻</span> Reading…</span>':r.label)+'</div>'
+      +'<div class="rname">'+(r.analyzing?'<span class="apill"><span class="spin">↻</span> Reading…</span>':(r.label||r.file))+demoTag+'</div>'
       +'<button class="ri-del" onclick="deleteResume(event,'+r.id+')" title="Delete">'+trashIcon+'</button></div>'
       +(!r.analyzing?'<div class="ri-row2">'
-        +'<button class="ri-rename-btn" onclick="startRename(event,'+r.id+')">'+pencilIcon+' Rename</button>'
+        +(r.isDemo
+          ? '<button class="ri-rename-btn" onclick="removeDemoResume(event)" style="color:var(--a2);">✕ Remove demo</button>'
+          : '<button class="ri-rename-btn" onclick="startRename(event,'+r.id+')">'+pencilIcon+' Rename</button>')
         +'</div>':'')
-      +(r.analyzing?'':'<div class="ri-meta">'+r.jobCount+' role'+(r.jobCount!==1?'s':'')+' on Indeed</div>')
+      +(r.analyzing?'':r.isDemo
+        ? '<div class="ri-meta" style="color:var(--ink4);font-style:italic;">Demo profile — upload your real resume to replace</div>'
+        : '<div class="ri-meta">'+r.jobCount+' role'+(r.jobCount!==1?'s':'')+' on Indeed</div>')
       +'</button>';
   }).join('');
 }
@@ -2166,16 +2268,20 @@ function toggleDislikeOpt(el){
 // Valid promo codes (one-time use per code)
 const PROMO_CODES = {
   'CATALINA-VIP': {used: false, label: 'Catalina VIP'},
+  'AUSTYN-VIP':   {used: false, label: 'Austyn VIP'},
+  'ROXANNE-VIP':  {used: false, label: 'Roxanne VIP'},
+  'DAD-VIP':      {used: false, label: 'Dad VIP'},
+  'DAISY-VIP':    {used: false, label: 'Daisy VIP'},
+  'NEIL-VIP':     {used: false, label: 'Neil VIP'},
+  'AVERY-VIP':    {used: false, label: 'Avery VIP'},
+  'LIZ-VIP':      {used: false, label: 'Liz VIP'},
+  'JANET-VIP':    {used: false, label: 'Janet VIP'},
+  'ROSE-VIP':     {used: false, label: 'Rose VIP'},
+  'JENNY-VIP':    {used: false, label: 'Jenny VIP'},
   'FAM2026-A':    {used: false, label: 'Family Code A'},
   'FAM2026-B':    {used: false, label: 'Family Code B'},
   'FAM2026-C':    {used: false, label: 'Family Code C'},
   'FAM2026-D':    {used: false, label: 'Family Code D'},
-  'FRIEND-001':   {used: false, label: 'Friend Code 1'},
-  'FRIEND-002':   {used: false, label: 'Friend Code 2'},
-  'FRIEND-003':   {used: false, label: 'Friend Code 3'},
-  'FRIEND-004':   {used: false, label: 'Friend Code 4'},
-  'FRIEND-005':   {used: false, label: 'Friend Code 5'},
-  'FRIEND-006':   {used: false, label: 'Friend Code 6'},
 };
 
 let userPlan = 'free'; // 'free', 'pro', 'vip'
@@ -2483,11 +2589,13 @@ function closeOnboarding(){
     if(g){g.textContent='Hi, '+name.split(' ')[0]+' 👋';g.style.display='inline';}
   }
   scheduleSave();
+  launchQuizAfterOnboarding();
 }
 function skipOnboarding(){
   userProfile.onboarded = true;
   document.getElementById('onboardingModal').classList.remove('open');
   scheduleSave();
+  launchQuizAfterOnboarding();
 }
 
 // ══════════════════════════════════════════════════
@@ -2648,7 +2756,14 @@ function addLoc(){const inp=document.getElementById('locIn'),val=inp.value.trim(
 // ══════════════════════════════════════════════════
 //  KEYBOARD / CLOSE HANDLERS
 // ══════════════════════════════════════════════════
-// ── PASTED JOB RENAME ─────────────────────────────
+// ── RESET ALL DATA ───────────────────────────────────
+function confirmResetData(){
+  if(confirm('This will delete all your resumes, saved jobs, tracker data, and settings. This cannot be undone.\n\nAre you sure?')){
+    localStorage.clear();
+    location.reload();
+  }
+}
+
 let renamePastedJobId = null;
 function openRenamePasted(jobId){
   renamePastedJobId = jobId;
@@ -2776,7 +2891,8 @@ document.getElementById('chipSuggestions').innerHTML = CHIP_SUGGESTIONS.map(s=>
 
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){
-    if(document.getElementById('vibesAnalysisModal').classList.contains('open'))closeVibesAnalysis();
+    if(document.getElementById('quizModal').classList.contains('open'))closeQuiz();
+    else if(document.getElementById('vibesAnalysisModal').classList.contains('open'))closeVibesAnalysis();
     else if(document.getElementById('renamePastedModal').classList.contains('open'))closeRenamePasted();
     else if(document.getElementById('onboardingModal').classList.contains('open'))skipOnboarding();
     else if(document.getElementById('feedbackModal').classList.contains('open'))closeFeedback();
@@ -2799,33 +2915,6 @@ updateTrackerBadge();
 updateProUI();
 renderResumes();
 renderPortfolio();
-
-// Show onboarding if first time
-setTimeout(()=>{
-  if(!userProfile.onboarded && !hadSavedState){
-    openOnboarding();
-  } else if(hadSavedState && userProfile.name){
-    document.getElementById('userGreeting') && (document.getElementById('userGreeting').textContent='Hi, '+userProfile.name.split(' ')[0]+' 👋');
-  } else if(!userProfile.onboarded && hadSavedState){
-    // Has data but never onboarded — remind gently after 30 seconds
-    setTimeout(()=>{
-      const hint=document.createElement('div');
-      hint.style.cssText='position:fixed;bottom:20px;right:20px;background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r);padding:14px 18px;font-size:13px;color:var(--ink2);box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:200;cursor:pointer;max-width:260px;line-height:1.5;';
-      hint.innerHTML='<strong style="display:block;margin-bottom:4px;">👋 Set up your profile</strong>Add your name and email to personalize fitted. <span style="color:var(--ac);display:block;margin-top:8px;font-size:12px;">Tap to set up →</span>';
-      hint.onclick=()=>{hint.remove();openOnboarding();};
-      document.body.appendChild(hint);
-      setTimeout(()=>hint.remove(),8000);
-    },30000);
-  }
-  // Welcome back message
-  if(hadSavedState && (resumes.length>0||jobs.length>0||Object.keys(trackerData).length>0)){
-    const toast=document.createElement('div');
-    toast.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--sf);border:1px solid var(--bd2);border-radius:20px;padding:8px 18px;font-size:12.5px;color:var(--ink3);box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:200;pointer-events:none;';
-    toast.textContent='✓ Your data has been restored';
-    document.body.appendChild(toast);
-    setTimeout(()=>toast.remove(),2800);
-  }
-},200);
 
 const LS_KEY = 'fitted_v1';
 
@@ -3057,7 +3146,161 @@ if(hadSavedState && (resumes.length > 0 || jobs.length > 0 || Object.keys(tracke
   }, 600);
 }
 
-// ── MOBILE DRAWER TOGGLES ─────────────────────────────
+// ── SHOW ONBOARDING OR QUIZ ────────────────────────
+setTimeout(()=>{
+  const hasJobs = jobs.length > 0;
+  const hasDemoFlag = localStorage.getItem('fitted_quiz_done');
+
+  if(!userProfile.onboarded && !hadSavedState){
+    // Brand new user — show onboarding first, quiz launches after
+    openOnboarding();
+  } else if(!hasDemoFlag && !hasJobs){
+    // Returning user OR someone who skipped onboarding but has no jobs yet
+    // Show quiz so they get demo content
+    openQuiz();
+  } else if(hadSavedState && userProfile.name){
+    const g = document.getElementById('userGreeting');
+    if(g){ g.textContent = 'Hi, '+userProfile.name.split(' ')[0]+' 👋'; g.style.display='inline'; }
+  } else if(!userProfile.onboarded && hadSavedState){
+    setTimeout(()=>{
+      const hint = document.createElement('div');
+      hint.style.cssText = 'position:fixed;bottom:20px;right:20px;background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r);padding:14px 18px;font-size:13px;color:var(--ink2);box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:200;cursor:pointer;max-width:260px;line-height:1.5;';
+      hint.innerHTML = '<strong style="display:block;margin-bottom:4px;">👋 Set up your profile</strong>Add your name and email to personalize fitted. <span style="color:var(--ac);display:block;margin-top:8px;font-size:12px;">Tap to set up →</span>';
+      hint.onclick = ()=>{ hint.remove(); openOnboarding(); };
+      document.body.appendChild(hint);
+      setTimeout(()=>hint.remove(), 8000);
+    }, 30000);
+  }
+}, 300);
+
+// ══════════════════════════════════════════════════
+//  QUIZ & DEMO PROFILE LOADER
+// ══════════════════════════════════════════════════
+let quizAnswers = {stage: null, field: null, priority: null};
+
+function openQuiz(){
+  document.getElementById('quizModal').classList.add('open');
+  showQuizStep(1);
+}
+function closeQuiz(){ document.getElementById('quizModal').classList.remove('open'); }
+
+function showQuizStep(step){
+  document.querySelectorAll('.quiz-step').forEach(s=>s.classList.remove('active'));
+  const stepId = step === '2b' ? 'qStep2b' : 'qStep'+step;
+  const el = document.getElementById(stepId);
+  if(el) el.classList.add('active');
+  // Update progress dots
+  const stepNum = step === '2b' ? 2 : Number(step);
+  document.querySelectorAll('.quiz-progress-dot').forEach((d,i)=>{
+    d.classList.toggle('done', i < stepNum);
+  });
+}
+
+function selectQuiz(step, value){
+  // Highlight selected
+  const stepId = step === '2b' ? 'qStep2b' : 'qStep'+step;
+  document.querySelectorAll('#'+stepId+' .quiz-opt').forEach(b=>b.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+
+  if(step === 1){
+    quizAnswers.stage = value;
+    setTimeout(()=>showQuizStep(2), 250);
+  } else if(step === 2){
+    if(value === 'healthcare'){
+      setTimeout(()=>showQuizStep('2b'), 250);
+    } else {
+      quizAnswers.field = value;
+      setTimeout(()=>showQuizStep(3), 250);
+    }
+  } else if(step === '2b'){
+    quizAnswers.field = value;
+    setTimeout(()=>showQuizStep(3), 250);
+  } else if(step === 3){
+    quizAnswers.priority = value;
+    setTimeout(()=>{ closeQuiz(); loadDemoProfile(); }, 300);
+  }
+}
+
+function quizBack(toStep){
+  showQuizStep(toStep);
+}
+
+function skipQuiz(){
+  closeQuiz();
+  localStorage.setItem('fitted_quiz_done', '1');
+  if(!quizAnswers.field) quizAnswers.field = 'marketing';
+  loadDemoProfile();
+}
+
+function loadDemoProfile(){
+  const field = quizAnswers.field || 'marketing';
+  const profile = DEMO_PROFILES[field];
+  if(!profile) return;
+
+  // Create demo resume
+  const demoId = 'demo_' + field;
+  const demoResume = {
+    id: demoId,
+    file: profile.name + ' — Demo Resume.pdf',
+    label: profile.resumeLabel,
+    analyzing: false,
+    jobCount: profile.jobs.length,
+    fileUrl: null,
+    dataUrl: null,
+    isDemo: true,
+  };
+
+  // Remove any existing demo resumes
+  resumes = resumes.filter(r => !r.isDemo);
+  resumes.unshift(demoResume);
+  activeR = demoId;
+
+  // Load demo jobs, tagged as demo
+  const demoJobs = profile.jobs.map(j=>({...j, isDemo:true}));
+  // Remove old demo jobs, keep pasted/real
+  jobs = jobs.filter(j=>!j.isDemo);
+  jobs = [...demoJobs, ...jobs];
+
+  // Apply priority sorting hint
+  if(quizAnswers.priority === 'pay') jobs.sort((a,b)=>b.pay-a.pay);
+  else if(quizAnswers.priority === 'remote') jobs.sort((a,b)=>(a.type==='Remote'?0:1)-(b.type==='Remote'?0:1));
+
+  renderResumes();
+  renderFeed();
+  badges();
+  document.getElementById('findJobsBtn').disabled = false;
+
+  // Mark quiz as done
+  localStorage.setItem('fitted_quiz_done', '1');
+
+  // Show welcome toast
+  setTimeout(()=>{
+    const toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--sf);border:1px solid var(--bd2);border-radius:20px;padding:10px 20px;font-size:13px;color:var(--ink2);box-shadow:0 4px 24px rgba(0,0,0,.12);z-index:300;pointer-events:none;animation:fadeIn .3s ease;text-align:center;white-space:nowrap;';
+    toast.innerHTML = '🎉 Welcome! Here\'s a demo profile to explore — upload your real resume when you\'re ready.';
+    document.body.appendChild(toast);
+    setTimeout(()=>toast.remove(), 4000);
+  }, 400);
+
+  scheduleSave();
+}
+
+// Show quiz after onboarding instead of going straight to empty app
+function launchQuizAfterOnboarding(){
+  setTimeout(()=>openQuiz(), 400);
+}
+
+function removeDemoResume(e){
+  if(e) e.stopPropagation();
+  resumes = resumes.filter(r => !r.isDemo);
+  jobs = jobs.filter(j => !j.isDemo);
+  activeR = resumes.length ? resumes[0].id : null;
+  renderResumes();
+  renderFeed();
+  badges();
+  scheduleSave();
+}
+
 function isMobile(){ return window.innerWidth <= 768; }
 
 function toggleMobileLeft(){
@@ -3114,6 +3357,112 @@ function closeMobileDrawers(){
 // Set Jobs tab active by default on mobile
 if(isMobile()) document.getElementById('mobNavJobs')?.classList.add('act');
 </script>
+<!-- QUIZ MODAL -->
+<style>
+.quiz-step{display:none;}.quiz-step.active{display:block;}
+.quiz-q{font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink);margin-bottom:6px;line-height:1.3;}
+.quiz-sub{font-size:13px;color:var(--ink3);margin-bottom:20px;}
+.quiz-options{display:flex;flex-direction:column;gap:10px;}
+.quiz-opt{display:flex;align-items:center;gap:12px;padding:13px 16px;border:1.5px solid var(--bd2);border-radius:var(--r);cursor:pointer;transition:all .15s;background:var(--sf);text-align:left;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink2);}
+.quiz-opt:hover{border-color:var(--ac);background:var(--acs);color:var(--ac);}
+.quiz-opt.selected{border-color:var(--ac);background:var(--acs);color:var(--ac);}
+.quiz-opt-emoji{font-size:20px;flex-shrink:0;width:28px;text-align:center;}
+.quiz-progress{display:flex;gap:6px;margin-bottom:24px;}
+.quiz-progress-dot{height:4px;border-radius:20px;flex:1;background:var(--sf3);transition:background .3s;}
+.quiz-progress-dot.done{background:var(--ac);}
+.quiz-nav{display:flex;align-items:center;justify-content:space-between;margin-top:20px;}
+.quiz-back{background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink3);padding:0;}
+.quiz-back:hover{color:var(--ink);}
+.quiz-field-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+@media(max-width:480px){.quiz-field-grid{grid-template-columns:1fr;}}
+</style>
+
+<div class="ov" id="quizModal">
+  <div class="modal sm" style="width:500px;padding:28px 28px 24px;">
+
+    <!-- Progress dots -->
+    <div class="quiz-progress" id="quizProgress">
+      <div class="quiz-progress-dot done" id="qd1"></div>
+      <div class="quiz-progress-dot" id="qd2"></div>
+      <div class="quiz-progress-dot" id="qd3"></div>
+    </div>
+
+    <!-- Step 1: Career stage -->
+    <div class="quiz-step active" id="qStep1">
+      <div class="quiz-q">Where are you right now?</div>
+      <div class="quiz-sub">We'll personalize your experience based on where you are in your career.</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="selectQuiz(1,'student')"><span class="quiz-opt-emoji">🎓</span>Still in college</button>
+        <button class="quiz-opt" onclick="selectQuiz(1,'recent')"><span class="quiz-opt-emoji">📄</span>Recent grad (last 1–2 years)</button>
+        <button class="quiz-opt" onclick="selectQuiz(1,'working')"><span class="quiz-opt-emoji">💼</span>Already working, looking for something better</button>
+        <button class="quiz-opt" onclick="selectQuiz(1,'changing')"><span class="quiz-opt-emoji">🔄</span>Changing careers or industries</button>
+        <button class="quiz-opt" onclick="selectQuiz(1,'returning')"><span class="quiz-opt-emoji">⏸️</span>Returning to work after a break</button>
+      </div>
+      <div class="quiz-nav">
+        <span></span>
+        <button class="quiz-back" onclick="skipQuiz()">Skip →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Field -->
+    <div class="quiz-step" id="qStep2">
+      <div class="quiz-q">What field are you heading into?</div>
+      <div class="quiz-sub">Pick the one that fits best — you can always explore others later.</div>
+      <div class="quiz-options quiz-field-grid">
+        <button class="quiz-opt" onclick="selectQuiz(2,'marketing')"><span class="quiz-opt-emoji">📣</span>Marketing, Brand & Comms</button>
+        <button class="quiz-opt" onclick="selectQuiz(2,'business')"><span class="quiz-opt-emoji">💰</span>Business, Sales & Partnerships</button>
+        <button class="quiz-opt" onclick="selectQuiz(2,'tech')"><span class="quiz-opt-emoji">💻</span>Tech & Operations</button>
+        <button class="quiz-opt" onclick="selectQuiz(2,'creative')"><span class="quiz-opt-emoji">🎨</span>Creative & Design</button>
+        <button class="quiz-opt" onclick="selectQuiz(2,'healthcare')"><span class="quiz-opt-emoji">🏥</span>Healthcare & Science</button>
+        <button class="quiz-opt" onclick="selectQuiz(2,'legal')"><span class="quiz-opt-emoji">⚖️</span>Legal, Policy & Government</button>
+        <button class="quiz-opt" onclick="selectQuiz(2,'engineering')"><span class="quiz-opt-emoji">🏗️</span>Engineering & Architecture</button>
+        <button class="quiz-opt" onclick="selectQuiz(2,'finance')"><span class="quiz-opt-emoji">💵</span>Finance & Accounting</button>
+        <button class="quiz-opt" onclick="selectQuiz(2,'hr')"><span class="quiz-opt-emoji">🤝</span>Human Resources & People Ops</button>
+        <button class="quiz-opt" onclick="selectQuiz(2,'nonprofit')"><span class="quiz-opt-emoji">🌍</span>Nonprofit, Education & Social Impact</button>
+        <button class="quiz-opt" onclick="selectQuiz(2,'pharmacy')"><span class="quiz-opt-emoji">🔬</span>Pharmacy, Science & Research</button>
+        <button class="quiz-opt" onclick="selectQuiz(2,'unsure')"><span class="quiz-opt-emoji">🗺️</span>Not sure yet</button>
+      </div>
+      <div class="quiz-nav">
+        <button class="quiz-back" onclick="quizBack(1)">← Back</button>
+        <button class="quiz-back" onclick="skipQuiz()">Skip →</button>
+      </div>
+    </div>
+
+    <!-- Step 2b: Healthcare sub-question -->
+    <div class="quiz-step" id="qStep2b">
+      <div class="quiz-q">Which track fits you better?</div>
+      <div class="quiz-sub">This helps us show the right jobs and demo profile.</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="selectQuiz('2b','healthcare-clinical')"><span class="quiz-opt-emoji">🩺</span>Clinical / Patient care (MD, PA, NP, nursing, residency)</button>
+        <button class="quiz-opt" onclick="selectQuiz('2b','healthcare-support')"><span class="quiz-opt-emoji">🏥</span>Healthcare support / admin (MA, CNA, coordinator, technician)</button>
+        <button class="quiz-opt" onclick="selectQuiz('2b','pharmacy')"><span class="quiz-opt-emoji">🔬</span>Pharmacy, lab, or research (PharmD, PhD, biochem, clinical trials)</button>
+      </div>
+      <div class="quiz-nav">
+        <button class="quiz-back" onclick="quizBack(2)">← Back</button>
+        <button class="quiz-back" onclick="skipQuiz()">Skip →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Priority -->
+    <div class="quiz-step" id="qStep3">
+      <div class="quiz-q">What matters most to you right now?</div>
+      <div class="quiz-sub">We'll sort your job feed to match.</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="selectQuiz(3,'pay')"><span class="quiz-opt-emoji">💸</span>Finding something that pays well</button>
+        <button class="quiz-opt" onclick="selectQuiz(3,'remote')"><span class="quiz-opt-emoji">🏠</span>Working remotely or having flexibility</button>
+        <button class="quiz-opt" onclick="selectQuiz(3,'growth')"><span class="quiz-opt-emoji">📈</span>Growing fast in my career</button>
+        <button class="quiz-opt" onclick="selectQuiz(3,'change')"><span class="quiz-opt-emoji">🔀</span>Making a career change</button>
+        <button class="quiz-opt" onclick="selectQuiz(3,'explore')"><span class="quiz-opt-emoji">🗺️</span>Just figuring out what\'s out there</button>
+      </div>
+      <div class="quiz-nav">
+        <button class="quiz-back" onclick="quizBack(2)">← Back</button>
+        <button class="quiz-back" onclick="skipQuiz()">Skip →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- VIBES ANALYSIS MODAL (What fitted. thinks about you) -->
 <div class="ov" id="vibesAnalysisModal" onclick="if(event.target===this)closeVibesAnalysis()">
   <div class="modal sm" style="width:460px;max-height:80vh;overflow-y:auto;">
