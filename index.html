@@ -25,7 +25,7 @@
   --r:14px;--rs:8px;--rx:6px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;}
+html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;overflow:hidden;}
 
 /* ── MAIN LAYOUT ── */
 .app{display:grid;grid-template-columns:230px 1fr 270px;grid-template-rows:54px calc(100vh - 54px);height:100vh;}
@@ -169,6 +169,7 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
     grid-template-columns: 1fr !important;
     grid-template-rows: 54px 1fr 56px !important;
     height: 100dvh;
+    overflow: hidden;
   }
 
   /* Top nav — tighten up */
