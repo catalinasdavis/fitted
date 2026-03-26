@@ -1,0 +1,2957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="fitted.">
+<meta name="theme-color" content="#f4f2ed">
+<meta name="description" content="Get a career tailor made for you. AI-powered job matching, resume analysis, and interview prep.">
+<title>fitted. — get a career tailor made for you</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1f;--ink2:#3d3d45;--ink3:#7a7a85;--ink4:#b0b0b8;
+  --bg:#f4f2ed;--sf:#fff;--sf2:#f0ede6;--sf3:#e8e4db;
+  --ac:#2d5be3;--acs:#eaeffe;
+  --a2:#e85d3a;--a2s:#fdf0ec;
+  --gr:#1a7a4a;--grs:#e6f5ed;
+  --gd:#b8750a;--gds:#fdf3e3;
+  --red:#c0392b;--reds:#fdecea;
+  --pur:#6d28d9;--purs:#ede9fe;
+  --bd:rgba(0,0,0,.07);--bd2:rgba(0,0,0,.13);
+  --r:14px;--rs:8px;--rx:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;}
+
+/* ── MAIN LAYOUT ── */
+.app{display:grid;grid-template-columns:230px 1fr 270px;grid-template-rows:54px calc(100vh - 54px);height:100vh;}
+
+/* ── TOP NAV ── */
+.topnav{grid-column:1/-1;background:var(--sf);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 18px;gap:14px;z-index:20;}
+.logo{font-family:'DM Serif Display',serif;font-size:22px;letter-spacing:-.02em;flex-shrink:0;}
+.logo span{color:var(--ac);}
+.divr{width:1px;height:18px;background:var(--bd2);}
+.sw{flex:1;max-width:460px;position:relative;}
+.sw svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--ink4);}
+.si{width:100%;padding:7px 12px 7px 32px;border:1px solid var(--bd2);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;background:var(--bg);color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s;}
+.si:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(45,91,227,.1);background:var(--sf);}
+.si::placeholder{color:var(--ink4);}
+.tnr{margin-left:auto;display:flex;align-items:center;gap:9px;}
+.bo{padding:7px 13px;border:1px solid var(--bd2);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink2);background:var(--sf);cursor:pointer;transition:all .15s;}
+.bo:hover{border-color:var(--ac);color:var(--ac);background:var(--acs);}
+.bp{padding:7px 13px;background:var(--ac);color:#fff;border:none;border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .15s;}
+.bp:hover{opacity:.88;}
+.bp:disabled{opacity:.4;cursor:not-allowed;}
+
+/* ── LEFT NAV ── */
+.leftnav{background:var(--sf);border-right:1px solid var(--bd);padding:14px 8px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;}
+.nsl{font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink4);padding:12px 10px 4px;margin-top:4px;}
+.nsl:first-child{padding-top:0;margin-top:0;}
+.nb{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--rs);color:var(--ink2);font-size:13px;cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:background .12s,color .12s;}
+.nb:hover{background:var(--sf2);color:var(--ink);}
+.nb.act{background:var(--acs);color:var(--ac);font-weight:500;}
+.nbdg{margin-left:auto;color:#fff;font-size:10px;font-weight:600;padding:1px 6px;border-radius:20px;line-height:16px;background:var(--ac);}
+.nbdg.gd{background:var(--gd);}
+.nbdg.gr{background:var(--gr);}
+.nbdg.red{background:var(--red);}
+
+/* Resume section */
+.ruz{border:1.5px dashed var(--bd2);border-radius:var(--rs);padding:10px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;margin:4px 2px 4px;}
+.ruz:hover{border-color:var(--ac);background:var(--acs);}
+.ruzl{font-size:12px;color:var(--ink3);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;}
+.ruzl small{font-size:10px;color:var(--ink4);}
+.ri{display:flex;flex-direction:column;padding:9px 10px;border-radius:var(--rs);cursor:pointer;border:1px solid transparent;background:none;width:100%;text-align:left;transition:background .12s;margin-bottom:4px;}
+.ri:hover{background:var(--sf2);}
+.ri.act{background:var(--acs);border-color:var(--ac);}
+.ri-top{display:flex;align-items:center;gap:7px;}
+.rdot{width:7px;height:7px;border-radius:50%;background:var(--ink4);flex-shrink:0;}
+.rdot.act{background:var(--ac);}
+.rname{font-size:12.5px;color:var(--ink2);flex:1;text-align:left;}
+.ri.act .rname{color:var(--ac);font-weight:500;}
+.ri-del{opacity:1;background:none;border:none;cursor:pointer;color:var(--ink4);padding:3px 5px;border-radius:4px;line-height:1;transition:all .12s;flex-shrink:0;display:flex;align-items:center;}
+.ri-del:hover{color:var(--a2);background:var(--a2s);}
+.ri-row2{display:flex;align-items:center;padding-left:14px;margin-top:4px;gap:4px;}
+.ri-rename-btn,.ri-view{display:flex;align-items:center;background:none;border:none;cursor:pointer;color:var(--ink4);padding:3px 5px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:11px;gap:3px;transition:all .12s;}
+.ri-rename-btn:hover{color:var(--ac);background:var(--acs);}
+.ri-view:hover{color:var(--ac);background:var(--acs);}
+.ri-meta{font-size:10.5px;color:var(--ink4);margin-top:3px;padding-left:14px;}
+.ri.act .ri-meta{color:var(--ac);opacity:.7;}
+.apill{display:inline-flex;align-items:center;gap:5px;background:var(--gds);color:var(--gd);border-radius:20px;padding:2px 8px;font-size:11px;}
+.spin{display:inline-block;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.ri-all{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--rs);cursor:pointer;border:1px solid var(--bd2);background:var(--sf2);width:100%;text-align:left;font-size:12.5px;color:var(--ink2);margin-bottom:4px;transition:all .15s;}
+.ri-all:hover{border-color:var(--ac);color:var(--ac);background:var(--acs);}
+.ri-all.act{border-color:var(--ac);background:var(--acs);color:var(--ac);font-weight:500;}
+.find-jobs-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:9px 12px;background:var(--ac);color:#fff;border:none;border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;width:calc(100% - 4px);margin:6px 2px 2px;transition:opacity .15s;}
+.find-jobs-btn:hover{opacity:.88;}
+.find-jobs-btn:disabled{opacity:.35;cursor:not-allowed;}
+.find-jobs-btn.searching{background:var(--gd);}
+
+/* ── FEED ── */
+.feed{padding:18px 20px;overflow-y:auto;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+.chip{display:inline-flex;align-items:center;padding:5px 12px;border:1px solid var(--bd2);border-radius:20px;font-size:12px;color:var(--ink3);background:var(--sf);cursor:pointer;transition:all .15s;gap:5px;}
+.chip:hover{border-color:var(--ac);color:var(--ac);background:var(--acs);}
+.chip.on{border-color:var(--ac);color:var(--ac);background:var(--acs);font-weight:500;}
+.chip-del{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;font-size:11px;line-height:1;opacity:.6;transition:opacity .12s;}
+.chip-del:hover{opacity:1;}
+.chip-add{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px dashed var(--bd2);border-radius:20px;font-size:12px;color:var(--ink4);background:none;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif;}
+.chip-add:hover{border-color:var(--ac);color:var(--ac);background:var(--acs);}
+.fhd{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;}
+.ft{font-family:'DM Serif Display',serif;font-size:19px;}
+.fm{font-size:12px;color:var(--ink3);margin-left:6px;}
+.ss{border:1px solid var(--bd2);border-radius:var(--rx);padding:4px 8px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink2);background:var(--sf);cursor:pointer;outline:none;}
+.resume-ctx{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--acs);border:1px solid var(--ac);border-radius:var(--rs);margin-bottom:16px;font-size:12.5px;color:var(--ac);}
+.ctx-switch{margin-left:auto;font-size:11.5px;cursor:pointer;text-decoration:underline;color:var(--ink3);}
+.jlist{display:flex;flex-direction:column;gap:10px;}
+.jcard{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:15px 16px;cursor:pointer;transition:box-shadow .18s,border-color .18s,transform .12s;display:grid;grid-template-columns:40px 1fr 68px;gap:0 12px;align-items:start;}
+.jcard:hover{box-shadow:0 4px 18px rgba(0,0,0,.08);border-color:var(--bd2);transform:translateY(-1px);}
+.jcard.pin{border-left:3px solid var(--gd);}
+.jcard.pasted{border-left:3px solid var(--ac);}
+.clogo{width:40px;height:40px;border-radius:9px;background:var(--sf2);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:14px;flex-shrink:0;}
+.jbody{min-width:0;}
+.jtrow{display:flex;align-items:flex-start;gap:6px;flex-wrap:wrap;margin-bottom:2px;}
+.jtitle{font-size:14px;font-weight:500;line-height:1.3;}
+.bdg{display:inline-flex;padding:2px 7px;border-radius:20px;font-size:9.5px;font-weight:600;text-transform:uppercase;}
+.bdg.nw{background:var(--a2s);color:var(--a2);}
+.bdg.ap{background:var(--grs);color:var(--gr);}
+.bdg.lw{background:var(--gds);color:var(--gd);}
+.bdg.pt{background:var(--acs);color:var(--ac);}
+.jco{font-size:12.5px;color:var(--ink3);margin-bottom:6px;}
+.jco strong{color:var(--ink2);font-weight:500;}
+.trow{display:flex;flex-wrap:wrap;gap:5px;}
+.tg{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;}
+.tg.rem{background:var(--grs);color:var(--gr);}
+.tg.hyb{background:var(--gds);color:var(--gd);}
+.tg.ons{background:var(--a2s);color:var(--a2);}
+.tg.pay{background:var(--sf2);color:var(--ink2);}
+.tg.res{background:var(--acs);color:var(--ac);}
+.mcol{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.mrw{position:relative;width:50px;height:50px;display:flex;align-items:center;justify-content:center;}
+.mrw svg{position:absolute;top:0;left:0;transform:rotate(-90deg);}
+.mpct{font-family:'DM Mono',monospace;font-size:12.5px;position:relative;z-index:1;}
+.mlbl{font-size:9px;color:var(--ink4);}
+.sbtn{background:none;border:none;cursor:pointer;color:var(--ink4);padding:3px;border-radius:5px;transition:color .15s,background .15s;line-height:1;}
+.sbtn:hover{color:var(--gd);background:var(--gds);}
+.sbtn.on{color:var(--gd);}
+.pdate{font-size:10.5px;color:var(--ink4);}
+.empty{text-align:center;padding:48px 20px;color:var(--ink3);}
+.empty h3{font-family:'DM Serif Display',serif;font-size:18px;color:var(--ink2);margin-bottom:5px;}
+.empty p{font-size:13px;margin-bottom:14px;}
+
+/* ── RIGHT PANEL ── */
+.rp{background:var(--sf);border-left:1px solid var(--bd);padding:18px 16px;overflow-y:auto;display:flex;flex-direction:column;}
+.ps{padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid var(--bd);}
+.ps:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.pt{font-family:'DM Serif Display',serif;font-size:16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.pedit{font-size:11px;font-weight:400;color:var(--ac);cursor:pointer;font-family:'DM Sans',sans-serif;}
+.pedit:hover{text-decoration:underline;}
+.vtags{display:flex;flex-wrap:wrap;gap:5px;}
+.vtag{padding:3px 9px;border-radius:20px;font-size:11.5px;}
+.vtag.b{background:var(--acs);color:var(--ac);}
+.vtag.w{background:var(--a2s);color:var(--a2);}
+.vtag.g{background:var(--grs);color:var(--gr);}
+.vtag.d{background:var(--gds);color:var(--gd);}
+.vempty{font-size:12px;color:var(--ink3);font-style:italic;}
+.vta{width:100%;min-height:88px;padding:8px;border:1px solid var(--bd2);border-radius:var(--rx);font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--ink);background:var(--bg);resize:vertical;outline:none;line-height:1.55;}
+.vibes-save-ind{font-size:11px;color:var(--ink4);height:14px;display:block;margin-top:3px;transition:color .2s;}
+.vibes-save-ind.ok{color:var(--gr);}
+.vta:focus{border-color:var(--ac);}
+.vsave{margin-top:7px;width:100%;}
+.loclist{display:flex;flex-direction:column;gap:8px;}
+.loci{display:flex;align-items:center;gap:8px;cursor:pointer;}
+.loci input{width:14px;height:14px;accent-color:var(--ac);cursor:pointer;}
+.loci span{font-size:12.5px;color:var(--ink2);}
+.locadd{display:flex;align-items:center;gap:6px;margin-top:10px;}
+.locadd input{flex:1;padding:5px 8px;border:1px solid var(--bd2);border-radius:var(--rx);font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink);background:var(--bg);outline:none;}
+.locadd input:focus{border-color:var(--ac);}
+.locadd button{padding:5px 10px;background:var(--ac);color:#fff;border:none;border-radius:var(--rx);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;}
+.pinp{width:100%;padding:6px 9px;border:1px solid var(--bd2);border-radius:var(--rx);font-family:'DM Mono',monospace;font-size:13px;color:var(--ink);background:var(--bg);outline:none;margin-bottom:6px;}
+.pinp:focus{border-color:var(--ac);}
+
+/* ── KANBAN TRACKER OVERLAY ── */
+.kanban-overlay{display:none;position:fixed;inset:0;z-index:60;background:var(--bg);flex-direction:column;animation:fadeIn .2s ease;}
+.kanban-overlay.open{display:flex;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.kanban-topbar{background:var(--sf);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:14px;padding:0 24px;height:54px;flex-shrink:0;}
+.kanban-back{display:flex;align-items:center;gap:7px;background:none;border:none;cursor:pointer;color:var(--ink3);font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 10px;border-radius:var(--rs);transition:all .15s;}
+.kanban-back:hover{background:var(--sf2);color:var(--ink);}
+.kanban-title{font-family:'DM Serif Display',serif;font-size:20px;}
+.kanban-body{flex:1;overflow-x:auto;padding:24px;display:flex;gap:16px;}
+.kanban-col{flex-shrink:0;width:260px;display:flex;flex-direction:column;gap:10px;}
+.kanban-col-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:var(--rs);margin-bottom:2px;}
+.kanban-col-title{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+.kanban-col-count{font-size:11px;font-weight:600;padding:2px 7px;border-radius:20px;}
+.kanban-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px;cursor:grab;transition:box-shadow .15s,transform .12s;user-select:none;}
+.kanban-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);transform:translateY(-2px);}
+.kanban-card.dragging{opacity:.5;transform:scale(.97);}
+.kc-title{font-size:13.5px;font-weight:500;margin-bottom:3px;line-height:1.3;}
+.kc-co{font-size:12px;color:var(--ink3);margin-bottom:8px;}
+.kc-co strong{color:var(--ink2);font-weight:400;}
+.kc-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.kc-tag{font-size:10.5px;padding:2px 8px;border-radius:20px;}
+.kc-actions{display:flex;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--bd);}
+.kc-btn{flex:1;padding:5px 8px;border:1px solid var(--bd2);border-radius:var(--rx);font-size:11.5px;font-family:'DM Sans',sans-serif;cursor:pointer;background:var(--sf);color:var(--ink2);transition:all .15s;text-align:center;}
+.kc-btn:hover{border-color:var(--ac);color:var(--ac);background:var(--acs);}
+.kc-btn.danger:hover{border-color:var(--a2);color:var(--a2);background:var(--a2s);}
+.kanban-drop-zone{min-height:80px;border:2px dashed transparent;border-radius:var(--r);transition:border-color .15s,background .15s;padding:8px;}
+.kanban-drop-zone.over{border-color:var(--ac);background:var(--acs);}
+.kanban-empty{text-align:center;padding:24px 12px;color:var(--ink4);font-size:12.5px;font-style:italic;}
+/* Deadline badge */
+.deadline-flag{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;padding:2px 8px;border-radius:20px;background:var(--a2s);color:var(--a2);}
+
+/* Add note modal inside kanban */
+.kc-note-input{width:100%;padding:8px;border:1px solid var(--bd2);border-radius:var(--rx);font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--ink);background:var(--bg);outline:none;min-height:70px;resize:vertical;margin-top:8px;}
+.kc-note-input:focus{border-color:var(--ac);}
+
+/* ── JOB DETAIL OVERLAY ── */
+.jd-overlay{display:none;position:fixed;inset:0;z-index:50;background:var(--bg);flex-direction:column;animation:jdIn .2s ease;}
+.jd-overlay.open{display:flex;}
+@keyframes jdIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.jd-topbar{background:var(--sf);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:14px;padding:0 24px;height:54px;flex-shrink:0;}
+.jd-back{display:flex;align-items:center;gap:7px;background:none;border:none;cursor:pointer;color:var(--ink3);font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 10px;border-radius:var(--rs);transition:all .15s;}
+.jd-back:hover{background:var(--sf2);color:var(--ink);}
+.jd-topbar-logo{font-family:'DM Serif Display',serif;font-size:22px;letter-spacing:-.02em;}
+.jd-topbar-logo span{color:var(--ac);}
+.jd-topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.jd-apply-btn{padding:8px 20px;background:var(--ac);color:#fff;border:none;border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .15s;}
+.jd-apply-btn:hover{opacity:.88;}
+.jd-star-btn{background:none;border:1px solid var(--bd2);border-radius:var(--rs);cursor:pointer;color:var(--ink3);padding:7px 10px;display:flex;align-items:center;gap:6px;font-family:'DM Sans',sans-serif;font-size:13px;transition:all .15s;}
+.jd-star-btn:hover{border-color:var(--gd);color:var(--gd);background:var(--gds);}
+.jd-star-btn.on{border-color:var(--gd);color:var(--gd);background:var(--gds);}
+.jd-body{display:flex;flex:1;overflow:hidden;}
+.jd-left{flex:1;display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--bd);}
+.jd-header{padding:24px 28px 0;flex-shrink:0;}
+.jd-co-row{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.jd-logo{width:52px;height:52px;border-radius:12px;background:var(--sf2);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:20px;flex-shrink:0;}
+.jd-role{font-family:'DM Serif Display',serif;font-size:22px;line-height:1.2;margin-bottom:3px;}
+.jd-co-line{font-size:13.5px;color:var(--ink3);}
+.jd-co-line strong{color:var(--ink2);font-weight:500;}
+.jd-meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.jd-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:12px;}
+.jd-pill.rem{background:var(--grs);color:var(--gr);}
+.jd-pill.hyb{background:var(--gds);color:var(--gd);}
+.jd-pill.ons{background:var(--a2s);color:var(--a2);}
+.jd-pill.pay{background:var(--sf2);color:var(--ink2);}
+.jd-pill.match{background:var(--acs);color:var(--ac);font-weight:500;}
+.jd-tabs{display:flex;border-bottom:1px solid var(--bd);padding:0 28px;flex-shrink:0;overflow-x:auto;}
+.jd-tab{padding:10px 16px;font-size:13px;color:var(--ink3);cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s;white-space:nowrap;}
+.jd-tab:hover{color:var(--ink);}
+.jd-tab.act{color:var(--ac);border-bottom-color:var(--ac);font-weight:500;}
+.jd-tab-content{flex:1;overflow-y:auto;padding:24px 28px;}
+
+/* Match tab */
+.match-score-hero{display:flex;align-items:center;gap:20px;padding:20px 24px;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);margin-bottom:20px;}
+.match-ring-lg{position:relative;width:80px;height:80px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.match-ring-lg svg{position:absolute;top:0;left:0;transform:rotate(-90deg);}
+.match-pct-lg{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;position:relative;z-index:1;}
+.match-headline{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:4px;}
+.match-sub{font-size:12.5px;color:var(--ink3);line-height:1.5;}
+.match-bars{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;}
+.match-bar-row{display:flex;align-items:center;gap:12px;}
+.match-bar-label{font-size:12.5px;color:var(--ink2);width:130px;flex-shrink:0;}
+.match-bar-track{flex:1;height:6px;background:var(--sf3);border-radius:20px;overflow:hidden;}
+.match-bar-fill{height:100%;border-radius:20px;}
+.match-bar-pct{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--ink3);width:36px;text-align:right;flex-shrink:0;}
+.match-kw-title{font-size:12px;font-weight:500;color:var(--ink2);letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px;}
+.kw-wrap{display:flex;flex-wrap:wrap;gap:7px;}
+.kw{padding:4px 11px;border-radius:20px;font-size:12px;}
+.kw.hit{background:var(--grs);color:var(--gr);}
+.kw.miss{background:var(--sf2);color:var(--ink3);text-decoration:line-through;}
+
+/* Tailor tab */
+.tailor-intro{font-size:13px;color:var(--ink3);margin-bottom:18px;line-height:1.6;}
+.tailor-section{margin-bottom:22px;}
+.tailor-section-title{font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px;}
+.tailor-item{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:14px 16px;margin-bottom:8px;}
+.tailor-item-label{font-size:12px;font-weight:500;color:var(--ink2);margin-bottom:5px;}
+.tailor-original{font-size:12.5px;color:var(--ink3);line-height:1.55;margin-bottom:8px;padding:8px 10px;background:var(--sf2);border-radius:var(--rx);}
+.tailor-suggested{font-size:12.5px;color:var(--gr);line-height:1.55;padding:8px 10px;background:var(--grs);border-radius:var(--rx);}
+.tailor-tag{display:inline-flex;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:20px;margin-bottom:6px;}
+.tailor-tag.swap{background:var(--a2s);color:var(--a2);}
+.tailor-tag.add{background:var(--grs);color:var(--gr);}
+
+/* Stand Out tab */
+.standout-section{margin-bottom:24px;}
+.standout-section-title{font-family:'DM Serif Display',serif;font-size:16px;margin-bottom:12px;}
+.standout-item{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;}
+.standout-num{width:24px;height:24px;border-radius:50%;background:var(--acs);color:var(--ac);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.standout-text{font-size:13px;color:var(--ink2);line-height:1.6;}
+.standout-text strong{color:var(--ink);font-weight:500;}
+.standout-callout{background:var(--sf);border:1px solid var(--bd);border-left:3px solid var(--ac);border-radius:var(--rs);padding:14px 16px;margin-top:16px;}
+.standout-callout p{font-size:13px;color:var(--ink2);line-height:1.6;}
+
+/* Email Drafts tab */
+.email-type-row{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.email-type-btn{padding:7px 14px;border:1px solid var(--bd2);border-radius:20px;font-size:12.5px;font-family:'DM Sans',sans-serif;cursor:pointer;background:var(--sf);color:var(--ink2);transition:all .15s;}
+.email-type-btn:hover{border-color:var(--ac);color:var(--ac);background:var(--acs);}
+.email-type-btn.act{border-color:var(--ac);color:var(--ac);background:var(--acs);font-weight:500;}
+.email-draft-box{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:18px 20px;}
+.email-subject{font-size:12px;font-weight:600;color:var(--ink3);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.email-subject-val{font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--bd);}
+.email-body{font-size:13px;color:var(--ink2);line-height:1.8;white-space:pre-wrap;}
+.email-copy-btn{margin-top:14px;padding:7px 14px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;background:var(--sf);color:var(--ink2);transition:all .15s;display:inline-flex;align-items:center;gap:6px;}
+.email-copy-btn:hover{border-color:var(--ac);color:var(--ac);background:var(--acs);}
+
+/* Interview Prep tab */
+.prep-intro{font-size:13px;color:var(--ink3);margin-bottom:18px;line-height:1.6;}
+.prep-question{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:16px 18px;margin-bottom:12px;}
+.prep-q-num{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:4px;}
+.prep-q-text{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:10px;line-height:1.4;}
+.prep-q-hint{font-size:12.5px;color:var(--ink3);line-height:1.6;}
+.prep-q-hint strong{color:var(--ink2);}
+
+/* Notes tab */
+.notes-area{width:100%;min-height:280px;padding:14px;border:1px solid var(--bd2);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--sf);resize:vertical;outline:none;line-height:1.7;}
+.notes-area:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(45,91,227,.08);}
+.notes-area::placeholder{color:var(--ink4);}
+.notes-hint{font-size:12px;color:var(--ink4);margin-top:8px;}
+
+/* Job description tab */
+.jd-desc{font-size:13px;color:var(--ink2);line-height:1.8;white-space:pre-wrap;background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:18px 20px;}
+
+/* ── DETAIL RIGHT SIDEBAR ── */
+.jd-right{width:280px;flex-shrink:0;padding:0;overflow-y:auto;display:flex;flex-direction:column;}
+.jd-rs{padding:16px 18px;border-bottom:1px solid var(--bd);}
+.jd-rs:last-child{border-bottom:none;}
+.jd-rs-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:10px;}
+.jd-rs-item{display:flex;flex-direction:column;gap:2px;margin-bottom:10px;}
+.jd-rs-label{font-size:11.5px;color:var(--ink3);}
+.jd-rs-val{font-size:13px;color:var(--ink2);}
+.jd-rs-val.good{color:var(--gr);}
+.similar-job{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd);cursor:pointer;transition:opacity .15s;}
+.similar-job:hover{opacity:.7;}
+.similar-job:last-child{border-bottom:none;}
+.sj-logo{width:30px;height:30px;border-radius:7px;background:var(--sf2);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:11px;flex-shrink:0;}
+.sj-info{flex:1;min-width:0;}
+.sj-title{font-size:12px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sj-co{font-size:11px;color:var(--ink3);}
+.sj-match{font-family:'DM Mono',monospace;font-size:12px;flex-shrink:0;}
+.view-job-link{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border:1px solid var(--ac);color:var(--ac);border-radius:var(--rs);font-size:12.5px;text-decoration:none;transition:all .15s;margin-top:6px;}
+.view-job-link:hover{background:var(--acs);}
+
+/* Salary data in sidebar */
+.salary-bar-section{margin-top:6px;}
+.salary-range-bar{height:6px;background:var(--sf3);border-radius:20px;overflow:hidden;margin:6px 0 4px;}
+.salary-range-fill{height:100%;border-radius:20px;background:var(--ac);}
+.salary-labels{display:flex;justify-content:space-between;font-size:10.5px;color:var(--ink4);font-family:'DM Mono',monospace;}
+
+/* ── CHATBOT ── */
+.jd-chat-section{display:flex;flex-direction:column;flex:1;min-height:0;padding:0;}
+.jd-chat-messages{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:12px 18px;min-height:100px;max-height:260px;}
+.jd-chat-msg{display:flex;flex-direction:column;}
+.jd-chat-msg.user{align-items:flex-end;}
+.jd-chat-msg.bot{align-items:flex-start;}
+.jd-chat-bubble{padding:9px 12px;border-radius:12px;font-size:12.5px;line-height:1.55;max-width:95%;}
+.jd-chat-msg.user .jd-chat-bubble{background:var(--ac);color:#fff;border-bottom-right-radius:4px;}
+.jd-chat-msg.bot .jd-chat-bubble{background:var(--sf2);color:var(--ink2);border-bottom-left-radius:4px;}
+.jd-chat-msg.bot .jd-chat-bubble.loading{color:var(--ink4);font-style:italic;}
+.jd-chat-suggestions{display:flex;flex-wrap:wrap;gap:5px;padding:4px 18px 8px;}
+.jd-chat-chip{padding:5px 10px;border:1px solid var(--bd2);border-radius:20px;font-size:11.5px;color:var(--ink3);background:var(--sf);cursor:pointer;transition:all .15s;text-align:left;}
+.jd-chat-chip:hover{border-color:var(--ac);color:var(--ac);background:var(--acs);}
+.jd-chat-input-row{display:flex;align-items:center;gap:7px;padding:10px 18px;border-top:1px solid var(--bd);flex-shrink:0;}
+.jd-chat-input{flex:1;padding:8px 11px;border:1px solid var(--bd2);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--ink);background:var(--bg);outline:none;transition:border-color .15s;}
+.jd-chat-input:focus{border-color:var(--ac);box-shadow:0 0 0 2px rgba(45,91,227,.08);}
+.jd-chat-input::placeholder{color:var(--ink4);}
+.jd-chat-send{width:32px;height:32px;background:var(--ac);color:#fff;border:none;border-radius:var(--rs);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .15s;}
+.jd-chat-send:hover{opacity:.85;}
+.chat-section-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:14px 18px 6px;border-top:1px solid var(--bd);}
+
+/* ── MODALS ── */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;align-items:center;justify-content:center;}
+.ov.open{display:flex;}
+.modal{background:var(--sf);border-radius:var(--r);padding:24px;width:540px;max-width:92vw;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.18);}
+.modal.sm{width:360px;}
+.mtitle{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px;}
+.msub{font-size:12.5px;color:var(--ink3);margin-bottom:16px;line-height:1.6;}
+.mta{width:100%;min-height:150px;padding:10px;border:1px solid var(--bd2);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);background:var(--bg);resize:vertical;outline:none;line-height:1.6;}
+.mta:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(45,91,227,.1);}
+.minput{width:100%;padding:10px 12px;border:1px solid var(--bd2);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--bg);outline:none;transition:border-color .15s,box-shadow .15s;}
+.minput:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(45,91,227,.1);}
+.mfoot{display:flex;gap:8px;margin-top:14px;justify-content:flex-end;align-items:center;}
+.paste-hint{font-size:12px;color:var(--ink4);flex:1;}
+.bg2{padding:7px 13px;background:none;color:var(--ink2);border:1px solid var(--bd2);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;}
+.bg2:hover{background:var(--sf2);}
+
+/* Deadline input in kanban */
+.kc-deadline-row{display:flex;align-items:center;gap:8px;margin-top:8px;}
+.kc-deadline-row label{font-size:12px;color:var(--ink3);}
+.kc-deadline-row input[type=date]{padding:4px 8px;border:1px solid var(--bd2);border-radius:var(--rx);font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink);background:var(--bg);outline:none;}
+
+/* Portfolio section */
+.portfolio-upload-zone{border:1.5px dashed var(--bd2);border-radius:var(--rs);padding:12px 10px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;margin:4px 0 8px;}
+.portfolio-upload-zone:hover{border-color:var(--ac);background:var(--acs);}
+.portfolio-upload-label{font-size:12px;color:var(--ink3);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;}
+.portfolio-upload-label small{font-size:10px;color:var(--ink4);}
+.portfolio-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);margin-bottom:6px;}
+.portfolio-item-icon{width:32px;height:32px;border-radius:var(--rx);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.portfolio-item-info{flex:1;min-width:0;}
+.portfolio-item-name{font-size:12.5px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.portfolio-item-type{font-size:11px;color:var(--ink4);margin-top:1px;}
+.portfolio-item-actions{display:flex;gap:4px;flex-shrink:0;}
+.pi-btn{background:none;border:none;cursor:pointer;color:var(--ink4);padding:4px;border-radius:4px;display:flex;align-items:center;transition:all .12s;}
+.pi-btn:hover{color:var(--ac);background:var(--acs);}
+.pi-btn.del:hover{color:var(--a2);background:var(--a2s);}
+.portfolio-empty{font-size:12px;color:var(--ink4);font-style:italic;padding:4px 0 6px;}
+.prep-q-hint-locked{margin-top:8px;}
+.prep-q-hint-locked .pro-lock{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--gd);font-weight:500;background:var(--gds);padding:4px 10px;border-radius:20px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+.prep-q-hint-locked .pro-lock:hover{opacity:.8;}
+
+/* Salary negotiation section */
+.salary-neg-section{margin-top:28px;padding-top:24px;border-top:2px solid var(--bd2);}
+.salary-neg-title{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:8px;}
+.salary-neg-intro{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:20px;}
+.salary-neg-stage{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:14px 16px;margin-bottom:12px;}
+.salary-neg-stage-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4);margin-bottom:8px;}
+.salary-neg-script{font-size:13.5px;font-style:italic;background:var(--acs);color:var(--ac);border-radius:var(--rx);padding:10px 12px;margin-bottom:8px;line-height:1.6;}
+.salary-neg-note{font-size:12.5px;color:var(--ink3);line-height:1.6;}
+
+
+.dbtn{background:none;border:none;cursor:pointer;color:var(--ink4);padding:3px;border-radius:5px;transition:color .15s,background .15s;line-height:1;}
+.dbtn:hover{color:var(--a2);background:var(--a2s);}
+
+/* Dislike modal */
+.dislike-options{display:flex;flex-direction:column;gap:8px;margin-bottom:6px;}
+.dislike-opt{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--bd2);border-radius:var(--rs);cursor:pointer;transition:all .15s;font-size:13px;color:var(--ink2);background:var(--sf);}
+.dislike-opt:hover{border-color:var(--a2);background:var(--a2s);color:var(--a2);}
+.dislike-opt.sel{border-color:var(--a2);background:var(--a2s);color:var(--a2);font-weight:500;}
+.dislike-opt input[type=checkbox]{accent-color:var(--a2);width:15px;height:15px;cursor:pointer;}
+
+/* Platform source badges */
+.src-badge{display:inline-flex;align-items:center;gap:4px;padding:1px 7px;border-radius:20px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+.src-badge.indeed{background:#003a9b22;color:#003a9b;}
+.src-badge.linkedin{background:#0077b522;color:#0077b5;}
+.src-badge.glassdoor{background:#0CAA4122;color:#0CAA41;}
+.src-badge.web{background:var(--sf2);color:var(--ink3);}
+
+/* Subscription / Pro UI */
+.pro-lock{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--gd);font-weight:500;background:var(--gds);padding:3px 9px;border-radius:20px;cursor:pointer;}
+.pro-lock:hover{opacity:.8;}
+.pro-gate{position:relative;overflow:hidden;border-radius:var(--rs);}
+.pro-gate-overlay{position:absolute;inset:0;background:rgba(247,245,240,.85);backdrop-filter:blur(3px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:5;border-radius:var(--rs);}
+.pro-gate-icon{font-size:22px;}
+.pro-gate-title{font-family:'DM Serif Display',serif;font-size:16px;color:var(--ink);}
+.pro-gate-sub{font-size:12.5px;color:var(--ink3);text-align:center;max-width:200px;line-height:1.5;}
+.pro-gate-btn{padding:8px 18px;background:var(--gd);color:#fff;border:none;border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;}
+.pro-gate-btn:hover{opacity:.88;}
+
+/* Career path (Pro feature) */
+.career-path-node{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;}
+.cp-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.cp-dot.now{background:var(--ac);}
+.cp-dot.next{background:var(--gr);}
+.cp-dot.future{background:var(--pur);}
+.cp-line{width:2px;background:var(--bd2);height:20px;margin:2px 0 2px 4px;}
+.cp-info{}
+.cp-title{font-size:13px;font-weight:500;color:var(--ink);}
+.cp-meta{font-size:11.5px;color:var(--ink3);margin-top:1px;}
+.cp-salary{font-size:11.5px;color:var(--gr);font-family:'DM Mono',monospace;}
+
+/* Subscription modal */
+.sub-plans{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px;}
+.sub-plan{border:1px solid var(--bd2);border-radius:var(--r);padding:16px;cursor:pointer;transition:all .15s;}
+.sub-plan:hover{border-color:var(--ac);}
+.sub-plan.highlight{border-color:var(--ac);border-width:2px;position:relative;}
+.sub-plan-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--ac);color:#fff;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;white-space:nowrap;}
+.sub-plan-name{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:4px;}
+.sub-plan-price{font-family:'DM Mono',monospace;font-size:20px;font-weight:500;color:var(--ac);margin-bottom:8px;}
+.sub-plan-price small{font-size:12px;color:var(--ink3);font-family:'DM Sans',sans-serif;font-weight:400;}
+.sub-plan-features{display:flex;flex-direction:column;gap:5px;}
+.sub-plan-feature{font-size:12px;color:var(--ink2);display:flex;align-items:center;gap:5px;}
+.sub-plan-feature::before{content:'✓';color:var(--gr);font-weight:600;}
+.sub-plan-feature.locked{color:var(--ink4);}
+.sub-plan-feature.locked::before{content:'—';color:var(--ink4);}
+.promo-input-row{display:flex;gap:8px;margin-top:10px;}
+.promo-input-row input{flex:1;padding:9px 12px;border:1px solid var(--bd2);border-radius:var(--rs);font-family:'DM Mono',monospace;font-size:13px;color:var(--ink);background:var(--bg);outline:none;letter-spacing:.08em;}
+.promo-input-row input:focus{border-color:var(--ac);}
+.promo-feedback{font-size:12.5px;margin-top:6px;min-height:18px;}
+.promo-feedback.ok{color:var(--gr);}
+.promo-feedback.err{color:var(--a2);}
+
+/* PWA install banner */
+.pwa-banner{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r);padding:12px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,.14);z-index:300;max-width:340px;width:calc(100vw - 32px);animation:fadeIn .3s ease;}
+.pwa-banner-logo{font-family:'DM Serif Display',serif;font-size:20px;flex-shrink:0;}
+.pwa-banner-logo span{color:var(--ac);}
+.pwa-banner-text{flex:1;min-width:0;}
+.pwa-banner-title{font-size:13px;font-weight:500;color:var(--ink);}
+.pwa-banner-sub{font-size:11.5px;color:var(--ink3);margin-top:1px;}
+.pwa-banner-actions{display:flex;gap:6px;flex-shrink:0;}
+.pwa-banner-install{padding:6px 12px;background:var(--ac);color:#fff;border:none;border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;}
+.pwa-banner-dismiss{padding:6px 8px;background:none;border:none;cursor:pointer;color:var(--ink4);font-size:16px;line-height:1;}
+</style>
+
+<!-- PWA Manifest injected inline -->
+<script>
+(function(){
+  const manifest = {
+    name: 'fitted.',
+    short_name: 'fitted.',
+    description: 'Get a career tailor made for you',
+    start_url: '.',
+    display: 'standalone',
+    background_color: '#f4f2ed',
+    theme_color: '#f4f2ed',
+    orientation: 'portrait-primary',
+    icons: [
+      { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%232d5be3'/><text x='256' y='360' font-family='Georgia,serif' font-size='320' fill='%23f4f2ed' text-anchor='middle'>f.</text></svg>", sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
+    ]
+  };
+  const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('link');
+  link.rel = 'manifest'; link.href = url;
+  document.head.appendChild(link);
+
+  // Apple touch icon (inline SVG as data URL)
+  const appleIcon = document.createElement('link');
+  appleIcon.rel = 'apple-touch-icon';
+  appleIcon.href = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%232d5be3' rx='80'/><text x='256' y='360' font-family='Georgia,serif' font-size='320' fill='%23f4f2ed' text-anchor='middle'>f.</text></svg>";
+  document.head.appendChild(appleIcon);
+})();
+</script>
+</head>
+<body>
+<div class="app">
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div style="display:flex;flex-direction:column;line-height:1.1;flex-shrink:0;">
+    <div class="logo">fitted<span>.</span></div>
+    <div style="font-size:9.5px;color:var(--ink4);letter-spacing:.04em;font-weight:400;margin-top:1px;">get a career tailor made for you</div>
+  </div>
+  <div class="divr"></div>
+  <div class="sw">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="5.5" cy="5.5" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M9 9L12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    <input class="si" id="srch" placeholder="Search job titles, companies, keywords…" oninput="renderFeed()">
+  </div>
+  <div class="tnr">
+    <span id="userGreeting" style="font-size:13px;color:var(--ink3);display:none;"></span>
+    <button id="proBtn" class="bo" onclick="openSubscription()" style="background:var(--gd);color:#fff;border-color:var(--gd);font-weight:500;">Upgrade</button>
+    <button class="bo" onclick="openFeedback()" title="Send feedback">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style="margin-right:4px"><path d="M11 1.5H2C1.7 1.5 1.5 1.7 1.5 2V8.5C1.5 8.8 1.7 9 2 9H4.5V11.5L7.5 9H11C11.3 9 11.5 8.8 11.5 8.5V2C11.5 1.7 11.3 1.5 11 1.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M4 5H9M4 6.5H7" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+      Feedback
+    </button>
+  </div>
+</nav>
+
+<!-- LEFT NAV -->
+<aside class="leftnav">
+  <div class="nsl">Discover</div>
+  <button class="nb act" id="nB" onclick="setView('browse',this)">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" fill="currentColor" opacity=".8"/><rect x="8" y="1" width="5" height="5" rx="1" fill="currentColor" opacity=".8"/><rect x="1" y="8" width="5" height="5" rx="1" fill="currentColor" opacity=".3"/><rect x="8" y="8" width="5" height="5" rx="1" fill="currentColor" opacity=".3"/></svg>
+    Browse
+    <span class="nbdg" id="bdgB">0</span>
+  </button>
+  <button class="nb" id="nS" onclick="setView('saved',this)">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 4.8L12.5 5.2L9.6 8L10.5 12L7 10.1L3.5 12L4.4 8L1.5 5.2L5.5 4.8L7 1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+    Saved
+    <span class="nbdg gd" id="bdgS">0</span>
+  </button>
+  <button class="nb" id="nA" onclick="openTracker()">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="2.5" height="9" rx="1" fill="currentColor" opacity=".5"/><rect x="5.25" y="1" width="2.5" height="10" rx="1" fill="currentColor" opacity=".8"/><rect x="9.5" y="4" width="2.5" height="7" rx="1" fill="currentColor"/></svg>
+    Tracker
+    <span class="nbdg gr" id="bdgA">0</span>
+    <span id="trackerBadge" style="display:none;background:var(--ac);color:#fff;font-size:10px;font-weight:600;padding:1px 5px;border-radius:20px;margin-left:2px;">0</span>
+  </button>
+
+  <div class="nsl">My Resumes</div>
+  <div class="ruz" onclick="document.getElementById('rfi').click()">
+    <label class="ruzl">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M6 9H12M9 6V12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Upload a resume
+      <small>PDF · DOCX · TXT</small>
+    </label>
+  </div>
+  <input type="file" id="rfi" accept=".pdf,.docx,.doc,.txt" style="display:none" onchange="handleUpload(this)">
+  <div id="rAllWrap" style="display:none;padding:0 2px 2px;">
+    <button class="ri-all" id="rAll" onclick="setResume(null)">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="4" height="4" rx=".8" fill="currentColor" opacity=".7"/><rect x="7" y="1" width="4" height="4" rx=".8" fill="currentColor" opacity=".7"/><rect x="1" y="7" width="4" height="4" rx=".8" fill="currentColor" opacity=".4"/><rect x="7" y="7" width="4" height="4" rx=".8" fill="currentColor" opacity=".4"/></svg>
+      All Resumes
+    </button>
+  </div>
+  <div id="rList"></div>
+  <div id="rHint" style="font-size:11.5px;color:var(--ink4);padding:4px 10px 0;font-style:italic;line-height:1.5;">Upload a resume and we'll find matching jobs.</div>
+  <button class="find-jobs-btn" id="findJobsBtn" onclick="findJobs()" disabled>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="5.5" cy="5.5" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M9 9L12.5 12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    Find Jobs
+  </button>
+  <button class="find-jobs-btn" id="pasteJobBtn" onclick="openPaste()" style="background:var(--sf);color:var(--ac);border:1px solid var(--ac);margin-top:4px;">
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="2" y="1" width="9" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 5H9M4 7.5H7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M4.5 1.5V3H8.5V1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Paste a Job
+  </button>
+</aside>
+
+<!-- FEED -->
+<main class="feed">
+  <div class="chips" id="chipsRow"></div>
+  <div id="resumeCtx" style="display:none;" class="resume-ctx">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="1" width="10" height="12" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 5H10M4 8H8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <span>Showing jobs matched to <strong id="ctxName"></strong></span>
+    <span class="ctx-switch" onclick="setResume(null)">Show all</span>
+  </div>
+  <div class="fhd">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <button id="toggleLeftBtn" onclick="toggleLeftNav()" title="Hide sidebar" style="background:none;border:1px solid var(--bd2);border-radius:var(--rx);padding:4px 6px;cursor:pointer;color:var(--ink3);display:flex;align-items:center;line-height:1;">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <span class="ft" id="ftitle">Matched for you</span><span class="fm" id="fmeta"></span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <select class="ss" onchange="sortJobs(this.value)">
+        <option value="match">Best match</option>
+        <option value="recent">Most recent</option>
+        <option value="pay">Pay ↑</option>
+        <option value="deadline">Closing soon</option>
+      </select>
+      <button id="toggleRightBtn" onclick="toggleRightPanel()" title="Hide preferences" style="background:none;border:1px solid var(--bd2);border-radius:var(--rx);padding:4px 6px;cursor:pointer;color:var(--ink3);display:flex;align-items:center;line-height:1;">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="jlist" id="jlist"></div>
+</main>
+
+<!-- RIGHT PANEL -->
+<aside class="rp">
+  <div class="ps">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+      <div class="pt" style="margin-bottom:0;">About me</div>
+      <button id="vAnalysisBtn" onclick="toggleVibesAnalysis()" style="display:none;background:var(--acs);color:var(--ac);border:1px solid var(--ac);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">✦ What fitted. thinks</button>
+    </div>
+    <textarea class="vta" id="vText" placeholder="Tell us about yourself — your experience, dream companies, what kind of role you want, where you want to be in 5 years…" style="min-height:100px;" oninput="onVibesInput()"></textarea>
+    <span id="vibesSaveInd" class="vibes-save-ind"></span>
+  </div>
+  <div class="ps">
+    <div class="pt">Location</div>
+    <div class="loclist" id="loclist"></div>
+    <div class="locadd">
+      <input type="text" id="locIn" placeholder="Add a location…" onkeydown="if(event.key==='Enter')addLoc()">
+      <button onclick="addLoc()">+</button>
+    </div>
+  </div>
+  <div class="ps">
+    <div class="pt">Pay target</div>
+    <input class="pinp" id="payMin" type="text" placeholder="e.g. $26/hr or $55,000/yr" onchange="renderFeed()">
+    <div style="font-size:11.5px;color:var(--ink3);">Jobs below your target will be flagged.</div>
+  </div>
+  <div class="ps">
+    <div class="pt">My Portfolio <span class="pro-lock" onclick="openSubscription()" id="portfolioProBadge" style="cursor:pointer;">✦ Pro</span></div>
+    <div id="portfolioProGate">
+      <!-- Pro gate overlay — hidden for Pro users -->
+      <div style="text-align:center;padding:16px 8px;">
+        <div style="font-size:22px;margin-bottom:8px;">✦</div>
+        <div style="font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:6px;">Portfolio is a Pro feature</div>
+        <div style="font-size:12px;color:var(--ink3);line-height:1.6;margin-bottom:12px;">Upload writing samples, moodboards, and projects. Soon Fitted will analyze them to make every output sound more like you.</div>
+        <button class="pro-gate-btn" style="width:100%;" onclick="openSubscription()">Unlock with Pro — $9/mo</button>
+        <div style="font-size:11px;color:var(--ink4);margin-top:8px;">Have a code? Enter it in the upgrade screen.</div>
+      </div>
+    </div>
+    <div id="portfolioContent" style="display:none;">
+      <div style="font-size:12px;color:var(--ink3);margin-bottom:10px;line-height:1.5;">Upload writing samples, moodboards, projects — anything that shows who you are beyond your resume. Coming soon: Fitted will analyze these to make every output sound more like you.</div>
+      <div class="portfolio-upload-zone" onclick="document.getElementById('portfolioFileInput').click()">
+        <label class="portfolio-upload-label">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M9 6V12M6 9H12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Add a file
+          <small>PDF · Images · Docs · Any file type</small>
+        </label>
+      </div>
+      <input type="file" id="portfolioFileInput" accept="*/*" style="display:none" onchange="handlePortfolioUpload(this)">
+      <div id="portfolioList"><div class="portfolio-empty">Nothing added yet.</div></div>
+    </div>
+  </div>
+</aside>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  KANBAN TRACKER OVERLAY                        -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="kanban-overlay" id="kanbanOverlay">
+  <div class="kanban-topbar">
+    <button class="kanban-back" onclick="closeTracker()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to jobs
+    </button>
+    <div class="divr"></div>
+    <div class="kanban-title">Application Tracker</div>
+    <div style="margin-left:auto;font-size:12.5px;color:var(--ink3);">Drag cards between columns to update status</div>
+  </div>
+  <div class="kanban-body" id="kanbanBody"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  JOB DETAIL OVERLAY                            -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="jd-overlay" id="jdOverlay">
+  <div class="jd-topbar">
+    <button class="jd-back" onclick="closeDetail()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to results
+    </button>
+    <div class="divr"></div>
+    <div class="jd-topbar-logo">fitted<span>.</span></div>
+    <div class="jd-topbar-right">
+      <button class="jd-star-btn" id="jdStarBtn" onclick="toggleDetailStar()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3" id="jdStarIcon"><path d="M7 1L8.5 4.8L12.5 5.2L9.6 8L10.5 12L7 10.1L3.5 12L4.4 8L1.5 5.2L5.5 4.8L7 1Z" stroke-linejoin="round"/></svg>
+        <span id="jdStarLabel">Save</span>
+      </button>
+      <button class="jd-apply-btn" id="jdApplyBtn" onclick="markApplied()">Apply Now</button>
+    </div>
+  </div>
+  <div class="jd-body">
+    <div class="jd-left">
+      <div class="jd-header">
+        <div class="jd-co-row">
+          <div class="jd-logo" id="jdLogo"></div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <div class="jd-role" id="jdRole"></div>
+              <button id="jdRenameBtn" onclick="openRenamePasted(activeJob?.id)" style="display:none;background:none;border:1px solid var(--bd2);border-radius:20px;padding:2px 9px;font-size:11px;color:var(--ink3);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;" onmouseover="this.style.borderColor='var(--ac)';this.style.color='var(--ac)'" onmouseout="this.style.borderColor='var(--bd2)';this.style.color='var(--ink3)'">✎ Rename</button>
+            </div>
+            <div class="jd-co-line" id="jdCoLine"></div>
+          </div>
+        </div>
+        <div class="jd-meta-row" id="jdMeta"></div>
+      </div>
+      <div class="jd-tabs" id="jdTabs"></div>
+      <div class="jd-tab-content" id="jdTabContent"></div>
+    </div>
+    <div class="jd-right" id="jdRight">
+      <div class="jd-rs">
+        <div class="jd-rs-title">Quick Info</div>
+        <div id="jdQuickInfo"></div>
+      </div>
+      <div class="jd-rs">
+        <div class="jd-rs-title">Similar Roles</div>
+        <div id="jdSimilar"></div>
+      </div>
+      <!-- Chatbot -->
+      <div class="chat-section-title">Ask Fitted</div>
+      <div class="jd-chat-section">
+        <div class="jd-chat-messages" id="jdChatMessages"></div>
+        <div class="jd-chat-suggestions" id="jdChatSuggestions"></div>
+        <!-- Free users see suggestions only; Pro users can type -->
+        <div id="jdChatInputRow" class="jd-chat-input-row" style="display:none;">
+          <input class="jd-chat-input" id="jdChatInput" placeholder="Ask anything about this job…"
+            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}">
+          <button class="jd-chat-send" onclick="sendChat()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7L2 2L4.5 7L2 12L12 7Z" fill="currentColor"/></svg>
+          </button>
+        </div>
+        <div id="jdChatLock" style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-top:1px solid var(--bd);flex-shrink:0;">
+          <span style="font-size:12px;color:var(--ink4);">Tap a suggestion above to ask</span>
+          <span class="pro-lock" onclick="openSubscription()" style="font-size:11px;cursor:pointer;">✦ Pro to type freely</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PASTE MODAL -->
+<div class="ov" id="pov" onclick="if(event.target===this)closePaste()">
+  <div class="modal">
+    <div class="mtitle">Paste a job listing</div>
+    <div class="msub">Paste the full job description — title, company, requirements, everything. Fitted will analyze your match, recommend the best resume, and tell you how to stand out.</div>
+    <textarea class="mta" id="ptext" placeholder="Paste the full job description here…"></textarea>
+    <div class="mfoot">
+      <span class="paste-hint" id="pasteHint"></span>
+      <button class="bg2" onclick="closePaste()">Cancel</button>
+      <button class="bp" onclick="analyzePaste()"><span id="pasteGoLabel">Go →</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- DISLIKE MODAL -->
+<div class="ov" id="dislikeModal" onclick="if(event.target===this)closeDislike()">
+  <div class="modal sm" style="width:440px;">
+    <div class="mtitle" style="font-size:18px;margin-bottom:4px;">Not interested?</div>
+    <div class="msub" style="margin-bottom:14px;">Tell us why — Fitted will learn and stop showing you jobs like <em id="dislikeJobTitle"></em>.</div>
+    <div class="dislike-options" id="dislikeOptions"></div>
+    <div class="mfoot">
+      <button class="bg2" onclick="closeDislike()">Cancel</button>
+      <button class="bp" style="background:var(--a2)" onclick="confirmDislike()">Hide this job</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUBSCRIPTION MODAL -->
+<div class="ov" id="subModal" onclick="if(event.target===this)closeSubscription()">
+  <div class="modal" style="width:560px;">
+    <div class="mtitle">Fitted Plans</div>
+    <div class="msub">Free forever for the basics. Pro unlocks career intelligence and deeper tools.</div>
+    <div class="sub-plans">
+      <div class="sub-plan">
+        <div class="sub-plan-name">Free</div>
+        <div class="sub-plan-price">$0 <small>forever</small></div>
+        <div class="sub-plan-features">
+          <div class="sub-plan-feature">Job matching from Indeed, LinkedIn & more</div>
+          <div class="sub-plan-feature">Resume upload & AI tailoring</div>
+          <div class="sub-plan-feature">Match scores & keyword analysis</div>
+          <div class="sub-plan-feature">Application tracker</div>
+          <div class="sub-plan-feature">Email drafts & interview prep</div>
+          <div class="sub-plan-feature">Chatbot assistant</div>
+          <div class="sub-plan-feature locked">Career path & salary milestones</div>
+          <div class="sub-plan-feature locked">Why you didn't hear back</div>
+          <div class="sub-plan-feature locked">Salary negotiation coach</div>
+          <div class="sub-plan-feature locked">Priority job alerts</div>
+          <div class="sub-plan-feature locked">Portfolio (writing samples, moodboards)</div>
+        </div>
+      </div>
+      <div class="sub-plan highlight" style="position:relative;">
+        <div class="sub-plan-badge">Most popular</div>
+        <div class="sub-plan-name">Pro ✦</div>
+        <div class="sub-plan-price">$9 <small>/month</small></div>
+        <div class="sub-plan-features">
+          <div class="sub-plan-feature">Everything in Free</div>
+          <div class="sub-plan-feature">Career path & salary milestones</div>
+          <div class="sub-plan-feature">Why you didn't hear back</div>
+          <div class="sub-plan-feature">Salary negotiation coach</div>
+          <div class="sub-plan-feature">Priority job alerts</div>
+          <div class="sub-plan-feature">Unlimited resume versions</div>
+          <div class="sub-plan-feature">Portfolio (writing samples, moodboards)</div>
+        </div>
+        <button class="pro-gate-btn" style="width:100%;margin-top:14px;" onclick="activatePro('pro')">Get Pro — $9/mo</button>
+      </div>
+    </div>
+    <!-- Promo code -->
+    <div style="border-top:1px solid var(--bd);padding-top:14px;margin-top:4px;">
+      <div style="font-size:13px;font-weight:500;color:var(--ink);margin-bottom:4px;">Have a promo code?</div>
+      <div style="font-size:12.5px;color:var(--ink3);margin-bottom:8px;">Enter your one-time code below. Codes are single-use and can't be shared.</div>
+      <div class="promo-input-row">
+        <input id="promoInput" type="text" placeholder="XXXXX-XXX" onkeydown="if(event.key==='Enter')checkPromoCode()">
+        <button class="bp" onclick="checkPromoCode()">Apply</button>
+      </div>
+      <div class="promo-feedback" id="promoFeedback"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD FILTER CHIP MODAL -->
+<div class="ov" id="addChipModal" onclick="if(event.target===this)closeAddChip()">
+  <div class="modal sm" style="width:420px;">
+    <div class="mtitle" style="font-size:18px;margin-bottom:4px;">Add a filter</div>
+    <div class="msub">Type any industry, role type, or keyword. It'll appear in your filter row and be applied to job matching.</div>
+    <input type="text" id="addChipInput" class="minput" placeholder="e.g. Tech, Healthcare, Full-time, $75k+"
+      onkeydown="if(event.key==='Enter')confirmAddChip();if(event.key==='Escape')closeAddChip();"
+      onfocus="this.style.borderColor='var(--ac)';this.style.boxShadow='0 0 0 3px rgba(45,91,227,.1)'"
+      onblur="this.style.borderColor='var(--bd2)';this.style.boxShadow='none'">
+    <div style="font-size:12px;color:var(--a2);margin-top:6px;min-height:16px;" id="addChipFeedback"></div>
+    <div style="margin-top:14px;">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:8px;">Quick add</div>
+      <div id="chipSuggestions" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+    </div>
+    <div class="mfoot" style="margin-top:16px;">
+      <button class="bg2" onclick="closeAddChip()">Cancel</button>
+      <button class="bp" onclick="confirmAddChip()">Add filter</button>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="renameModal" onclick="if(event.target===this)closeRename()">
+  <div class="modal sm">
+    <div class="mtitle" style="font-size:18px;margin-bottom:6px;">Rename resume</div>
+    <div class="msub">Give it a name that helps you tell them apart.</div>
+    <input type="text" id="renameInput" class="minput" placeholder="e.g. Marketing — Version 2"
+      onfocus="this.style.borderColor='var(--ac)';this.style.boxShadow='0 0 0 3px rgba(45,91,227,.1)'"
+      onblur="this.style.borderColor='var(--bd2)';this.style.boxShadow='none'"
+      onkeydown="if(event.key==='Enter')confirmRename();if(event.key==='Escape')closeRename();">
+    <div class="mfoot">
+      <button class="bg2" onclick="closeRename()">Cancel</button>
+      <button class="bp" onclick="confirmRename()">Save name</button>
+    </div>
+  </div>
+</div>
+
+<!-- ONBOARDING MODAL -->
+<div class="ov" id="onboardingModal">
+  <div class="modal sm" style="width:420px;">
+    <div style="font-size:28px;margin-bottom:12px;">🪡</div>
+    <div class="mtitle">Welcome to fitted.</div>
+    <div class="msub">Get a career tailor made for you. Tell us a little about yourself to get started — you can always update this later.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div>
+        <div style="font-size:12px;font-weight:500;color:var(--ink3);margin-bottom:4px;">Your name</div>
+        <input type="text" id="onboardName" class="minput" placeholder="First name is fine">
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:500;color:var(--ink3);margin-bottom:4px;">Email address</div>
+        <input type="email" id="onboardEmail" class="minput" placeholder="you@email.com">
+        <div style="font-size:11px;color:var(--ink4);margin-top:4px;">Stays on your device — not shared anywhere.</div>
+      </div>
+    </div>
+    <div class="mfoot" style="margin-top:18px;">
+      <button class="bg2" onclick="skipOnboarding()">Skip for now</button>
+      <button class="bp" onclick="closeOnboarding()">Let's go →</button>
+    </div>
+  </div>
+</div>
+
+<!-- FEEDBACK MODAL -->
+<div class="ov" id="feedbackModal" onclick="if(event.target===this)closeFeedback()">
+  <div class="modal sm" style="width:440px;">
+    <div class="mtitle" style="font-size:18px;margin-bottom:4px;">Send feedback</div>
+    <div class="msub">Tell us what's working, what's broken, or what you'd love to see. Every message gets read.</div>
+    <div id="feedbackForm">
+      <textarea id="feedbackText" class="mta" placeholder="What's on your mind? Feature requests, bugs, general thoughts — all welcome." style="min-height:120px;"></textarea>
+      <div style="font-size:12px;color:var(--a2);margin-top:4px;min-height:16px;" id="feedbackHint"></div>
+      <div style="margin-top:10px;">
+        <div style="font-size:12px;font-weight:500;color:var(--ink3);margin-bottom:4px;">Your email (optional — only if you want a reply)</div>
+        <input type="email" id="feedbackEmail" class="minput" placeholder="you@email.com" style="font-size:13px;padding:8px 10px;">
+      </div>
+      <div class="mfoot" style="margin-top:14px;">
+        <button class="bg2" onclick="closeFeedback()">Cancel</button>
+        <button class="bp" onclick="openGoogleForm()">Open feedback form →</button>
+      </div>
+    </div>
+    <div id="feedbackSent" style="display:none;text-align:center;padding:20px 0;">
+      <div style="font-size:28px;margin-bottom:10px;">✓</div>
+      <div style="font-size:14px;font-weight:500;color:var(--ink);margin-bottom:6px;">Thanks for your feedback!</div>
+      <div style="font-size:12.5px;color:var(--ink3);margin-bottom:16px;">Every message gets read. If you left your email, we'll be in touch.</div>
+      <button class="bp" onclick="closeFeedback()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- RENAME PASTED JOB MODAL -->
+<div class="ov" id="renamePastedModal" onclick="if(event.target===this)closeRenamePasted()">
+  <div class="modal sm" style="width:400px;">
+    <div class="mtitle" style="font-size:18px;margin-bottom:4px;">Rename this job</div>
+    <div class="msub">Give it a name that helps you remember what it is.</div>
+    <input type="text" id="renamePastedInput" class="minput" placeholder="e.g. Brand Coordinator — Reformation"
+      onkeydown="if(event.key==='Enter')confirmRenamePasted();if(event.key==='Escape')closeRenamePasted();"
+      onfocus="this.style.borderColor='var(--ac)';this.style.boxShadow='0 0 0 3px rgba(45,91,227,.1)'"
+      onblur="this.style.borderColor='var(--bd2)';this.style.boxShadow='none'">
+    <div class="mfoot" style="margin-top:14px;">
+      <button class="bg2" onclick="closeRenamePasted()">Cancel</button>
+      <button class="bp" onclick="confirmRenamePasted()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── scheduleSave defined FIRST — called by many functions below ──────────────
+let saveTimer = null;
+function scheduleSave(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveState, 400);
+}
+
+// ══════════════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════════════
+const INDEED_JOBS = {
+  'Brand & Marketing': [
+    {id:'im1',title:'Campaign Coordinator',company:'The Hearst Corporation',location:'San Francisco, CA',type:'Hybrid',pay:51,pl:'$50–52k/yr',match:71,tags:['hybrid','brand','marketing'],posted:'Feb 2, 2026',isNew:false,logo:'HC',lb:'#f0e8e8',lf:'#801a1a',url:'https://to.indeed.com/aaxnzk8zwbdz',desc:'Support brand campaigns and cross-channel marketing at one of the world\'s largest media companies.'},
+    {id:'im2',title:'Marketing Coordinator',company:'HDR Remodeling',location:'Emeryville, CA',type:'Hybrid',pay:40,pl:'$35–45/hr',match:62,tags:['hybrid','marketing'],posted:'Mar 3, 2026',isNew:false,logo:'HD',lb:'#e8f0e8',lf:'#1a501a',url:'https://to.indeed.com/aalvkm8bjncs',desc:'Full-time marketing coordinator role supporting campaign planning and brand consistency.'},
+    {id:'im3',title:'Coordinator, Talent Development',company:'Kendo Brands',location:'San Francisco, CA',type:'Hybrid',pay:35,pl:'$33.50–37.25/hr',match:54,tags:['hybrid','brand','marketing'],posted:'Mar 19, 2026',isNew:true,logo:'KB',lb:'#f5ede6',lf:'#7a3d20',url:'https://to.indeed.com/aatfsxwgh8ng',desc:'Kendo Brands (LVMH) is hiring a coordinator to support brand and talent development across their portfolio of beauty brands.'},
+    {id:'im4',title:'Creative Services Coordinator',company:'Coordinated Resources',location:'San Francisco, CA',type:'Hybrid',pay:70,pl:'$58–82k/yr',match:58,tags:['hybrid','brand'],posted:'Mar 19, 2026',isNew:true,logo:'CR',lb:'#eae8f5',lf:'#3a2880',url:'https://to.indeed.com/aadpj7rmktbj',desc:'Coordinate creative services, vendor relationships, and project timelines.'},
+    {id:'im5',title:'Merchandise Coordinator',company:'Williams-Sonoma / Dormify',location:'San Francisco, CA',type:'Hybrid',pay:29,pl:'$28–30/hr',match:68,tags:['hybrid','brand','marketing'],posted:'Dec 15, 2025',isNew:false,logo:'WS',lb:'#f0ece8',lf:'#4a3828',url:'https://to.indeed.com/aawpkf4d4pcz',desc:'Support merchandise planning and visual storytelling for Dormify within Williams-Sonoma.'},
+  ],
+  'Communications': [
+    {id:'ic1',title:'Marketing & Communications Coordinator',company:'Loti AI',location:'San Francisco, CA',type:'Remote',pay:28,pl:'Part-time · flex',match:52,tags:['remote','comms'],posted:'Jan 16, 2026',isNew:false,logo:'LA',lb:'#eaeffe',lf:'#2d5be3',url:'https://to.indeed.com/aayc2xcg2s9g',desc:'Part-time comms coordinator for an AI startup — writing, social content, and stakeholder communications.'},
+    {id:'ic2',title:'Social Media Associate – Instagram',company:'Two Barrels',location:'Remote',type:'Remote',pay:50,pl:'$50k/yr',match:64,tags:['remote','comms','marketing'],posted:'Jan 27, 2025',isNew:false,logo:'TB',lb:'#f0ece8',lf:'#4a3828',url:'https://to.indeed.com/aaxrj4pt8rfl',desc:'Own Two Barrels\' Instagram presence end-to-end — content creation, community management, and brand voice.'},
+    {id:'ic3',title:'Marketing & Communications Associate',company:'Sensei Ag',location:'Austin, TX',type:'Remote',pay:32,pl:'$26.35–38.45/hr',match:69,tags:['remote','comms','marketing'],posted:'Feb 12, 2026',isNew:false,logo:'SA',lb:'#e8f0e8',lf:'#1a501a',url:'https://to.indeed.com/aacdhnyl88jh',desc:'Communications and marketing associate role supporting brand storytelling and content strategy.'},
+    {id:'ic4',title:'Influencer Marketing Coordinator',company:'Confidential',location:'Remote',type:'Remote',pay:51,pl:'$44–59k/yr',match:73,tags:['remote','comms','marketing'],posted:'Jan 16, 2026',isNew:false,logo:'IM',lb:'#fdf0ec',lf:'#c44520',url:'https://to.indeed.com/aapfmqz8j9wv',desc:'Coordinate influencer relationships, campaign briefs, and performance tracking for a growing consumer brand.'},
+    {id:'ic5',title:'Social Media & Digital Engagement Coordinator',company:'Maxwell Home Inspections',location:'Remote',type:'Remote',pay:20,pl:'$18–22/hr',match:51,tags:['remote','comms'],posted:'Dec 3, 2025',isNew:false,logo:'MH',lb:'#f4f2ed',lf:'#7a7a85',url:'https://to.indeed.com/aadbl8d7qp9g',desc:'Manage social media presence and digital engagement across platforms.'},
+  ],
+  'Business Dev': [
+    {id:'ib1',title:'Business Development Associate',company:'Freebrook Imports',location:'Remote',type:'Remote',pay:87,pl:'$80–95k/yr',match:63,tags:['remote','bizdev'],posted:'Mar 18, 2026',isNew:true,logo:'FI',lb:'#e8f0f8',lf:'#1a5080',url:'https://to.indeed.com/aa7ctm2p8lgv',desc:'Business development associate driving strategic partnerships and market expansion.'},
+    {id:'ib2',title:'Client Success Associate',company:'Big Health',location:'Remote',type:'Remote',pay:80,pl:'$65–95k/yr',match:59,tags:['remote','bizdev'],posted:'Feb 12, 2026',isNew:false,logo:'BH',lb:'#e6f5ed',lf:'#1a7a4a',url:'https://to.indeed.com/aawx4t9brf4h',desc:'Build and manage relationships with employer partners at a digital health company.'},
+    {id:'ib3',title:'Associate Client Development Manager',company:'World Wide Technology',location:'Remote',type:'Remote',pay:85,pl:'$75–95k/yr',match:55,tags:['remote','bizdev'],posted:'Mar 19, 2026',isNew:true,logo:'WW',lb:'#f0eae6',lf:'#6a2020',url:'https://to.indeed.com/aar6l2rzgd86',desc:'Develop client relationships and drive new business opportunities across WWT\'s technology solutions portfolio.'},
+    {id:'ib4',title:'Healthcare Comms Project Coordinator',company:'Flywheel Partners',location:'Remote',type:'Remote',pay:62,pl:'$60–65k/yr',match:67,tags:['remote','bizdev','comms'],posted:'Oct 27, 2025',isNew:false,logo:'FP',lb:'#f5edf0',lf:'#7a2848',url:'https://to.indeed.com/aaf7c6p2wnzj',desc:'Project coordinator supporting business development and client communications at a healthcare agency.'},
+    {id:'ib5',title:'Paid Social Associate',company:'Miles Partnership',location:'Remote',type:'Remote',pay:55,pl:'$50–60k/yr',match:48,tags:['remote','bizdev','marketing'],posted:'Jan 30, 2026',isNew:false,logo:'MP',lb:'#f4f2ed',lf:'#7a7a85',url:'https://to.indeed.com/aaqkpzv7bn2j',desc:'Support paid social campaigns and partner relationships for a travel marketing agency.'},
+  ],
+  'General / Master': [
+    {id:'ig1',title:'Marketing Coordinator',company:'Atari, Inc.',location:'Remote',type:'Remote',pay:67,pl:'$60–75k/yr',match:66,tags:['remote','marketing','brand'],posted:'Jan 22, 2026',isNew:false,logo:'AT',lb:'#eae8f5',lf:'#3a2880',url:'https://to.indeed.com/aabzcxykbvk9',desc:'Marketing coordinator at an iconic gaming brand — campaigns, content, and brand coordination.'},
+    {id:'ig2',title:'Marketing Coordinator',company:'Lean Marketing',location:'Remote',type:'Remote',pay:32,pl:'$25–40/hr · part-time',match:61,tags:['remote','marketing'],posted:'Mar 4, 2026',isNew:false,logo:'LM',lb:'#e8f0e8',lf:'#1a501a',url:'https://to.indeed.com/aa7v42c4lk7q',desc:'Part-time marketing coordinator supporting campaign strategy, content, and client communications.'},
+    {id:'ig3',title:'Influencer Campaign Coordinator Intern',company:'Ever Lasting Fabric',location:'Remote',type:'Remote',pay:25,pl:'$22.92–27.61/hr',match:65,tags:['remote','marketing','comms'],posted:'Mar 10, 2026',isNew:true,logo:'EF',lb:'#fdf0ec',lf:'#c44520',url:'https://to.indeed.com/aavngv9lbtcq',desc:'Influencer marketing coordinator intern managing campaign coordination and creator outreach.'},
+    {id:'ig4',title:'Marketing & Communications Coordinator',company:'Loti AI',location:'Remote',type:'Remote',pay:28,pl:'Part-time · flex',match:58,tags:['remote','comms','marketing'],posted:'Jan 16, 2026',isNew:false,logo:'LA',lb:'#eaeffe',lf:'#2d5be3',url:'https://to.indeed.com/aaz67zvn4qh2',desc:'Part-time comms and marketing coordinator for a growing AI company.'},
+    {id:'ig5',title:'Social Media Coordinator',company:'The Social Lemon',location:'Los Angeles, CA',type:'Remote',pay:22,pl:'$20–25/hr',match:68,tags:['remote','comms','marketing'],posted:'Feb 24, 2026',isNew:false,logo:'SL',lb:'#fdf3e3',lf:'#b8750a',url:'https://to.indeed.com/aa8m6d9gqtst',desc:'California-based social media coordinator managing content, scheduling, and engagement.'},
+  ],
+};
+
+const RESUME_KEYWORDS = {
+  'Brand & Marketing':  ['brand','marketing','campaign','creative','content','storytelling','lifestyle','aesthetic','visual','launch','influencer','product','consumer'],
+  'Communications':     ['communications','comms','social media','community','engagement','writing','editorial','messaging','voice','copy','audience','newsletter'],
+  'Business Dev':       ['business development','partnerships','outreach','pipeline','prospecting','sales','b2b','clients','accounts','crm','revenue','growth'],
+  'General / Master':   ['brand','marketing','communications','content','social','creative','strategy','coordinator','associate','lifestyle','customer','retail'],
+};
+
+// Kanban columns
+const KANBAN_COLS = [
+  {id:'applied',   label:'Applied',      color:'#2d5be3', bg:'#eaeffe'},
+  {id:'heard',     label:'Heard Back',   color:'#b8750a', bg:'#fdf3e3'},
+  {id:'interview', label:'Interviewing', color:'#6d28d9', bg:'#ede9fe'},
+  {id:'offer',     label:'Offer',        color:'#1a7a4a', bg:'#e6f5ed'},
+  {id:'rejected',  label:'Rejected',     color:'#c0392b', bg:'#fdecea'},
+];
+
+// State
+let jobs = [];
+let starred = new Set();
+let appliedSet = new Set();
+let filters = new Set();
+let view = 'browse';
+let resumes = [];
+let activeR = null;
+let locs = [];
+let userProfile = {name:'', email:'', onboarded:false};
+let activeJob = null;
+let activeTab = 'match';
+let notes = {};
+let chatHistory = {};
+let chatJobId = null;
+// Tracker state: jobId -> {col, resumeUsed, deadline, notes}
+let trackerData = {};
+let dragJobId = null;
+
+// ══════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════
+function mc(p){return p>=74?'#1a7a4a':p>=62?'#2d5be3':p>=50?'#b8750a':'#7a7a85';}
+
+function ring(p,sz=50,sw=4){
+  const r=(sz-sw*2)/2,circ=2*Math.PI*r,fill=(p/100)*circ,col=mc(p),cx=sz/2,cy=sz/2;
+  return '<div class="mrw"><svg width="'+sz+'" height="'+sz+'" viewBox="0 0 '+sz+' '+sz+'">'
+    +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#ede9e0" stroke-width="'+sw+'"/>'
+    +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+col+'" stroke-width="'+sw+'" stroke-dasharray="'+fill.toFixed(1)+' '+circ.toFixed(1)+'" stroke-linecap="round"/>'
+    +'</svg><span class="mpct" style="color:'+col+'">'+p+'%</span></div>';
+}
+
+function ringLg(p){
+  const sz=80,sw=7,r=(sz-sw*2)/2,circ=2*Math.PI*r,fill=(p/100)*circ,col=mc(p),cx=sz/2,cy=sz/2;
+  return '<div class="match-ring-lg"><svg width="'+sz+'" height="'+sz+'" viewBox="0 0 '+sz+' '+sz+'">'
+    +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#ede9e0" stroke-width="'+sw+'"/>'
+    +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+col+'" stroke-width="'+sw+'" stroke-dasharray="'+fill.toFixed(1)+' '+circ.toFixed(1)+'" stroke-linecap="round"/>'
+    +'</svg><span class="match-pct-lg" style="color:'+col+'">'+p+'%</span></div>';
+}
+
+function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function daysUntil(d){if(!d)return null;const ms=new Date(d)-new Date();return Math.ceil(ms/86400000);}
+
+// ══════════════════════════════════════════════════
+//  FIND JOBS
+// ══════════════════════════════════════════════════
+// findJobs → see findJobsMultiPlatform below
+
+// ══════════════════════════════════════════════════
+//  PASTE & ANALYZE
+// ══════════════════════════════════════════════════
+function openPaste(){document.getElementById('ptext').value='';document.getElementById('pasteHint').textContent='';document.getElementById('pasteGoLabel').textContent='Go →';document.getElementById('pov').classList.add('open');}
+function closePaste(){document.getElementById('pov').classList.remove('open');}
+
+function analyzePaste(){
+  const text=document.getElementById('ptext').value.trim();
+  if(!text||text.length<50){document.getElementById('pasteHint').textContent='Please paste the full job description.';return;}
+  document.getElementById('pasteGoLabel').textContent='Analyzing…';
+  document.getElementById('pasteHint').textContent='';
+  setTimeout(()=>{
+    const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
+    const tl=text.toLowerCase();
+
+    // ── TITLE: first short line that isn't all-caps noise ──
+    let title='Pasted Role';
+    for(const line of lines){
+      if(line.length>4 && line.length<90 && !/^(about|we are|we're|join|our|the|a |an )/i.test(line)){
+        title=line; break;
+      }
+    }
+
+    // ── COMPANY: detect "at Company", "Company is hiring", "About Company" ──
+    let company='See listing';
+    const coPatterns=[
+      /\bat\s+([A-Z][A-Za-z0-9\s&,.''-]{1,40}?)(?:\s*[-–,!]|\s+is\b|\s+are\b|$)/m,
+      /^([A-Z][A-Za-z0-9\s&,.''-]{1,40}?)\s+is\s+(?:hiring|looking|seeking)/m,
+      /^About\s+([A-Z][A-Za-z0-9\s&,.''-]{1,40}?)$/m,
+      /^Company:\s*(.+)$/im,
+      /^Employer:\s*(.+)$/im,
+    ];
+    for(const pat of coPatterns){
+      const m=text.match(pat);
+      if(m&&m[1]&&m[1].trim().length>1){company=m[1].trim().replace(/[,.]$/,'');break;}
+    }
+
+    // ── LOCATION / TYPE ──
+    const hasRemote=tl.includes('remote')||tl.includes('work from home')||tl.includes('wfh');
+    const hasHybrid=tl.includes('hybrid');
+    const hasOnsite=tl.includes('on-site')||tl.includes('onsite')||tl.includes('in-office')||tl.includes('in office');
+    const type=hasRemote&&!hasHybrid?'Remote':hasHybrid?'Hybrid':hasOnsite?'On-site':'Remote';
+
+    // Try to extract a city
+    const cityM=text.match(/\b([A-Z][a-z]+(?:\s[A-Z][a-z]+)?),\s*([A-Z]{2})\b/);
+    const locationStr=cityM?cityM[0]:type==='Remote'?'Remote':'See listing';
+
+    // ── PAY: handles $XX/hr, $XXk, $XX–$YY, $XX,000 ──
+    const payPatterns=[
+      /\$[\d,]+(?:\.\d+)?\s*[-–to]+\s*\$[\d,]+(?:\.\d+)?(?:\s*\/\s*(?:hr|hour|yr|year))?/i,
+      /\$[\d,]+(?:k|K)(?:\s*[-–]\s*\$[\d,]+(?:k|K))?(?:\s*\/\s*(?:yr|year))?/i,
+      /\$[\d,]+(?:\.\d+)?(?:\s*\/\s*(?:hr|hour))/i,
+      /\$[\d,]+(?:,\d{3})+(?:\s*[-–]\s*\$[\d,]+(?:,\d{3})+)?/,
+    ];
+    let payLabel='See listing';
+    for(const pat of payPatterns){
+      const m=text.match(pat);
+      if(m){payLabel=m[0].trim();break;}
+    }
+
+    // ── MATCH SCORE using active resume ──
+    const ready=resumes.filter(r=>!r.analyzing&&r.label);
+    let bestResume=null,bestScore=0;
+    const resumeScores={};
+    if(ready.length>0){
+      const preferred=activeR?ready.find(r=>r.id===activeR):null;
+      const ordered=preferred?[preferred,...ready.filter(r=>r.id!==activeR)]:ready;
+      ordered.forEach(r=>{
+        const kws=RESUME_KEYWORDS[r.label]||RESUME_KEYWORDS['General / Master'];
+        const hits=kws.filter(k=>tl.includes(k));
+        const score=Math.min(78,38+hits.length*4);
+        resumeScores[r.label]=score;
+        if(score>bestScore){bestScore=score;bestResume=r;}
+      });
+    } else {
+      const kws=RESUME_KEYWORDS['General / Master'];
+      bestScore=Math.min(75,42+kws.filter(k=>tl.includes(k)).length*3);
+    }
+
+    // ── TAGS ──
+    const tags=[];
+    if(hasRemote) tags.push('remote'); else if(hasHybrid) tags.push('hybrid'); else tags.push('onsite');
+    if(tl.includes('brand')||tl.includes('marketing')) tags.push('brand','marketing');
+    if(tl.includes('social')) tags.push('comms');
+    if(tl.includes('business development')||tl.includes('partnerships')) tags.push('bizdev');
+    if(!tags.includes('brand')&&!tags.includes('comms')&&!tags.includes('bizdev')) tags.push('marketing');
+
+    const newJob={
+      id:'p_'+Date.now(),title,company,
+      location:locationStr,type,pay:0,pl:payLabel,
+      match:Math.max(bestScore,35),
+      tags:[...new Set(tags)],
+      posted:'Just added',isNew:true,applied:false,
+      logo:company!=='See listing'?company.charAt(0).toUpperCase():'✎',
+      lb:'#eaeffe',lf:'#2d5be3',
+      pasted:true,pastedText:text,url:null,
+      resumeLabel:bestResume?bestResume.label:null,
+      bestResumeId:bestResume?bestResume.id:null,
+      resumeScores
+    };
+    jobs.unshift(newJob);
+    closePaste();
+    renderFeed();
+    setTimeout(()=>openDetail(jobs.find(j=>j.id===newJob.id)),200);
+  },900);
+}
+
+// ══════════════════════════════════════════════════
+//  KANBAN TRACKER
+// ══════════════════════════════════════════════════
+function openTracker(){
+  renderKanban();
+  document.getElementById('kanbanOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeTracker(){
+  document.getElementById('kanbanOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function getTrackerJobs(){
+  // All jobs that are in the tracker (applied or manually added)
+  return jobs.filter(j=>trackerData[j.id]);
+}
+
+function addToTracker(jobId,col='applied'){
+  const j=jobs.find(x=>x.id===jobId);
+  if(!j)return;
+  const resumeUsed=j.resumeLabel||null;
+  if(!trackerData[jobId]){
+    trackerData[jobId]={col,resumeUsed,deadline:null,notes:''};
+  }
+  updateTrackerBadge();
+}
+
+function updateTrackerBadge(){
+  const count=Object.keys(trackerData).length;
+  const badge=document.getElementById('trackerBadge');
+  if(count>0){badge.style.display='';badge.textContent=count;}
+  else badge.style.display='none';
+}
+
+function renderKanban(){
+  const body=document.getElementById('kanbanBody');
+  body.innerHTML='';
+  KANBAN_COLS.forEach(col=>{
+    const colJobs=jobs.filter(j=>trackerData[j.id]&&trackerData[j.id].col===col.id);
+    const colEl=document.createElement('div');
+    colEl.className='kanban-col';
+    colEl.innerHTML=
+      '<div class="kanban-col-header" style="background:'+col.bg+'">'
+      +'<span class="kanban-col-title" style="color:'+col.color+'">'+col.label+'</span>'
+      +'<span class="kanban-col-count" style="background:'+col.color+';color:#fff">'+colJobs.length+'</span>'
+      +'</div>';
+    const zone=document.createElement('div');
+    zone.className='kanban-drop-zone';
+    zone.dataset.col=col.id;
+    zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('over');});
+    zone.addEventListener('dragleave',()=>zone.classList.remove('over'));
+    zone.addEventListener('drop',e=>{
+      e.preventDefault();zone.classList.remove('over');
+      if(dragJobId&&trackerData[dragJobId]){
+        trackerData[dragJobId].col=col.id;
+        // If moved to applied, also add to appliedSet
+        if(col.id==='applied')appliedSet.add(dragJobId);
+        renderKanban();renderFeed();badges();
+      }
+    });
+    if(colJobs.length===0){
+      zone.innerHTML='<div class="kanban-empty">Drop jobs here</div>';
+    } else {
+      colJobs.forEach(j=>{
+        const td=trackerData[j.id];
+        const days=daysUntil(td.deadline);
+        const card=document.createElement('div');
+        card.className='kanban-card';
+        card.draggable=true;
+        card.addEventListener('dragstart',()=>{dragJobId=j.id;card.classList.add('dragging');});
+        card.addEventListener('dragend',()=>card.classList.remove('dragging'));
+        const typeClass=j.type==='Remote'?'rem':j.type==='Hybrid'?'hyb':'ons';
+        card.innerHTML=
+          '<div class="kc-title">'+j.title+'</div>'
+          +'<div class="kc-co"><strong>'+j.company+'</strong> · '+j.location+'</div>'
+          +'<div class="kc-meta">'
+          +'<span class="kc-tag tg '+typeClass+'">'+j.type+'</span>'
+          +'<span class="kc-tag tg pay">'+j.pl+'</span>'
+          +(td.resumeUsed?'<span class="kc-tag tg res">'+td.resumeUsed+'</span>':'')
+          +(days!==null&&days<=7?'<span class="deadline-flag">⚠ '+days+'d left</span>':'')
+          +'</div>'
+          +(td.notes?'<div style="font-size:11.5px;color:var(--ink3);margin-top:8px;line-height:1.5;background:var(--sf2);border-radius:var(--rx);padding:6px 8px;">'+escapeHtml(td.notes)+'</div>':'')
+          +'<div class="kc-actions">'
+          +'<button class="kc-btn" onclick="openDetail(jobs.find(x=>x.id===\''+j.id+'\'))">View</button>'
+          +'<button class="kc-btn" onclick="editTrackerCard(\''+j.id+'\')">Edit</button>'
+          +'<button class="kc-btn danger" onclick="removeFromTracker(\''+j.id+'\')">Remove</button>'
+          +'</div>';
+        zone.appendChild(card);
+      });
+    }
+    colEl.appendChild(zone);
+    body.appendChild(colEl);
+  });
+}
+
+function removeFromTracker(jobId){
+  delete trackerData[jobId];
+  updateTrackerBadge();
+  renderKanban();renderFeed();badges();
+}
+
+function editTrackerCard(jobId){
+  const td=trackerData[jobId];if(!td)return;
+  const j=jobs.find(x=>x.id===jobId);if(!j)return;
+  // Simple inline edit using prompt (will be replaced with proper modal later)
+  const dl=prompt('Application deadline (YYYY-MM-DD), or leave blank:',td.deadline||'');
+  if(dl!==null)td.deadline=dl.trim()||null;
+  const n=prompt('Notes (what happened, follow-up needed, etc.):',td.notes||'');
+  if(n!==null)td.notes=n;
+  renderKanban();
+}
+
+// ══════════════════════════════════════════════════
+//  JOB DETAIL
+// ══════════════════════════════════════════════════
+function openDetail(job){
+  if(!job)return;
+  activeJob=job;activeTab='match';
+  document.getElementById('jdOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+
+  const logo=document.getElementById('jdLogo');
+  logo.style.background=job.lb;logo.style.color=job.lf;logo.textContent=job.logo;
+  document.getElementById('jdRole').textContent=job.title;
+  document.getElementById('jdCoLine').innerHTML='<strong>'+job.company+'</strong> · '+job.location;
+  // Show rename button only for pasted jobs
+  const renameBtn=document.getElementById('jdRenameBtn');
+  if(renameBtn) renameBtn.style.display=job.pasted?'inline-block':'none';
+
+  const score=job.match;
+  const tc=job.type==='Remote'?'rem':job.type==='Hybrid'?'hyb':'ons';
+  document.getElementById('jdMeta').innerHTML=
+    '<span class="jd-pill '+tc+'">'+job.type+'</span>'
+    +'<span class="jd-pill pay">'+job.pl+'</span>'
+    +'<span class="jd-pill match">'+score+'% match</span>'
+    +(job.resumeLabel?'<span class="jd-pill" style="background:var(--sf2);color:var(--ink2)">📄 '+job.resumeLabel+'</span>':'')
+    +(job.pasted?'<span class="jd-pill" style="background:var(--acs);color:var(--ac)">Pasted</span>':'')
+    +(appliedSet.has(job.id)?'<span class="jd-pill" style="background:var(--grs);color:var(--gr)">Applied ✓</span>':'');
+
+  document.getElementById('jdApplyBtn').textContent=job.url?'Apply Now':'Mark Applied';
+
+  const isRejected = trackerData[job.id]?.col === 'rejected';
+  const tabs=job.pasted
+    ?[...(isRejected?['rejected']:[]),'match','tailor','standout','emails','prep','career','description','notes']
+    :[...(isRejected?['rejected']:[]),'match','tailor','standout','emails','prep','career','notes'];
+  const tabLabels={rejected:'Why Rejected ✦',match:'Match Details',tailor:'Tailor My Resume',standout:'Help Me Stand Out',emails:'Email Drafts',prep:'Interview Prep',career:'Career Path ✦',description:'Job Description',notes:'Notes'};
+  const firstTab = isRejected ? 'rejected' : 'match';
+  document.getElementById('jdTabs').innerHTML=tabs.map(t=>
+    '<button class="jd-tab'+(t===firstTab?' act':'')+'" data-tab="'+t+'" onclick="switchTab(this)">'+tabLabels[t]+'</button>'
+  ).join('');
+  activeTab = firstTab;
+  renderTab(firstTab);
+  document.getElementById('jdQuickInfo').innerHTML=
+    '<div class="jd-rs-item"><div class="jd-rs-label">Posted</div><div class="jd-rs-val">'+job.posted+'</div></div>'
+    +'<div class="jd-rs-item"><div class="jd-rs-label">Type</div><div class="jd-rs-val">'+job.type+'</div></div>'
+    +'<div class="jd-rs-item"><div class="jd-rs-label">Pay</div><div class="jd-rs-val good">'+job.pl+'</div></div>'
+    +'<div class="jd-rs-item"><div class="jd-rs-label">Match</div><div class="jd-rs-val" style="color:'+mc(score)+'">'+score+'% — '+(score>=74?'Strong fit':score>=62?'Good fit':score>=50?'Partial fit':'Stretch')+'</div></div>'
+    +(job.pasted&&job.resumeLabel
+      ?'<div class="jd-rs-item" style="margin-top:6px;padding-top:10px;border-top:1px solid var(--bd)"><div class="jd-rs-label" style="color:var(--gr);font-weight:500">Best resume to use</div><div class="jd-rs-val" style="color:var(--gr);font-weight:500">'+job.resumeLabel+'</div></div>'
+        +(job.resumeScores&&Object.keys(job.resumeScores).length>1
+          ?'<div class="jd-rs-item"><div class="jd-rs-label">All resume scores</div><div>'
+            +Object.entries(job.resumeScores).sort((a,b)=>b[1]-a[1]).map(([lbl,pct])=>
+              '<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0;color:'+(lbl===job.resumeLabel?'var(--gr)':'var(--ink3)')+';">'
+              +'<span>'+(lbl===job.resumeLabel?'★ ':'')+lbl+'</span>'
+              +'<span style="font-family:\'DM Mono\',monospace">'+pct+'%</span>'
+              +'</div>').join('')
+            +'</div></div>'
+          :'')
+      :job.pasted&&!job.resumeLabel
+        ?'<div class="jd-rs-item" style="margin-top:6px;padding-top:10px;border-top:1px solid var(--bd)"><div class="jd-rs-label">Resume recommendation</div><div class="jd-rs-val" style="font-style:italic;color:var(--ink4)">Upload resumes to see which fits best</div></div>'
+        :job.resumeLabel?'<div class="jd-rs-item"><div class="jd-rs-label">Scored with</div><div class="jd-rs-val">'+job.resumeLabel+'</div></div>':''
+    )
+    // Tracker status
+    +(trackerData[job.id]?'<div class="jd-rs-item"><div class="jd-rs-label">Tracker status</div><div class="jd-rs-val">'+(KANBAN_COLS.find(c=>c.id===trackerData[job.id].col)||{label:'—'}).label+'</div></div>':'')
+    +(job.url?'<a class="view-job-link" href="'+job.url+'" target="_blank"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2V7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>View on Indeed</a>':'');
+
+  // Similar
+  const similar=jobs.filter(j=>j.id!==job.id&&j.tags.some(t=>job.tags.includes(t))).slice(0,4);
+  document.getElementById('jdSimilar').innerHTML=similar.length
+    ?similar.map(j=>'<div class="similar-job" onclick="openDetail(jobs.find(x=>x.id===\''+j.id+'\'))">'
+      +'<div class="sj-logo" style="background:'+j.lb+';color:'+j.lf+'">'+j.logo+'</div>'
+      +'<div class="sj-info"><div class="sj-title">'+j.title+'</div><div class="sj-co">'+j.company+'</div></div>'
+      +'<div class="sj-match" style="color:'+mc(j.match)+'">'+j.match+'%</div>'
+      +'</div>').join('')
+    :'<div style="font-size:12.5px;color:var(--ink4);font-style:italic;">Find jobs first to see similar roles.</div>';
+
+  renderTab('match');
+  initChat();
+}
+
+function closeDetail(){
+  document.getElementById('jdOverlay').classList.remove('open');
+  document.body.style.overflow='';
+  activeJob=null;
+}
+
+function switchTab(btn){
+  document.querySelectorAll('.jd-tab').forEach(t=>t.classList.remove('act'));
+  btn.classList.add('act');activeTab=btn.dataset.tab;renderTab(activeTab);
+}
+
+let activeEmailType='apply';
+function renderTab(tab){
+  const el=document.getElementById('jdTabContent');
+  const j=activeJob;const score=j.match;
+
+  if(tab==='rejected'){
+    renderRejectedTab(j);
+
+  } else if(tab==='match'){
+    const bars=[
+      {label:'Skills match',pct:Math.min(99,score+3),col:'#2d5be3'},
+      {label:'Experience fit',pct:Math.max(55,score-8),col:'#1a7a4a'},
+      {label:'Title alignment',pct:Math.min(99,score+6),col:'#2d5be3'},
+      {label:'Industry overlap',pct:Math.max(60,score-4),col:'#1a7a4a'},
+      {label:'Keywords found',pct:Math.min(99,score+1),col:'#b8750a'},
+    ];
+    const hitKw=['brand storytelling','customer insight','cross-functional','CRM','retail analytics','premium lifestyle'];
+    const missKw=['campaign management','paid media','email marketing'];
+    const personalFit = getPersonalFitScore(j);
+    const hasAboutMe = !!(document.getElementById('vText')?.value?.trim());
+    const personalFitHTML = hasAboutMe && personalFit
+      ? '<div style="margin-top:20px;padding:16px 20px;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);">'
+        +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">'
+        +'<div style="font-size:13px;font-weight:500;color:var(--ink);">Personal fit</div>'
+        +'<div style="font-family:\'DM Mono\',monospace;font-size:18px;font-weight:500;color:'+mc(personalFit)+';">'+personalFit+'%</div>'
+        +'</div>'
+        +'<div style="height:6px;background:var(--sf3);border-radius:20px;overflow:hidden;margin-bottom:8px;"><div style="width:'+personalFit+'%;height:100%;background:'+mc(personalFit)+';border-radius:20px;"></div></div>'
+        +'<div style="font-size:12.5px;color:var(--ink3);line-height:1.55;">Based on what you told us in About Me — dream companies, preferred work style, and career goals.</div>'
+        +'</div>'
+      : '<div style="margin-top:20px;padding:14px 16px;background:var(--sf2);border-radius:var(--rs);font-size:12.5px;color:var(--ink3);line-height:1.6;">Fill in your <strong style="color:var(--ink);">About Me</strong> to see a personal fit score — how well this role matches your goals, preferences, and dream companies.</div>';
+    el.innerHTML=
+      '<div class="match-score-hero">'+ringLg(score)
+      +'<div><div class="match-headline">'+(score>=74?'Strong fit':score>=62?'Good fit — worth the application':score>=50?'Partial fit — tailor carefully':'Stretch role')+'</div>'
+      +'<div class="match-sub">Based on your resume and this job\'s requirements.</div></div></div>'
+      +'<div class="match-bars">'+bars.map(b=>'<div class="match-bar-row"><div class="match-bar-label">'+b.label+'</div><div class="match-bar-track"><div class="match-bar-fill" style="width:'+b.pct+'%;background:'+b.col+'"></div></div><div class="match-bar-pct">'+b.pct+'%</div></div>').join('')+'</div>'
+      +'<div class="match-kw-title">Keywords found in your resume</div>'
+      +'<div class="kw-wrap">'+hitKw.map(k=>'<span class="kw hit">'+k+'</span>').join('')+missKw.map(k=>'<span class="kw miss">'+k+'</span>').join('')+'</div>'
+      +personalFitHTML
+      +(j.url?'<div style="margin-top:20px;padding:12px 14px;background:var(--sf2);border-radius:var(--rs);font-size:12px;color:var(--ink4);line-height:1.5;">⚠ Always verify job details are current before applying. Job listings may have changed since they were added to Fitted. <a href="'+j.url+'" target="_blank" style="color:var(--ac);text-decoration:none;">View original listing →</a></div>':'');
+
+  } else if(tab==='tailor'){
+    const tailorItems = [
+      {type:'swap', label:'Most recent role — key bullet',
+       original:'Turn complex industry data into clear written content',
+       suggested:'Translate complex market data into strategic written content that drives leadership decisions',
+       why:'This role asks for "strategic communication" — using their exact language signals you already think the way they do. ATS systems also score keyword matches.',
+       tieBack:'Use this in interviews when they ask about your communication experience.'},
+      {type:'swap', label:'Most recent role — bullet 2',
+       original:'Your current bullet here after uploading your resume',
+       suggested:'Reframe using the job description\'s exact language — match their keywords, tone, and priorities',
+       why:'Hiring managers spend 6 seconds on a resume. Bullets that mirror the job description language read as an immediate match.',
+       tieBack:'Every word you borrow from their posting is a word their ATS is looking for.'},
+      {type:'add', label:'Skills section',
+       original:'Currently missing from your resume',
+       suggested:'Add: Brand Activation · Stakeholder Communication · Content Calendar Management',
+       why:'These three phrases appear in this job description. ATS systems often filter on skills sections specifically — listing them here guarantees the match.',
+       tieBack:'Only add skills you can speak to in an interview. If you can\'t explain it, don\'t list it.'},
+    ];
+    const dismissed = window._dismissedTailor = window._dismissedTailor || new Set();
+    el.innerHTML=
+      '<p class="tailor-intro">These suggestions help your resume speak '+j.company+'\'s language. Each one includes why we suggest it so you can decide if it\'s right for you.</p>'
+      +'<div class="tailor-section"><div class="tailor-section-title">Suggested edits</div>'
+      +tailorItems.filter((_,i)=>!dismissed.has(i)).map((item,i)=>
+        '<div class="tailor-item" id="ti_'+i+'">'
+        +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">'
+        +'<span class="tailor-tag '+item.type+'">'+(item.type==='swap'?'Swap':'Add')+'</span>'
+        +'<button onclick="dismissTailor('+i+')" style="background:none;border:none;cursor:pointer;color:var(--ink4);font-size:11px;padding:2px 6px;border-radius:4px;font-family:\'DM Sans\',sans-serif;" title="Not applicable for me">✕ Not for me</button>'
+        +'</div>'
+        +'<div class="tailor-item-label">'+item.label+'</div>'
+        +'<div class="tailor-original">'+item.original+'</div>'
+        +'<div class="tailor-suggested">'+item.suggested+'</div>'
+        +'<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--bd);">'
+        +'<div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);margin-bottom:4px;">Why we suggest this</div>'
+        +'<div style="font-size:12.5px;color:var(--ink2);line-height:1.6;">'+item.why+'</div>'
+        +'<div style="font-size:12px;color:var(--ac);margin-top:6px;"><strong>Talk about it:</strong> '+item.tieBack+'</div>'
+        +'</div>'
+        +'</div>'
+      ).join('')
+      +'</div>'
+      +'<div class="tailor-section"><div class="tailor-section-title">Keywords to work in</div>'
+      +'<div class="kw-wrap">'+['brand activation','stakeholder communication','campaign support','content calendar','cross-functional collaboration','brand guidelines'].map(k=>'<span class="kw hit">'+k+'</span>').join('')+'</div></div>';
+
+  } else if(tab==='standout'){
+    const vibesRaw = document.getElementById('vText')?.value?.trim() || '';
+    el.innerHTML=
+      '<div class="standout-section"><div class="standout-section-title">Before you apply</div>'
+      +'<div class="standout-item"><div class="standout-num">1</div><div class="standout-text"><strong>Research their recent work.</strong> Look at '+j.company+'\'s social channels from the last 3 months. Be ready to name something specific — interviewers always know who actually looked.</div></div>'
+      +'<div class="standout-item"><div class="standout-num">2</div><div class="standout-text"><strong>Lead with your most memorable story.</strong> What\'s the one experience on your resume that\'s genuinely hard to forget? The one that\'s specific, high-stakes, and shows you at your best? Open your cover letter with that. It\'s the detail people remember.</div></div>'
+      +'<div class="standout-item"><div class="standout-num">3</div><div class="standout-text"><strong>Connect your background to their values.</strong> What in your experience — your degree, a past role, a project — gives your "I care about this" claims actual credibility? Name it specifically. Interviewers can tell the difference between genuine alignment and generic enthusiasm.</div></div>'
+      +'</div><div class="standout-section"><div class="standout-section-title">In the interview</div>'
+      +'<div class="standout-item"><div class="standout-num">4</div><div class="standout-text"><strong>Have a specific "why this brand" answer ready.</strong> Generic enthusiasm doesn\'t land. What about '+j.company+' specifically makes sense for where you\'re going?</div></div>'
+      +'<div class="standout-item"><div class="standout-num">5</div><div class="standout-text"><strong>Use your most unexpected experience as a talking point.</strong> Something on your resume that seems unrelated to this role is often your most memorable answer. It shows range, it\'s surprising, and it proves you can handle complexity. Don\'t hide it — lead with it.</div></div>'
+      +'</div><div class="standout-callout"><p>'+(vibesRaw?'These tips are based on the general role. Upload your resume and Fitted will personalize each one to your specific experience and '+j.company+'\'s culture.':'Fill in your About Me and upload your resume so Fitted can give you personalized guidance for exactly this role and company.')+'</p></div>';
+
+  } else if(tab==='emails'){
+    const isPro = userPlan==='pro'||userPlan==='vip';
+    const types=['apply','followup','thankyou','checkin'];
+    const typeLabels={apply:'After applying',followup:'Follow-up',thankyou:'Thank-you note',checkin:'Checking in'};
+    const emailContent={
+      apply:{
+        subject:'Re: '+j.title+' — [Your Name]',
+        body:'Hi [Hiring Manager\'s Name],\n\nI just submitted my application for the '+j.title+' role and wanted to reach out directly.\n\n[1–2 sentences: what specifically draws you to this company, and what makes you the right fit. Be specific — mention something real about their brand or culture.]\n\nI\'d love to connect if you have a few minutes.\n\nBest,\n[Your Name]\n[Your Phone Number]',
+        tips:[
+          {bracket:'[Hiring Manager\'s Name]', tip:'Look up the hiring manager on LinkedIn before sending. A named email gets opened more than "Hi there."', proTip:'Find their name on LinkedIn or the company website — it takes 2 minutes and meaningfully improves open rate.'},
+          {bracket:'[1–2 sentences', tip:'Be specific about the company — not just the role.', proTip:'Reference something real: a recent campaign, a product launch, a brand value. One specific detail beats three generic ones every time.'},
+        ]
+      },
+      followup:{
+        subject:'Following up — '+j.title+' Application',
+        body:'Hi [Name],\n\nI wanted to follow up on my application for the '+j.title+' position, submitted [X days] ago. I remain very interested in the role and in joining the team at '+j.company+'.\n\nIf there\'s anything additional I can provide to support my application, I\'m happy to send it along. Thank you for your time.\n\nBest,\n[Your Name]',
+        tips:[
+          {bracket:'[X days]', tip:'Wait 5–7 business days after applying before sending this.', proTip:'If you haven\'t heard back in 10+ days, it\'s fine to follow up a second time — keep it even shorter.'},
+        ]
+      },
+      thankyou:{
+        subject:'Thank you — '+j.title+' Interview',
+        body:'Hi [Name],\n\nThank you so much for taking the time to speak with me about the '+j.title+' role today. I really enjoyed learning more about [something specific they mentioned] and left the conversation more excited about the opportunity than when I came in.\n\nI\'m confident I could make a real contribution to the team, and I hope to hear from you soon.\n\nWarm regards,\n[Your Name]',
+        tips:[
+          {bracket:'[something specific they mentioned]', tip:'Fill this in immediately after the interview while it\'s fresh. A personalized thank-you shows you were listening.', proTip:'Reference a specific thing they said — a challenge the team is facing, a project they mentioned, something you bonded over. Generic thank-yous get skipped.'},
+        ]
+      },
+      checkin:{
+        subject:'Checking in — '+j.title,
+        body:'Hi [Name],\n\nI hope you\'re doing well. I wanted to check in on the '+j.title+' search — I\'ve continued to be excited about the possibility of joining '+j.company+' and wanted to make sure my application is still under consideration.\n\nPlease don\'t hesitate to reach out if you need anything else from me.\n\nBest,\n[Your Name]',
+        tips:[]
+      },
+    };
+    const e=emailContent[activeEmailType]||emailContent.apply;
+    const tipsHTML = e.tips.map(t=>
+      '<div style="background:var(--sf);border:1px solid var(--bd);border-left:3px solid var(--gd);border-radius:var(--rs);padding:10px 14px;margin-bottom:8px;">'
+      +'<div style="font-size:11px;font-weight:600;color:var(--gd);letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px;">💡 Tip for <code style="font-size:11px;">'+t.bracket.substring(0,20)+'…</code></div>'
+      +'<div style="font-size:12.5px;color:var(--ink2);line-height:1.5;">'+t.tip+'</div>'
+      +(isPro?'<div style="font-size:12px;color:var(--ac);margin-top:5px;"><strong>Pro detail:</strong> '+t.proTip+'</div>':'<div style="margin-top:5px;"><span class="pro-lock" onclick="openSubscription()" style="font-size:11px;">✦ Pro — see detailed guidance</span></div>')
+      +'</div>'
+    ).join('');
+    el.innerHTML=
+      '<div class="email-type-row">'+types.map(t=>'<button class="email-type-btn'+(activeEmailType===t?' act':'')+'" onclick="setEmailType(\''+t+'\')">'+typeLabels[t]+'</button>').join('')+'</div>'
+      +'<div class="email-draft-box">'
+      +'<div class="email-subject">Subject line</div>'
+      +'<div contenteditable="true" id="emailSubjectEdit" style="font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--bd);outline:none;min-height:20px;" spellcheck="true">'+escapeHtml(e.subject)+'</div>'
+      +'<div contenteditable="true" id="emailBodyEdit" class="email-body" style="outline:none;min-height:80px;white-space:pre-wrap;" spellcheck="true">'+escapeHtml(e.body)+'</div>'
+      +'</div>'
+      +(tipsHTML?'<div style="margin-top:14px;"><div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:8px;">Editing tips</div>'+tipsHTML+'</div>':'')
+      +'<div style="display:flex;gap:8px;margin-top:14px;">'
+      +'<button class="email-copy-btn" onclick="copyEmailEditable()"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M9 4V2.5C9 1.7 8.3 1 7.5 1H2.5C1.7 1 1 1.7 1 2.5V7.5C1 8.3 1.7 9 2.5 9H4" stroke="currentColor" stroke-width="1.2"/></svg> Copy email</button>'
+      +'<button class="email-copy-btn" onclick="resetEmail(\''+activeEmailType+'\')" style="color:var(--ink3);">↺ Reset to template</button>'
+      +'</div>';
+
+  } else if(tab==='prep'){
+    const isPro = userPlan==='pro'||userPlan==='vip';
+    const questions=[
+      {
+        q:'Tell me about a time you represented a brand in a high-stakes situation.',
+        hint:'<strong>Find your story:</strong> Think about a time you were the face of a brand — an event, a launch, a customer interaction that mattered. The more specific and unexpected the setting, the more memorable your answer. Use the STAR format: Situation, Task, Action, Result.',
+      },
+      {
+        q:'How do you translate customer insights into action?',
+        hint:'<strong>Find your story:</strong> When did you notice something about customers, their behavior, or their feedback — and do something with it? The best answers show a specific observation that led to a specific decision or change, not just "I listen to customers."',
+      },
+      {
+        q:'What do you know about our brand and why does it resonate with you?',
+        hint:'Research <em>'+j.company+'</em> before the interview. Find a specific campaign, product decision, or brand moment that genuinely landed with you. Your answer must name something real — "I noticed you did X and it connected with me because…" Interviewers always know who actually looked vs. who googled the company five minutes before.',
+      },
+      {
+        q:'Walk me through a project where you had to communicate complex information clearly.',
+        hint:'<strong>Find your story:</strong> Think beyond "I wrote an email." What\'s the most demanding audience you\'ve ever communicated to? The more unexpected the context — technical, high-stakes, compressed timeline — the better this answer lands.',
+      },
+      {
+        q:'Where do you see yourself in three years?',
+        hint:'Be honest and ambitious. Name a direction without naming a specific company. "I want to be leading [type of work] for a [type of brand]" — that shows ambition without making it awkward for the person interviewing you. Fill in the blanks with what\'s actually true for you.',
+      },
+    ];
+
+    // Questions always visible; hints Pro-gated; answer writing Pro-gated
+    const prepAnswers = window._prepAnswers = window._prepAnswers || {};
+    const questionsHTML = questions.map((q,i)=>{
+      const hintHTML = isPro
+        ? '<div class="prep-q-hint">'+q.hint+'</div>'
+        : '<div class="prep-q-hint-locked">'
+          +'<span class="pro-lock" onclick="openSubscription()">✦ Pro — unlock answer guidance</span>'
+          +'</div>';
+      const answerHTML = isPro
+        ? '<div style="margin-top:12px;">'
+          +'<div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);margin-bottom:6px;">Your answer</div>'
+          +'<textarea id="prep_ans_'+i+'" placeholder="Write your answer here — what specific story will you use? What\'s the key detail that makes it memorable?" style="width:100%;min-height:80px;padding:10px;border:1px solid var(--bd2);border-radius:var(--rs);font-family:\'DM Sans\',sans-serif;font-size:13px;color:var(--ink);background:var(--bg);resize:vertical;outline:none;line-height:1.6;" oninput="savePrepAnswer('+i+',this.value)">'+(prepAnswers[activeJob?.id+'_'+i]||'')+'</textarea>'
+          +'<button onclick="evaluatePrepAnswer('+i+')" style="margin-top:6px;padding:5px 12px;border:1px solid var(--ac);border-radius:var(--rs);background:none;color:var(--ac);font-family:\'DM Sans\',sans-serif;font-size:12px;cursor:pointer;">Get feedback on my answer →</button>'
+          +'<div id="prep_fb_'+i+'" style="font-size:12.5px;color:var(--ink2);line-height:1.6;margin-top:8px;"></div>'
+          +'</div>'
+        : '<div style="margin-top:10px;"><span class="pro-lock" onclick="openSubscription()" style="font-size:11.5px;">✦ Pro — write and get feedback on your answers</span></div>';
+      return '<div class="prep-question">'
+        +'<div class="prep-q-num">Question '+(i+1)+'</div>'
+        +'<div class="prep-q-text">'+q.q+'</div>'
+        +hintHTML
+        +answerHTML
+        +'</div>';
+    }).join('');
+
+    // Salary negotiation section — fully Pro
+    const salaryHTML = isPro
+      ? '<div class="salary-neg-section">'
+          +'<div class="salary-neg-title">Salary Negotiation</div>'
+          +'<p class="salary-neg-intro">The negotiation starts before they make an offer. Here\'s exactly how to handle each stage for <strong>'+j.company+'</strong>.</p>'
+          +'<div class="salary-neg-stage">'
+            +'<div class="salary-neg-stage-label">When they ask your salary expectations</div>'
+            +'<div class="salary-neg-script">"I\'m open based on the full picture of the role and compensation package. Could you share the budgeted range?"</div>'
+            +'<div class="salary-neg-note">Don\'t name a number first. Whoever speaks first anchors low. If they push: "I\'d want to be somewhere in the range that reflects the scope of this role — what are you working with?"</div>'
+          +'</div>'
+          +'<div class="salary-neg-stage">'
+            +'<div class="salary-neg-stage-label">When they give you a number</div>'
+            +'<div class="salary-neg-script">"Thank you — I appreciate you sharing that. Based on my experience with premium retail brands and the scope of this role, I was thinking closer to [top third of their range + 10%]. Is there flexibility there?"</div>'
+            +'<div class="salary-neg-note">For '+j.pl+', that means countering at the high end. Never accept on the spot — it\'s always fine to say "I\'d love 24 hours to think it over."</div>'
+          +'</div>'
+          +'<div class="salary-neg-stage">'
+            +'<div class="salary-neg-stage-label">If they say the range is firm</div>'
+            +'<div class="salary-neg-script">"I understand. Is there flexibility on any other parts of the package — start date, title, remote days, or a 90-day review with a raise if I hit targets?"</div>'
+            +'<div class="salary-neg-note">Salary isn\'t the only lever. PTO, remote flexibility, title, and performance reviews are all negotiable even when base pay isn\'t.</div>'
+          +'</div>'
+          +'<div class="salary-neg-stage">'
+            +'<div class="salary-neg-stage-label">The one thing never to say</div>'
+            +'<div class="salary-neg-script" style="color:var(--a2);background:var(--a2s);">"I really need this job" or "I\'ll take whatever you\'re offering."</div>'
+            +'<div class="salary-neg-note">Even if true, saying it transfers all the power. Stay warm, stay confident, and remember: they want to hire you or they wouldn\'t be having this conversation.</div>'
+          +'</div>'
+        +'</div>'
+      : '<div class="salary-neg-section pro-gate" style="position:relative;min-height:180px;">'
+          +'<div class="salary-neg-title">Salary Negotiation</div>'
+          +'<div style="filter:blur(4px);pointer-events:none;opacity:.4;">'
+            +'<div class="salary-neg-stage"><div class="salary-neg-stage-label">When they ask your salary expectations</div><div class="salary-neg-script">Don\'t name a number first. Ask them for the range instead…</div></div>'
+            +'<div class="salary-neg-stage"><div class="salary-neg-stage-label">When they give you a number</div><div class="salary-neg-script">Counter at the top third of their range plus ten percent…</div></div>'
+          +'</div>'
+          +'<div class="pro-gate-overlay">'
+            +'<div class="pro-gate-icon">✦</div>'
+            +'<div class="pro-gate-title">Pro feature</div>'
+            +'<div class="pro-gate-sub">Get exact scripts for every stage of salary negotiation, tailored to this role and company.</div>'
+            +'<button class="pro-gate-btn" onclick="openSubscription()">Unlock with Pro — $9/mo</button>'
+          +'</div>'
+        +'</div>';
+
+    el.innerHTML = '<p class="prep-intro">Likely questions for this role.'+(isPro?' Answer guidance is tailored to your actual experience.':' <span class="pro-lock" onclick="openSubscription()" style="cursor:pointer;">✦ Upgrade to Pro</span> to unlock what to say for each question.')+'</p>'
+      + questionsHTML
+      + salaryHTML;
+
+  } else if(tab==='career'){
+    renderCareerPathTab(j);
+
+  } else if(tab==='description'){
+    el.innerHTML='<div class="jd-desc">'+escapeHtml(j.pastedText||'')+'</div>';
+
+  } else if(tab==='notes'){
+    const saved=notes[j.id]||'';
+    el.innerHTML='<textarea class="notes-area" id="notesArea" placeholder="Your thoughts — questions to ask, things to research, why this feels right or wrong…">'+saved+'</textarea>'
+      +'<div class="notes-hint">Notes save automatically as you type.</div>';
+    document.getElementById('notesArea').addEventListener('input',function(){notes[j.id]=this.value;});
+  }
+}
+
+// setEmailType and copyEmail defined below in the updated email section
+
+function updateDetailStar(){
+  if(!activeJob)return;
+  const on=starred.has(activeJob.id);
+  document.getElementById('jdStarBtn').className='jd-star-btn'+(on?' on':'');
+  document.getElementById('jdStarIcon').setAttribute('fill',on?'currentColor':'none');
+  document.getElementById('jdStarLabel').textContent=on?'Saved':'Save';
+}
+
+function toggleDetailStar(){
+  if(!activeJob)return;
+  starred.has(activeJob.id)?starred.delete(activeJob.id):starred.add(activeJob.id);
+  updateDetailStar();renderFeed();
+}
+
+function markApplied(){
+  if(!activeJob)return;
+  if(activeJob.url)window.open(activeJob.url,'_blank');
+  appliedSet.add(activeJob.id);
+  starred.add(activeJob.id);
+  addToTracker(activeJob.id,'applied');
+  updateDetailStar();renderFeed();badges();updateTrackerBadge();
+  const score=activeJob.match,tc=activeJob.type==='Remote'?'rem':activeJob.type==='Hybrid'?'hyb':'ons';
+  document.getElementById('jdMeta').innerHTML=
+    '<span class="jd-pill '+tc+'">'+activeJob.type+'</span>'
+    +'<span class="jd-pill pay">'+activeJob.pl+'</span>'
+    +'<span class="jd-pill match">'+score+'% match</span>'
+    +'<span class="jd-pill" style="background:var(--grs);color:var(--gr)">Applied ✓</span>';
+  document.getElementById('jdApplyBtn').textContent='Applied ✓';
+  document.getElementById('jdApplyBtn').style.background='var(--gr)';
+}
+
+// ══════════════════════════════════════════════════
+//  CHATBOT
+// ══════════════════════════════════════════════════
+const CHAT_SUGGESTIONS=['What should I know about this company?','How do I tailor my resume?','What questions might they ask?','Write me a cover letter','Is this a good fit for me?','What salary should I negotiate?'];
+
+// initChat defined below (with Pro gating)
+
+function rerenderChat(){
+  const j=activeJob;if(!j)return;
+  const msgs=document.getElementById('jdChatMessages');
+  const history=chatHistory[j.id]||[];
+  msgs.innerHTML=history.length===0
+    ?'<div class="jd-chat-msg bot"><div class="jd-chat-bubble">Hi! I can help with this role — company research, resume tweaks, interview prep, cover letters, salary strategy. What do you need?</div></div>'
+    :history.map(m=>'<div class="jd-chat-msg '+m.role+'"><div class="jd-chat-bubble">'+m.text.replace(/\n/g,'<br>')+'</div></div>').join('');
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function sendChat(){
+  const input=document.getElementById('jdChatInput');
+  const text=input.value.trim();if(!text)return;
+  input.value='';sendChatMsg(text);
+}
+
+function sendChatMsg(text){
+  const j=activeJob;if(!j)return;
+  if(!chatHistory[j.id])chatHistory[j.id]=[];
+  document.getElementById('jdChatSuggestions').innerHTML='';
+  chatHistory[j.id].push({role:'user',text});rerenderChat();
+  const msgs=document.getElementById('jdChatMessages');
+  const loading=document.createElement('div');
+  loading.className='jd-chat-msg bot';loading.id='chatLoading';
+  loading.innerHTML='<div class="jd-chat-bubble loading">Thinking…</div>';
+  msgs.appendChild(loading);msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(()=>{
+    const response=generateChatResponse(text,j);
+    document.getElementById('chatLoading')?.remove();
+    chatHistory[j.id].push({role:'bot',text:response});rerenderChat();
+  },800);
+}
+
+function generateChatResponse(text,job){
+  const t=text.toLowerCase();const co=job.company;const score=job.match;
+  const resumeLabel=job.resumeLabel||(resumes.length?resumes[0].label:null);
+  if(t.includes('company')||t.includes('know about')||t.includes('research')||t.includes('culture')||t.includes('reviews'))
+    return 'For '+co+', I\'d check their LinkedIn page, Glassdoor reviews, and any recent press coverage. Key things to look for: how employees describe the culture, average tenure, and what leadership is actually like day-to-day. Want help turning anything you find into specific interview talking points?';
+  if(t.includes('resume')||t.includes('tailor')||t.includes('tweak')||t.includes('update'))
+    return 'For this role, I\'d use your '+(resumeLabel||'uploaded resume')+' as the base. The biggest opportunity is mirroring the company\'s exact language from the job description — their keywords, their priorities, their tone. Check the Tailor My Resume tab for specific bullet-level suggestions.';
+  if(t.includes('cover letter'))
+    return 'The best cover letter openings start with a specific story — not "I am excited to apply." Think about the one experience you\'ve had that\'s most relevant to what '+co+' does. Open with that moment, in one or two sentences. Want help drafting it? Tell me what experience you want to lead with and I\'ll write the opening.';
+  if(t.includes('question')||t.includes('interview')||t.includes('ask')||t.includes('prep'))
+    return 'Likely questions for this role:\n\n1. "Tell me about a time you represented a brand in a high-stakes situation."\n2. "How do you translate customer insights into action?"\n3. "What do you know about our brand and why does it resonate with you?"\n4. "Walk me through communicating complex information clearly."\n5. "Where do you see yourself in three years?"\n\nCheck the Interview Prep tab for guidance on how to answer each one.';
+  if(t.includes('salary')||t.includes('pay')||t.includes('negotiat')||t.includes('compensation'))
+    return 'For a role like this, the listed range is '+job.pl+'. Don\'t name a number first — if they ask, say "I\'m open based on the full compensation package, could you share the budgeted range?" Once they give a number, aim for the top third. Never accept on the spot — it\'s always fine to say you\'d like 24 hours. Check the Salary Negotiation section at the bottom of Interview Prep for full scripts.';
+  if(t.includes('good fit')||t.includes('should i apply')||t.includes('worth it'))
+    return 'At '+score+'%, this is a '+(score>=85?'strong fit — apply with confidence. Your background maps well to what they\'re asking for.':score>=70?'solid fit. There\'s a gap or two, but nothing that should stop you from applying. Tailor your resume to their language and you\'ll be competitive.':'partial fit. It\'s a stretch, but stretches are worth applying to if you genuinely want the role. The key is making your application hyper-specific to their language and showing you\'ve done the research.');
+  if(t.includes('deadline')||t.includes('closing')||t.includes('when'))
+    return 'I don\'t have the exact closing date for this listing. For any job posted more than a week ago, I\'d apply within 48 hours — strong candidates get moved on quickly. You can add a deadline to the card in your Tracker.';
+  if(t.includes('follow')||t.includes('email')||t.includes('reach out'))
+    return 'After applying, wait 5–7 business days before following up. Check the Email Drafts tab for a ready-to-send follow-up. Keep it short: express continued interest, mention one specific thing about the role, and ask if they need anything else from you.';
+  return 'Good question about this role at '+co+'. The key is positioning your specific experience as proof you can do what they need — use their exact language, name real examples, and show you\'ve actually looked at their brand. What specifically are you trying to figure out?';
+}
+
+// ══════════════════════════════════════════════════
+//  FEED
+// ══════════════════════════════════════════════════
+function renderFeed(){
+  const list=document.getElementById('jlist');
+  const q=document.getElementById('srch').value.toLowerCase();
+  const minPay=parseFloat((document.getElementById('payMin').value||'').replace(/[^0-9.]/g,''))||0;
+  let pool=view==='browse'?jobs.filter(j=>!appliedSet.has(j.id)&&!disliked.has(j.id)):view==='saved'?jobs.filter(j=>starred.has(j.id)):jobs.filter(j=>appliedSet.has(j.id));
+  let f=pool.filter(j=>{
+    const mq=!q||(j.title+' '+j.company).toLowerCase().includes(q);
+    const mf=filters.size===0||j.tags.some(t=>filters.has(t));
+    return mq&&mf;
+  });
+  document.getElementById('fmeta').textContent=f.length+' roles';
+  const ctx=document.getElementById('resumeCtx');
+  if(activeR&&resumes.length){const r=resumes.find(x=>x.id===activeR);if(r&&!r.analyzing&&r.label){ctx.style.display='flex';document.getElementById('ctxName').textContent=r.label;}else ctx.style.display='none';}
+  else ctx.style.display='none';
+  badges();list.innerHTML='';
+  if(!f.length){
+    list.innerHTML='<div class="empty"><div style="font-size:32px;opacity:.25;margin-bottom:10px">◎</div>'+(jobs.length===0?'<h3>No jobs yet</h3><p>Upload a resume and click <strong>Find Jobs</strong> to get matched roles from Indeed.</p>':'<h3>No matches found</h3><p>Try adjusting your filters or search.</p>')+'</div>';
+    return;
+  }
+  f.forEach(j=>{
+    const isStar=starred.has(j.id),isApp=appliedSet.has(j.id),low=minPay>0&&j.pay>0&&j.pay<minPay;
+    const trackerCol=trackerData[j.id]?(KANBAN_COLS.find(c=>c.id===trackerData[j.id].col)||null):null;
+    const d=document.createElement('div');
+    d.className='jcard'+(isStar?' pin':'')+(j.pasted?' pasted':'');
+    const srcBadge=j.source==='linkedin'?'<span class="src-badge linkedin">LinkedIn</span>':j.source==='glassdoor'?'<span class="src-badge glassdoor">Glassdoor</span>':j.source==='web'?'<span class="src-badge web">Web</span>':'<span class="src-badge indeed">Indeed</span>';
+    d.innerHTML='<div class="clogo" style="background:'+j.lb+';color:'+j.lf+'">'+j.logo+'</div>'
+      +'<div class="jbody"><div class="jtrow"><span class="jtitle">'+j.title+'</span>'
+      +(j.isNew?'<span class="bdg nw">New</span>':'')+(isApp?'<span class="bdg ap">Applied</span>':'')+(low?'<span class="bdg lw">Below target</span>':'')+(j.pasted?'<span class="bdg pt">Pasted</span>':'')
+      +(trackerCol?'<span class="bdg" style="background:'+trackerCol.bg+';color:'+trackerCol.color+'">'+trackerCol.label+'</span>':'')
+      +'</div><div class="jco"><strong>'+j.company+'</strong> · '+j.location+'</div>'
+      +'<div class="trow"><span class="tg '+(j.type==='Remote'?'rem':j.type==='Hybrid'?'hyb':'ons')+'">'+j.type+'</span><span class="tg pay">'+j.pl+'</span>'
+      +(j.resumeLabel?'<span class="tg res">'+j.resumeLabel+'</span>':j.pasted?'<span class="tg res">Pasted</span>':'')
+      +srcBadge
+      +'</div></div>'
+      +'<div class="mcol">'+ring(j.match)+'<div class="mlbl">match</div>'
+      +'<button class="sbtn'+(isStar?' on':'')+'" onclick="toggleStar(event,\''+j.id+'\')" title="Save">'
+      +'<svg width="13" height="13" viewBox="0 0 13 13" fill="'+(isStar?'currentColor':'none')+'" stroke="currentColor" stroke-width="1.3"><path d="M6.5 1L8 4.8L12 5.2L9.2 7.8L10 12L6.5 10.1L3 12L3.8 7.8L1 5.2L5 4.8L6.5 1Z" stroke-linejoin="round"/></svg>'
+      +'</button>'
+      +'<button class="dbtn" onclick="openDislike(event,\''+j.id+'\')" title="Not interested">'
+      +'<svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="6.5" cy="6.5" r="5.5"/><path d="M4 4L9 9M9 4L4 9" stroke-linecap="round"/></svg>'
+      +'</button>'
+      +'<div class="pdate">'+j.posted+'</div></div>';
+    d.addEventListener('click',e=>{if(!e.target.closest('.sbtn'))openDetail(j);});
+    list.appendChild(d);
+  });
+}
+
+// badges() defined below with tracker count
+
+// ══════════════════════════════════════════════════
+//  FILTER CHIPS — dynamic, user-extensible
+// ══════════════════════════════════════════════════
+// Built-in chips: key, label, removable
+let chipDefs = [
+  {key:'remote',    label:'Remote',    on:false, removable:false},
+  {key:'hybrid',    label:'Hybrid',    on:false, removable:false},
+  {key:'brand',     label:'Brand',     on:false, removable:false},
+  {key:'marketing', label:'Marketing', on:false, removable:false},
+  {key:'comms',     label:'Comms',     on:false, removable:false},
+  {key:'bizdev',    label:'Biz Dev',   on:false, removable:false},
+];
+
+function renderChips(){
+  const row = document.getElementById('chipsRow');
+  if(!row) return;
+  // Sync filters Set with chipDefs
+  filters = new Set(chipDefs.filter(c=>c.on).map(c=>c.key));
+
+  row.innerHTML = chipDefs.map(c=>{
+    const delBtn = c.removable
+      ? '<span class="chip-del" onclick="removeChip(event,\''+c.key+'\')" title="Remove filter">×</span>'
+      : '';
+    return '<button class="chip'+(c.on?' on':'')+'" data-f="'+c.key+'" onclick="toggleChipKey(\''+c.key+'\')">'
+      + c.label + delBtn
+      +'</button>';
+  }).join('')
+  + '<button class="chip-add" onclick="openAddChip()" title="Add a filter">'
+  + '<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1V10M1 5.5H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
+  + 'Add filter</button>';
+}
+
+function toggleChipKey(key){
+  const c = chipDefs.find(x=>x.key===key);
+  if(!c) return;
+  c.on = !c.on;
+  renderChips();
+  renderFeed();
+}
+
+// Legacy handler kept for any inline onclick="toggleChip(this)" still in HTML
+function toggleChip(btn){
+  const f = btn.dataset.f;
+  const c = chipDefs.find(x=>x.key===f);
+  if(c){ c.on = !c.on; } else { filters.has(f)?filters.delete(f):filters.add(f); }
+  renderChips();
+  renderFeed();
+}
+
+function removeChip(e, key){
+  e.stopPropagation();
+  chipDefs = chipDefs.filter(c=>c.key!==key);
+  filters.delete(key);
+  renderChips();
+  renderFeed();
+}
+
+function openAddChip(){
+  document.getElementById('addChipInput').value='';
+  document.getElementById('addChipFeedback').textContent='';
+  document.getElementById('addChipModal').classList.add('open');
+  setTimeout(()=>document.getElementById('addChipInput').focus(), 50);
+}
+function closeAddChip(){ document.getElementById('addChipModal').classList.remove('open'); }
+
+function confirmAddChip(){
+  const val = document.getElementById('addChipInput').value.trim();
+  const fb  = document.getElementById('addChipFeedback');
+  if(!val){ fb.textContent='Please enter a filter name.'; return; }
+  const key = val.toLowerCase().replace(/\s+/g,'-');
+  if(chipDefs.find(c=>c.key===key)){ fb.textContent='That filter already exists.'; return; }
+  chipDefs.push({key, label:val, on:true, removable:true});
+  closeAddChip();
+  renderChips();
+  renderFeed();
+}
+
+// Quick-add suggestions shown in the modal
+const CHIP_SUGGESTIONS = [
+  'Tech','Finance','Healthcare','Education','Nonprofit','Legal',
+  'Design','Engineering','Sales','HR','Operations','Product',
+  'Real Estate','Hospitality','Media','Fashion','Food & Bev',
+  'Full-time','Part-time','Entry Level','Mid Level','Senior',
+  'Startup','Remote-first','$50k+','$75k+','$100k+',
+];
+
+function sortJobs(v){
+  if(v==='deadline') jobs.sort((a,b)=>{const da=trackerData[a.id]?.deadline||'9999',db=trackerData[b.id]?.deadline||'9999';return da.localeCompare(db);});
+  else if(v==='match') jobs.sort((a,b)=>b.match-a.match);
+  else if(v==='pay') jobs.sort((a,b)=>b.pay-a.pay);
+  renderFeed();
+}
+function toggleStar(e,id){e.stopPropagation();starred.has(id)?starred.delete(id):starred.add(id);renderFeed();}
+function setView(v,btn){view=v;document.querySelectorAll('.nb').forEach(b=>b.classList.remove('act'));btn.classList.add('act');const t={browse:'Matched for you',saved:'Saved jobs',applied:'Applied'};document.getElementById('ftitle').textContent=t[v];renderFeed();}
+
+// ══════════════════════════════════════════════════
+//  RESUME UPLOAD / DELETE / RENAME
+// ══════════════════════════════════════════════════
+function setResume(id){activeR=id;renderResumes();renderFeed();}
+
+function deleteResume(e,id){
+  e.stopPropagation();
+  resumes=resumes.filter(r=>r.id!==id);
+  if(activeR===id)activeR=resumes.length?resumes[0].id:null;
+  const remainingLabels=new Set(resumes.map(r=>r.label).filter(Boolean));
+  if(remainingLabels.size===0)jobs=jobs.filter(j=>j.pasted);
+  else{const keep=new Set();remainingLabels.forEach(label=>{(INDEED_JOBS[label]||[]).forEach(j=>keep.add(j.id));});jobs=jobs.filter(j=>j.pasted||keep.has(j.id));}
+  document.getElementById('findJobsBtn').disabled=resumes.length===0;
+  renderResumes();renderFeed();
+}
+
+function handleUpload(input){
+  const file=input.files[0];if(!file)return;
+  const id=Date.now();
+  const blobUrl=URL.createObjectURL(file);
+  resumes.push({id,file:file.name,label:null,analyzing:true,jobCount:0,fileUrl:blobUrl,dataUrl:null});
+  document.getElementById('rHint').style.display='none';
+  document.getElementById('findJobsBtn').disabled=true;
+  renderResumes();
+  // Read as base64 so it persists across sessions
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const r=resumes.find(x=>x.id===id);
+    if(r) r.dataUrl=e.target.result;
+    scheduleSave();
+  };
+  reader.readAsDataURL(file);
+  setTimeout(()=>{
+    const r=resumes.find(x=>x.id===id);
+    if(r){
+      r.analyzing=false;
+      r.label=guessTitle(file.name);
+      r.jobCount=(INDEED_JOBS[r.label]||[]).length;
+      if(resumes.filter(x=>!x.analyzing).length===1) activeR=id;
+    }
+    document.getElementById('findJobsBtn').disabled=false;
+    // Re-evaluate all jobs against the new resume set
+    reEvaluateAllJobs();
+    renderResumes();
+    scheduleSave();
+  },2000);
+  input.value='';
+}
+
+// ── RE-EVALUATE ALL JOBS AGAINST ALL READY RESUMES ──
+function reEvaluateAllJobs(){
+  const ready=resumes.filter(r=>!r.analyzing&&r.label);
+  if(!ready.length){ renderFeed(); return; }
+  jobs.forEach(job=>{
+    const tl=(job.pastedText||job.desc||job.title+' '+job.company).toLowerCase();
+    let bestScore=0,bestLabel=null,bestId=null;
+    const scores={};
+    ready.forEach(r=>{
+      const kws=RESUME_KEYWORDS[r.label]||RESUME_KEYWORDS['General / Master'];
+      const hits=kws.filter(k=>tl.includes(k));
+      // Base score from keyword hits, capped at realistic range
+      let score=Math.min(78, 38+hits.length*4);
+      // Boost for dream companies
+      const dreamCos=['ralph lauren','sézane','sezane','aritzia','reformation','hermès','hermes','marine layer','ferrari'];
+      if(dreamCos.some(dc=>job.company.toLowerCase().includes(dc))) score=Math.min(score+6,80);
+      scores[r.label]=score;
+      if(score>bestScore){bestScore=score;bestLabel=r.label;bestId=r.id;}
+    });
+    job.match=bestScore;
+    job.resumeLabel=bestLabel;
+    job.bestResumeId=bestId;
+    job.resumeScores=scores;
+  });
+  renderFeed();
+  // If a job detail is open, refresh it
+  if(activeJob){
+    const updated=jobs.find(j=>j.id===activeJob.id);
+    if(updated){ activeJob=updated; renderTab(activeTab); }
+  }
+}
+
+function guessTitle(fn){
+  const n=fn.toLowerCase();
+  if(n.includes('brand')||n.includes('marketing'))return'Brand & Marketing';
+  if(n.includes('comms')||n.includes('communication'))return'Communications';
+  if(n.includes('sales')||n.includes('biz')||n.includes('business'))return'Business Dev';
+  return'General / Master';
+}
+
+function renderResumes(){
+  const rl=document.getElementById('rList'),hint=document.getElementById('rHint'),allWrap=document.getElementById('rAllWrap'),allBtn=document.getElementById('rAll');
+  if(!resumes.length){rl.innerHTML='';hint.style.display='block';allWrap.style.display='none';return;}
+  hint.style.display='none';
+  const ready=resumes.filter(r=>!r.analyzing);
+  allWrap.style.display=ready.length>=2?'block':'none';
+  if(allBtn)allBtn.className='ri-all'+(activeR===null?' act':'');
+  const trashIcon='<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 3.5H11M4.5 3.5V2.5C4.5 2 5 1.5 5.5 1.5H7.5C8 1.5 8.5 2 8.5 2.5V3.5M5 6V10M8 6V10M2.5 3.5L3 11C3 11.5 3.5 12 4 12H9C9.5 12 10 11.5 10 11L10.5 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>';
+  const eyeIcon='<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6C1 6 2.8 2.5 6 2.5C9.2 2.5 11 6 11 6C11 6 9.2 9.5 6 9.5C2.8 9.5 1 6 1 6Z" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>';
+  const pencilIcon='<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M7.5 1.5L9.5 3.5L3.5 9.5H1.5V7.5L7.5 1.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>';
+  rl.innerHTML=resumes.map(r=>{
+    const isAct=activeR===r.id;
+    return '<button class="ri'+(isAct?' act':'')+'" onclick="setResume('+r.id+')">'
+      +'<div class="ri-top"><div class="rdot'+(isAct?' act':'')+'"></div>'
+      +'<div class="rname">'+(r.analyzing?'<span class="apill"><span class="spin">↻</span> Reading…</span>':r.label)+'</div>'
+      +'<button class="ri-del" onclick="deleteResume(event,'+r.id+')" title="Delete">'+trashIcon+'</button></div>'
+      +(!r.analyzing?'<div class="ri-row2">'
+        +'<button class="ri-rename-btn" onclick="startRename(event,'+r.id+')">'+pencilIcon+' Rename</button>'
+        +'</div>':'')
+      +(r.analyzing?'':'<div class="ri-meta">'+r.jobCount+' role'+(r.jobCount!==1?'s':'')+' on Indeed</div>')
+      +'</button>';
+  }).join('');
+}
+
+function viewResume(e,id){
+  e.stopPropagation();
+  const r=resumes.find(x=>x.id===id);
+  if(!r) return;
+  // Prefer dataUrl (persists across sessions), fall back to blobUrl (current session only)
+  const url=r.dataUrl||r.fileUrl;
+  if(url) window.open(url,'_blank');
+  else alert('File not available — please re-upload this resume to view it.');
+}
+
+function startRename(e,id){
+  e.stopPropagation();const r=resumes.find(x=>x.id===id);if(!r)return;
+  document.getElementById('renameInput').value=r.label||'';
+  document.getElementById('renameModal').dataset.rid=id;
+  document.getElementById('renameModal').classList.add('open');
+  setTimeout(()=>{document.getElementById('renameInput').focus();document.getElementById('renameInput').select();},50);
+}
+
+function confirmRename(){
+  const modal=document.getElementById('renameModal');
+  const id=parseInt(modal.dataset.rid);
+  const val=document.getElementById('renameInput').value.trim();
+  if(val){const r=resumes.find(x=>x.id===id);if(r)r.label=val;}
+  modal.classList.remove('open');renderResumes();renderFeed();
+}
+function closeRename(){document.getElementById('renameModal').classList.remove('open');}
+
+// ══════════════════════════════════════════════════
+//  DISLIKE SYSTEM
+// ══════════════════════════════════════════════════
+let disliked = new Set();
+let dislikePrefs = {}; // reason tracking for AI learning
+let pendingDislikeId = null;
+
+const DISLIKE_REASONS = [
+  {id:'pay',    label:'Pay is too low'},
+  {id:'loc',    label:'Location doesn\'t work'},
+  {id:'level',  label:'Not the right seniority level'},
+  {id:'ind',    label:'Wrong industry'},
+  {id:'co',     label:'Not interested in this company'},
+  {id:'type',   label:'Wrong job type (remote/hybrid/onsite)'},
+  {id:'role',   label:'Not the right kind of role'},
+  {id:'other',  label:'Something else'},
+];
+
+function openDislike(e, jobId){
+  e.stopPropagation();
+  pendingDislikeId = jobId;
+  const j = jobs.find(x=>x.id===jobId);
+  document.getElementById('dislikeJobTitle').textContent = j ? j.title+' at '+j.company : 'this job';
+  // Reset selections
+  document.querySelectorAll('.dislike-opt').forEach(o=>o.classList.remove('sel'));
+  document.querySelectorAll('.dislike-opt input').forEach(i=>i.checked=false);
+  document.getElementById('dislikeModal').classList.add('open');
+}
+
+function closeDislike(){ document.getElementById('dislikeModal').classList.remove('open'); pendingDislikeId=null; }
+
+function confirmDislike(){
+  if(!pendingDislikeId) return;
+  const selected = [...document.querySelectorAll('.dislike-opt.sel')].map(o=>o.dataset.reason);
+  disliked.add(pendingDislikeId);
+  // Learn from feedback
+  selected.forEach(r=>{dislikePrefs[r]=(dislikePrefs[r]||0)+1;});
+  applyDislikeLearning(selected, pendingDislikeId);
+  closeDislike();
+  renderFeed();
+}
+
+function applyDislikeLearning(reasons, jobId){
+  const j = jobs.find(x=>x.id===jobId); if(!j) return;
+  // Lower scores on similar jobs based on reason
+  reasons.forEach(r=>{
+    if(r==='pay') jobs.forEach(jj=>{ if(jj.pay>0&&jj.pay<=j.pay&&jj.id!==jobId) jj.match=Math.max(10,jj.match-6); });
+    if(r==='co') jobs.forEach(jj=>{ if(jj.company===j.company&&jj.id!==jobId) disliked.add(jj.id); });
+    if(r==='ind'||r==='role') jobs.forEach(jj=>{ if(jj.tags.every(t=>j.tags.includes(t))&&jj.id!==jobId) jj.match=Math.max(10,jj.match-4); });
+    if(r==='type') jobs.forEach(jj=>{ if(jj.type===j.type&&jj.id!==jobId) jj.match=Math.max(10,jj.match-5); });
+  });
+}
+
+function toggleDislikeOpt(el){
+  el.classList.toggle('sel');
+}
+
+// ══════════════════════════════════════════════════
+//  SUBSCRIPTION & PROMO CODES
+// ══════════════════════════════════════════════════
+// Valid promo codes (one-time use per code)
+const PROMO_CODES = {
+  'CATALINA-VIP': {used: false, label: 'Catalina VIP'},
+  'FAM2026-A':    {used: false, label: 'Family Code A'},
+  'FAM2026-B':    {used: false, label: 'Family Code B'},
+  'FAM2026-C':    {used: false, label: 'Family Code C'},
+  'FAM2026-D':    {used: false, label: 'Family Code D'},
+  'FRIEND-001':   {used: false, label: 'Friend Code 1'},
+  'FRIEND-002':   {used: false, label: 'Friend Code 2'},
+  'FRIEND-003':   {used: false, label: 'Friend Code 3'},
+  'FRIEND-004':   {used: false, label: 'Friend Code 4'},
+  'FRIEND-005':   {used: false, label: 'Friend Code 5'},
+  'FRIEND-006':   {used: false, label: 'Friend Code 6'},
+};
+
+let userPlan = 'free'; // 'free', 'pro', 'vip'
+
+function openSubscription(){ document.getElementById('subModal').classList.add('open'); }
+function closeSubscription(){ document.getElementById('subModal').classList.remove('open'); }
+
+function checkPromoCode(){
+  const raw = document.getElementById('promoInput').value.trim().toUpperCase();
+  const fb = document.getElementById('promoFeedback');
+  if(!raw){ fb.textContent='Please enter a code.'; fb.className='promo-feedback err'; return; }
+  const code = PROMO_CODES[raw];
+  if(!code){ fb.textContent='That code isn\'t valid. Check the spelling and try again.'; fb.className='promo-feedback err'; return; }
+  if(code.used){ fb.textContent='This code has already been used and can\'t be shared.'; fb.className='promo-feedback err'; return; }
+  // Valid — activate pro
+  code.used = true;
+  userPlan = 'vip';
+  fb.textContent='✓ Code accepted! You now have free Pro access. Welcome to Fitted Pro.';
+  fb.className='promo-feedback ok';
+  setTimeout(()=>{ closeSubscription(); updateProUI(); }, 1800);
+}
+
+function activatePro(plan){
+  userPlan = plan;
+  closeSubscription();
+  updateProUI();
+  alert('In a real app, this would take you to payment. For now, Pro is activated!');
+}
+
+function updateProUI(){
+  const isPro = userPlan==='pro'||userPlan==='vip';
+
+  // Show/hide pro gate overlays in job detail tabs
+  document.querySelectorAll('.pro-gate-overlay').forEach(el=>el.style.display=isPro?'none':'flex');
+
+  // Portfolio gate
+  const gate    = document.getElementById('portfolioProGate');
+  const content = document.getElementById('portfolioContent');
+  const badge   = document.getElementById('portfolioProBadge');
+  if(gate)    gate.style.display    = isPro ? 'none'  : 'block';
+  if(content) content.style.display = isPro ? 'block' : 'none';
+  if(badge)   badge.style.display   = isPro ? 'none'  : 'inline-flex';
+
+  // Update nav Upgrade button
+  const btn = document.getElementById('proBtn');
+  if(btn){
+    btn.textContent = isPro ? '✦ Pro' : 'Upgrade';
+    btn.style.background = isPro ? 'var(--gr)' : 'var(--gd)';
+  }
+}
+
+// ══════════════════════════════════════════════════
+//  MULTI-PLATFORM JOB SEARCH (LinkedIn, Glassdoor, Web)
+// ══════════════════════════════════════════════════
+// LinkedIn job search URLs by resume type (real search URLs)
+const LINKEDIN_URLS = {
+  'Brand & Marketing': 'https://www.linkedin.com/jobs/search/?keywords=brand+marketing+coordinator&f_E=1%2C2&sortBy=DD',
+  'Communications':    'https://www.linkedin.com/jobs/search/?keywords=communications+coordinator+marketing&f_E=1%2C2&sortBy=DD',
+  'Business Dev':      'https://www.linkedin.com/jobs/search/?keywords=business+development+associate&f_E=1%2C2&sortBy=DD',
+  'General / Master':  'https://www.linkedin.com/jobs/search/?keywords=marketing+coordinator+associate&f_E=1%2C2&sortBy=DD',
+};
+const GLASSDOOR_URLS = {
+  'Brand & Marketing': 'https://www.glassdoor.com/Job/brand-marketing-coordinator-jobs-SRCH_KO0,27.htm',
+  'Communications':    'https://www.glassdoor.com/Job/communications-coordinator-jobs-SRCH_KO0,26.htm',
+  'Business Dev':      'https://www.glassdoor.com/Job/business-development-associate-jobs-SRCH_KO0,30.htm',
+  'General / Master':  'https://www.glassdoor.com/Job/marketing-coordinator-jobs-SRCH_KO0,21.htm',
+};
+
+// Simulated multi-platform jobs with real search links
+const PLATFORM_JOBS = {
+  'Brand & Marketing': [
+    {id:'li1',title:'Brand Marketing Coordinator',company:'Reformation',location:'Remote',type:'Remote',pay:30,pl:'$28–33/hr',match:72,tags:['remote','brand','marketing'],posted:'2 days ago',isNew:true,logo:'Rf',lb:'#f5ede6',lf:'#7a3d20',source:'linkedin',url:'https://www.linkedin.com/jobs/search/?keywords=brand+marketing+coordinator+reformation'},
+    {id:'li2',title:'Marketing Coordinator, Niche Retail – Beauty',company:'Undisclosed Brand',location:'New York, NY',type:'Hybrid',pay:35,pl:'$32–38/hr',match:67,tags:['hybrid','brand','marketing'],posted:'1 week ago',isNew:false,logo:'NB',lb:'#f5edf0',lf:'#7a2848',source:'linkedin',url:'https://www.linkedin.com/jobs/search/?keywords=marketing+coordinator+niche+retail+beauty'},
+  ],
+  'Communications': [
+    {id:'li3',title:'Social Media & Community Coordinator',company:'Aritzia',location:'Remote',type:'Remote',pay:29,pl:'$27–32/hr',match:70,tags:['remote','comms','brand'],posted:'3 days ago',isNew:true,logo:'Az',lb:'#f0ece8',lf:'#4a3828',source:'linkedin',url:'https://www.linkedin.com/jobs/search/?keywords=social+media+coordinator+aritzia'},
+    {id:'li4',title:'Brand Ambassador & Content Coordinator',company:'Rare Beauty',location:'Remote',type:'Remote',pay:27,pl:'$25–30/hr',match:64,tags:['remote','comms','marketing'],posted:'5 days ago',isNew:false,logo:'RB',lb:'#fdf0ec',lf:'#c44520',source:'glassdoor',url:'https://www.glassdoor.com/Job/rare-beauty-jobs-SRCH_KE0,11.htm'},
+  ],
+  'Business Dev': [
+    {id:'li5',title:'Partnerships & Growth Associate',company:'Wellfound Startup',location:'Remote',type:'Remote',pay:65,pl:'$60–75k/yr',match:60,tags:['remote','bizdev'],posted:'1 day ago',isNew:true,logo:'WF',lb:'#e8f0f8',lf:'#1a5080',source:'web',url:'https://wellfound.com/jobs?role=business-development'},
+  ],
+  'General / Master': [
+    {id:'li6',title:'Marketing & Brand Coordinator',company:'Patagonia',location:'Remote',type:'Remote',pay:32,pl:'$30–36/hr',match:82,tags:['remote','brand','marketing'],posted:'4 days ago',isNew:false,logo:'Pt',lb:'#e8f0e8',lf:'#1a5020',source:'linkedin',url:'https://www.linkedin.com/jobs/search/?keywords=marketing+brand+coordinator+patagonia'},
+    {id:'li7',title:'Content & Social Coordinator',company:'Sézane',location:'Remote (US)',type:'Remote',pay:31,pl:'$28–34/hr',match:86,tags:['remote','comms','brand'],posted:'2 days ago',isNew:true,logo:'Sz',lb:'#f5edf0',lf:'#7a2848',source:'glassdoor',url:'https://www.glassdoor.com/Job/sezane-jobs-SRCH_KE0,6.htm'},
+  ],
+};
+
+function findJobsMultiPlatform(){
+  const ready=resumes.filter(r=>!r.analyzing&&r.label); if(!ready.length)return;
+  const btn=document.getElementById('findJobsBtn');
+  btn.disabled=true;btn.classList.add('searching');
+  btn.innerHTML='<span class="spin">↻</span> Searching Indeed, LinkedIn…';
+  setTimeout(()=>{
+    const seen=new Set();const newJobs=[];
+    ready.forEach(r=>{
+      const pool=[...(INDEED_JOBS[r.label]||[]),...(PLATFORM_JOBS[r.label]||[])];
+      pool.forEach(j=>{
+        if(!seen.has(j.id)&&!disliked.has(j.id)){
+          seen.add(j.id);
+          if(!jobs.find(x=>x.id===j.id))newJobs.push({...j,resumeLabel:r.label});
+        }
+      });
+    });
+    jobs=[...newJobs,...jobs.filter(j=>j.pasted)];
+    btn.disabled=false;btn.classList.remove('searching');
+    btn.innerHTML='<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="5.5" cy="5.5" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M9 9L12.5 12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Refresh Jobs';
+    renderFeed();
+  },1800);
+}
+
+// Override findJobs to use multi-platform
+function findJobs(){ findJobsMultiPlatform(); }
+
+// ══════════════════════════════════════════════════
+//  CAREER PATH TAB (Pro feature)
+// ══════════════════════════════════════════════════
+function renderCareerPathTab(job){
+  const el=document.getElementById('jdTabContent');
+  const isPro=userPlan==='pro'||userPlan==='vip';
+  const cp=[
+    {stage:'now',   title:'Where you are',       role:'Sales Associate / Brand Ambassador',   yrs:'0–1 yr',     sal:'$20–28/hr',  dot:'now'},
+    {stage:'next',  title:'This role',            role:job.title,                              yrs:'1–2 yrs',    sal:job.pl,       dot:'next'},
+    {stage:'next',  title:'2 years out',          role:'Brand Manager / Marketing Manager',    yrs:'2–4 yrs',    sal:'$55–75k/yr', dot:'next'},
+    {stage:'future',title:'5 years out',          role:'Senior Brand Strategist / Director',   yrs:'5+ yrs',     sal:'$80–120k/yr',dot:'future'},
+    {stage:'future',title:'North Star',           role:'Brand Marketing Manager, Olympics',    yrs:'6–10 yrs',   sal:'$100–150k/yr',dot:'future'},
+  ];
+  const pathHTML=cp.map((n,i)=>'<div class="career-path-node">'
+    +'<div style="display:flex;flex-direction:column;align-items:center">'
+    +'<div class="cp-dot '+n.dot+'"></div>'
+    +(i<cp.length-1?'<div class="cp-line"></div>':'')
+    +'</div>'
+    +'<div class="cp-info">'
+    +'<div class="cp-meta">'+n.title+'</div>'
+    +'<div class="cp-title">'+n.role+'</div>'
+    +'<div class="cp-salary">'+n.sal+' · '+n.yrs+'</div>'
+    +'</div></div>'
+  ).join('');
+  el.innerHTML='<div style="margin-bottom:16px;font-size:13px;color:var(--ink3);line-height:1.6;">Here\'s where <strong style="color:var(--ink)">'+job.title+'</strong> fits in a realistic career path from where you are now to where you want to be.</div>'
+    +'<div class="pro-gate" style="'+(isPro?'':'')+'">'+pathHTML
+    +(!isPro?'<div class="pro-gate-overlay"><div class="pro-gate-icon">✦</div><div class="pro-gate-title">Fitted Pro feature</div><div class="pro-gate-sub">See your full career path, salary milestones, and what roles to target at each stage.</div><button class="pro-gate-btn" onclick="closeDetail();openSubscription()">Unlock with Pro</button></div>':'')
+    +'</div>';
+}
+
+function quickAddChip(label){
+  document.getElementById('addChipInput').value = label;
+  confirmAddChip();
+}
+
+function setEmailType(type){activeEmailType=type;renderTab('emails');}
+
+function copyEmailEditable(){
+  const subj=document.getElementById('emailSubjectEdit');
+  const body=document.getElementById('emailBodyEdit');
+  if(!body)return;
+  const text='Subject: '+(subj?subj.innerText:'')+'\n\n'+(body.innerText||'');
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.querySelector('.email-copy-btn');
+    if(btn){btn.textContent='Copied!';setTimeout(()=>{btn.innerHTML='<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M9 4V2.5C9 1.7 8.3 1 7.5 1H2.5C1.7 1 1 1.7 1 2.5V7.5C1 8.3 1.7 9 2.5 9H4" stroke="currentColor" stroke-width="1.2"/></svg> Copy email';},1500);}
+  }).catch(()=>{});
+}
+function copyEmail(){ copyEmailEditable(); }
+function resetEmail(type){ activeEmailType=type; renderTab('emails'); }
+
+// ── PREP ANSWER HELPERS ──────────────────────────────
+function savePrepAnswer(i, val){
+  if(!activeJob) return;
+  if(!window._prepAnswers) window._prepAnswers = {};
+  window._prepAnswers[activeJob.id+'_'+i] = val;
+}
+function evaluatePrepAnswer(i){
+  const ta = document.getElementById('prep_ans_'+i);
+  const fb = document.getElementById('prep_fb_'+i);
+  if(!ta||!fb) return;
+  const val = ta.value.trim();
+  if(!val){ fb.innerHTML='<span style="color:var(--ink4);font-style:italic;">Write your answer first, then tap for feedback.</span>'; return; }
+  fb.innerHTML='<span style="color:var(--ink4);font-style:italic;">Reviewing…</span>';
+  setTimeout(()=>{
+    let msg = '';
+    if(val.length < 60) msg = '⚠ This answer is pretty short. Interviewers want specifics — try to include a concrete situation, what you did, and what happened as a result.';
+    else if(!val.match(/\b(I|my|we)\b/i)) msg = '⚠ Make it personal. Use "I" — share what you specifically did, not just what happened around you.';
+    else if(val.length > 600) msg = '✓ Good detail. Consider trimming — the strongest interview answers are 60–90 seconds spoken, which is roughly 150–200 words. You can save the extra detail for follow-up questions.';
+    else msg = '✓ Solid structure. Make sure you can say this naturally out loud — practice it once before the interview so it doesn\'t sound rehearsed.';
+    fb.innerHTML='<div style="background:var(--sf2);border-radius:var(--rs);padding:10px 12px;font-size:12.5px;color:var(--ink2);line-height:1.6;">'+msg+'</div>';
+  }, 700);
+}
+
+// ── TAILOR DISMISS ────────────────────────────────────
+function dismissTailor(i){
+  if(!window._dismissedTailor) window._dismissedTailor = new Set();
+  window._dismissedTailor.add(i);
+  renderTab('tailor');
+}
+
+// ══════════════════════════════════════════════════
+//  ABOUT ME REDESIGN (#6)
+// ══════════════════════════════════════════════════
+let vibesAnalysis = null;
+
+// ── ABOUT ME AUTO-SAVE ───────────────────────────────
+let vibesInputTimer = null;
+function onVibesInput(){
+  clearTimeout(vibesInputTimer);
+  const val = document.getElementById('vText')?.value?.trim() || '';
+  const btn = document.getElementById('vAnalysisBtn');
+  if(btn) btn.style.display = val ? 'inline-flex' : 'none';
+  vibesAnalysis = val ? analyzeVibes(val) : null;
+  // Show pending indicator
+  const ind = document.getElementById('vibesSaveInd');
+  if(ind){ ind.textContent=''; ind.className='vibes-save-ind'; }
+  vibesInputTimer = setTimeout(()=>{
+    scheduleSave();
+    // Show "Saved ✓" briefly
+    if(ind){ ind.textContent='Saved ✓'; ind.className='vibes-save-ind ok'; setTimeout(()=>{ ind.textContent=''; ind.className='vibes-save-ind'; },2000); }
+  }, 1200);
+}
+
+function saveVibesNew(){
+  const raw = document.getElementById('vText')?.value?.trim() || '';
+  vibesAnalysis = raw ? analyzeVibes(raw) : null;
+  const btn = document.getElementById('vAnalysisBtn');
+  if(btn) btn.style.display = raw ? 'inline-flex' : 'none';
+  scheduleSave();
+}
+
+function analyzeVibes(raw){
+  const t = raw.toLowerCase();
+  const insights = [];
+  const interviewable = [];
+  const prefs = [];
+  // Detect experience signals
+  if(t.includes('launch')||t.includes('pop-up')||t.includes('event')) interviewable.push('Brand launch / event experience — strong interview story potential');
+  if(t.includes('brand')||t.includes('lifestyle')) prefs.push('Premium lifestyle or brand-focused roles');
+  if(t.includes('remote')) prefs.push('Remote-friendly positions');
+  if(t.includes('hybrid')) prefs.push('Hybrid positions');
+  if(t.includes('degree')||t.includes('graduate')||t.includes('university')||t.includes('college')) insights.push('Education background detected — mention it when employers value analytical or research skills');
+  if(t.includes('retail')||t.includes('store')||t.includes('customer')) interviewable.push('Customer-facing retail experience — use when asked about brand representation or communication');
+  if(t.includes('write')||t.includes('writing')||t.includes('newsletter')||t.includes('brief')) interviewable.push('Writing and communications experience — relevant for content, brand, and marketing roles');
+  if(t.includes('salesforce')||t.includes('crm')||t.includes('excel')||t.includes('data')) insights.push('Technical tools mentioned — add these to your skills section if not already there');
+  if(t.includes('$')||t.includes('/hr')||t.includes('salary')||t.includes('pay')) prefs.push('Pay preference detected — your target will flag below-range roles in the feed');
+  if(t.includes('dream')||t.includes('goal')||t.includes('north star')) insights.push('Clear career direction noted — Fitted will weight matches toward your stated goals');
+  // Defaults
+  if(!insights.length && !interviewable.length) insights.push('Add more detail about your experience and goals — the more context you give, the better Fitted can match you');
+  return {insights, interviewable, prefs};
+}
+
+// openVibesAnalysis, closeVibesAnalysis, toggleVibesAnalysis defined below
+
+// Override saveVibes to use new version
+function saveVibes(){ saveVibesNew(); }
+function toggleVibesEdit(){ /* no-op — textarea always visible */ }
+
+// ══════════════════════════════════════════════════
+//  COLLAPSIBLE PANELS (#8 / #9)
+// ══════════════════════════════════════════════════
+let leftNavCollapsed = false;
+let rightPanelCollapsed = false;
+
+function toggleLeftNav(){
+  leftNavCollapsed = !leftNavCollapsed;
+  const nav = document.querySelector('.leftnav');
+  const app = document.querySelector('.app');
+  if(leftNavCollapsed){
+    nav.style.width='0';nav.style.overflow='hidden';nav.style.padding='0';
+    app.style.gridTemplateColumns='0 1fr '+(rightPanelCollapsed?'0':'270px');
+  } else {
+    nav.style.width='';nav.style.overflow='';nav.style.padding='';
+    app.style.gridTemplateColumns='230px 1fr '+(rightPanelCollapsed?'0':'270px');
+  }
+  document.getElementById('toggleLeftBtn').title = leftNavCollapsed ? 'Show sidebar' : 'Hide sidebar';
+  document.getElementById('toggleLeftBtn').innerHTML = leftNavCollapsed
+    ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    : '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+
+function toggleRightPanel(){
+  rightPanelCollapsed = !rightPanelCollapsed;
+  const rp = document.querySelector('.rp');
+  const app = document.querySelector('.app');
+  if(rightPanelCollapsed){
+    rp.style.width='0';rp.style.overflow='hidden';rp.style.padding='0';
+    app.style.gridTemplateColumns=(leftNavCollapsed?'0':'230px')+' 1fr 0';
+  } else {
+    rp.style.width='';rp.style.overflow='';rp.style.padding='';
+    app.style.gridTemplateColumns=(leftNavCollapsed?'0':'230px')+' 1fr 270px';
+  }
+  document.getElementById('toggleRightBtn').title = rightPanelCollapsed ? 'Show preferences' : 'Hide preferences';
+  document.getElementById('toggleRightBtn').innerHTML = rightPanelCollapsed
+    ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    : '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+
+// ══════════════════════════════════════════════════
+//  ONBOARDING (#10)
+// ══════════════════════════════════════════════════
+function openOnboarding(){ document.getElementById('onboardingModal').classList.add('open'); }
+function closeOnboarding(){
+  const name = document.getElementById('onboardName').value.trim();
+  const email = document.getElementById('onboardEmail').value.trim();
+  userProfile.name = name;
+  userProfile.email = email;
+  userProfile.onboarded = true;
+  document.getElementById('onboardingModal').classList.remove('open');
+  if(name){
+    const g=document.getElementById('userGreeting');
+    if(g){g.textContent='Hi, '+name.split(' ')[0]+' 👋';g.style.display='inline';}
+  }
+  scheduleSave();
+}
+function skipOnboarding(){
+  userProfile.onboarded = true;
+  document.getElementById('onboardingModal').classList.remove('open');
+  scheduleSave();
+}
+
+// ══════════════════════════════════════════════════
+//  FEEDBACK (#17) — Google Form based
+// ══════════════════════════════════════════════════
+let feedbackList = [];
+
+function openFeedback(){
+  document.getElementById('feedbackSent').style.display='none';
+  document.getElementById('feedbackForm').style.display='block';
+  document.getElementById('feedbackModal').classList.add('open');
+}
+function closeFeedback(){ document.getElementById('feedbackModal').classList.remove('open'); }
+function viewFeedbackAdmin(){
+  if(!feedbackList.length){ alert('No feedback yet.'); return; }
+  const summary = feedbackList.map((f,i)=>(i+1)+'. ['+f.date+'] '+f.email+'\n'+f.text).join('\n\n---\n\n');
+  const win = window.open('','_blank');
+  win.document.write('<pre style="font-family:monospace;padding:24px;line-height:1.7;max-width:700px;">'+summary+'</pre>');
+}
+
+
+// ══════════════════════════════════════════════════
+//  REJECTED TAB (#1)
+// ══════════════════════════════════════════════════
+function renderRejectedTab(job){
+  const el = document.getElementById('jdTabContent');
+  const isPro = userPlan==='pro'||userPlan==='vip';
+  const rejectedReasons = [
+    {icon:'🔍', label:'ATS keyword gap', detail:'Your resume may not have contained enough of the exact phrases from the job description. ATS systems score keyword density before a human ever reads your application.'},
+    {icon:'📅', label:'Applied too late', detail:'Many roles fill within the first 48–72 hours. If the job had been posted for more than a week when you applied, the pipeline may have already been moving.'},
+    {icon:'📄', label:'Resume formatting', detail:'Non-standard formatting (tables, columns, graphics, headers/footers) can confuse ATS parsers and cause your resume to be misread or dropped entirely.'},
+    {icon:'📊', label:'Experience gap', detail:'The role may have had unstated requirements — years of experience, a specific tool, or a type of company — that didn\'t match your background closely enough.'},
+    {icon:'👥', label:'Internal candidate', detail:'A significant portion of roles are filled by internal candidates or referrals before the external posting is even reviewed. This is not a reflection of your application.'},
+  ];
+  const emailTemplate = 'Subject: '+job.title+' Application — Request for Feedback\n\nHi [Hiring Manager\'s Name],\n\nThank you for letting me know about your decision regarding the '+job.title+' role. I genuinely enjoyed learning about '+job.company+' through the process.\n\nI\'m always working to improve as a candidate. If you have a moment, I\'d be grateful for any brief feedback on my application or interview — even one specific thing I could strengthen would be incredibly helpful.\n\nThank you again for your time and consideration.\n\n[Your Name]';
+
+  const reasonsHTML = rejectedReasons.map(r=>
+    '<div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd);">'
+    +'<div style="font-size:20px;flex-shrink:0;width:28px;">'+r.icon+'</div>'
+    +'<div><div style="font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px;">'+r.label+'</div>'
+    +'<div style="font-size:12.5px;color:var(--ink3);line-height:1.6;">'+r.detail+'</div>'
+    +'</div></div>'
+  ).join('');
+
+  if(!isPro){
+    el.innerHTML=
+      '<div style="margin-bottom:16px;font-size:13px;color:var(--ink3);line-height:1.6;">You moved this role to <strong style="color:var(--red)">Rejected</strong> in your tracker. Here\'s what might have happened — and what to do next.</div>'
+      +'<div class="pro-gate" style="position:relative;min-height:240px;">'
+      +'<div style="filter:blur(3px);pointer-events:none;opacity:.4;">'+reasonsHTML+'</div>'
+      +'<div class="pro-gate-overlay"><div class="pro-gate-icon">✦</div><div class="pro-gate-title">Pro feature</div><div class="pro-gate-sub">See likely reasons you didn\'t hear back, a follow-up email template, and specific things to fix before your next application.</div><button class="pro-gate-btn" onclick="openSubscription()">Unlock with Pro</button></div>'
+      +'</div>';
+    return;
+  }
+
+  el.innerHTML=
+    '<div style="margin-bottom:16px;font-size:13px;color:var(--ink3);line-height:1.6;">You moved this role to <strong style="color:var(--red)">Rejected</strong>. Here are the most likely reasons — and a ready-to-send follow-up email asking for feedback.</div>'
+    +'<div style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:10px;">Likely reasons</div>'
+    +reasonsHTML
+    +'<div style="margin-top:24px;">'
+    +'<div style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:10px;">Email asking for feedback</div>'
+    +'<div style="font-size:12px;color:var(--ink3);margin-bottom:10px;line-height:1.5;">Most companies won\'t respond. But some will — and even one piece of specific feedback is worth more than a hundred generic applications.</div>'
+    +'<div contenteditable="true" id="rejectedEmailBody" style="background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:16px 18px;font-size:13px;color:var(--ink2);line-height:1.8;white-space:pre-wrap;outline:none;min-height:200px;">'+escapeHtml(emailTemplate)+'</div>'
+    +'<button class="email-copy-btn" onclick="copyRejectedEmail()" style="margin-top:10px;"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M9 4V2.5C9 1.7 8.3 1 7.5 1H2.5C1.7 1 1 1.7 1 2.5V7.5C1 8.3 1.7 9 2.5 9H4" stroke="currentColor" stroke-width="1.2"/></svg> Copy email</button>'
+    +'</div>';
+}
+
+function copyRejectedEmail(){
+  const el = document.getElementById('rejectedEmailBody');
+  if(!el) return;
+  navigator.clipboard.writeText(el.innerText).then(()=>{
+    const btn = document.querySelector('.email-copy-btn');
+    if(btn){btn.textContent='Copied!';setTimeout(()=>{btn.innerHTML='<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M9 4V2.5C9 1.7 8.3 1 7.5 1H2.5C1.7 1 1 1.7 1 2.5V7.5C1 8.3 1.7 9 2.5 9H4" stroke="currentColor" stroke-width="1.2"/></svg> Copy email';},1500);}
+  }).catch(()=>{});
+}
+
+// ══════════════════════════════════════════════════
+//  PORTFOLIO
+// ══════════════════════════════════════════════════
+let portfolioItems = [];
+
+function getFileIcon(name){
+  const ext=name.split('.').pop().toLowerCase();
+  if(ext==='pdf') return '📄';
+  if(['doc','docx'].includes(ext)) return '📝';
+  if(['jpg','jpeg','png','gif','webp','svg'].includes(ext)) return '🖼️';
+  if(['ppt','pptx'].includes(ext)) return '📊';
+  if(['xls','xlsx','csv'].includes(ext)) return '📋';
+  if(['mp4','mov'].includes(ext)) return '🎬';
+  return '📎';
+}
+
+function getFileTypeName(name){
+  const ext=name.split('.').pop().toLowerCase();
+  const m={pdf:'PDF Document',doc:'Word Document',docx:'Word Document',jpg:'Image',jpeg:'Image',png:'Image',gif:'Image',webp:'Image',svg:'SVG Image',ppt:'Presentation',pptx:'Presentation',xls:'Spreadsheet',xlsx:'Spreadsheet',csv:'CSV',mp4:'Video',mov:'Video'};
+  return m[ext]||ext.toUpperCase()+' File';
+}
+
+function formatBytes(b){
+  if(b<1024)return b+'B';
+  if(b<1048576)return(b/1024).toFixed(0)+'KB';
+  return(b/1048576).toFixed(1)+'MB';
+}
+
+function handlePortfolioUpload(input){
+  const file=input.files[0];if(!file)return;
+  if(file.size>8*1024*1024){
+    if(!confirm('This file is '+formatBytes(file.size)+'. Large files may slow down saving. Continue?')) return;
+  }
+  const id=Date.now();
+  const reader=new FileReader();
+  reader.onload=function(e){
+    portfolioItems.push({id,name:file.name,type:getFileTypeName(file.name),size:formatBytes(file.size),icon:getFileIcon(file.name),dataUrl:e.target.result});
+    renderPortfolio();
+    scheduleSave();
+  };
+  reader.readAsDataURL(file);
+  input.value='';
+}
+
+function renderPortfolio(){
+  const list=document.getElementById('portfolioList');if(!list)return;
+  if(!portfolioItems.length){list.innerHTML='<div class="portfolio-empty">Nothing added yet.</div>';return;}
+  const viewSvg='<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6C1 6 2.8 2.5 6 2.5C9.2 2.5 11 6 11 6C11 6 9.2 9.5 6 9.5C2.8 9.5 1 6 1 6Z" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>';
+  const trashSvg='<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 3.5H10M4 3.5V3C4 2.4 4.4 2 5 2H7C7.6 2 8 2.4 8 3V3.5M4.5 6V10M7.5 6V10M2.5 3.5L3 10.5C3 10.8 3.3 11 3.5 11H8.5C8.7 11 9 10.8 9 10.5L9.5 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>';
+  const iconBgs={'📄':'#fdf0ec','📝':'#e6f5ed','🖼️':'#eaeffe','📊':'#fdf3e3','📋':'#f0ede6','🎬':'#ede9fe','📎':'#f4f2ed'};
+  list.innerHTML=portfolioItems.map(item=>
+    '<div class="portfolio-item">'
+    +'<div class="portfolio-item-icon" style="background:'+(iconBgs[item.icon]||'#f4f2ed')+'">'+item.icon+'</div>'
+    +'<div class="portfolio-item-info">'
+    +'<div class="portfolio-item-name">'+item.name+'</div>'
+    +'<div class="portfolio-item-type">'+item.type+' · '+item.size+'</div>'
+    +'</div>'
+    +'<div class="portfolio-item-actions">'
+    +'<button class="pi-btn" onclick="viewPortfolioItem('+item.id+')" title="View">'+viewSvg+'</button>'
+    +'<button class="pi-btn del" onclick="deletePortfolioItem('+item.id+')" title="Remove">'+trashSvg+'</button>'
+    +'</div></div>'
+  ).join('');
+}
+
+function viewPortfolioItem(id){
+  const item=portfolioItems.find(x=>x.id===id);
+  if(item&&item.dataUrl) window.open(item.dataUrl,'_blank');
+}
+
+function deletePortfolioItem(id){
+  portfolioItems=portfolioItems.filter(x=>x.id!==id);
+  renderPortfolio();
+  scheduleSave();
+}
+
+// toggleVibesEdit and saveVibes defined above in About Me section
+
+// ══════════════════════════════════════════════════
+//  LOCATION
+// ══════════════════════════════════════════════════
+function renderLocs(){document.getElementById('loclist').innerHTML=locs.map((l,i)=>'<label class="loci"><input type="checkbox" '+(l.c?'checked':'')+' onchange="toggleLoc('+i+',this.checked)"><span>'+l.l+'</span></label>').join('');}
+function toggleLoc(i,v){locs[i].c=v;renderFeed();}
+function addLoc(){const inp=document.getElementById('locIn'),val=inp.value.trim();if(!val)return;locs.push({l:val,c:true});inp.value='';renderLocs();renderFeed();}
+
+// ══════════════════════════════════════════════════
+//  KEYBOARD / CLOSE HANDLERS
+// ══════════════════════════════════════════════════
+// ── PASTED JOB RENAME ─────────────────────────────
+let renamePastedJobId = null;
+function openRenamePasted(jobId){
+  renamePastedJobId = jobId;
+  const j = jobs.find(x=>x.id===jobId);
+  document.getElementById('renamePastedInput').value = j ? j.title : '';
+  document.getElementById('renamePastedModal').classList.add('open');
+  setTimeout(()=>{document.getElementById('renamePastedInput').focus();document.getElementById('renamePastedInput').select();},50);
+}
+function closeRenamePasted(){ document.getElementById('renamePastedModal').classList.remove('open'); renamePastedJobId=null; }
+function confirmRenamePasted(){
+  const val = document.getElementById('renamePastedInput').value.trim();
+  if(val && renamePastedJobId){
+    const j = jobs.find(x=>x.id===renamePastedJobId);
+    if(j){ j.title = val; renderFeed(); if(activeJob?.id===renamePastedJobId){ document.getElementById('jdRole').textContent=val; } }
+  }
+  closeRenamePasted();
+  scheduleSave();
+}
+
+// ── GOOGLE FORM FEEDBACK ─────────────────────────────
+// openFeedback and closeFeedback defined above in feedback section
+function openGoogleForm(){
+  // Replace this URL with your actual Google Form link once you create it at forms.google.com
+  const GOOGLE_FORM_URL = 'https://forms.gle/REPLACE_WITH_YOUR_FORM_ID';
+  window.open(GOOGLE_FORM_URL, '_blank');
+  document.getElementById('feedbackSent').style.display='block';
+  document.getElementById('feedbackForm').style.display='none';
+}
+
+// ── VIBES ANALYSIS TOGGLE (expands below) ────────────
+// ── VIBES ANALYSIS — opens modal ─────────────────────
+function toggleVibesAnalysis(){
+  const raw = document.getElementById('vText')?.value?.trim() || '';
+  if(!raw) return;
+  if(!vibesAnalysis) vibesAnalysis = analyzeVibes(raw);
+  const a = vibesAnalysis;
+  const isPro = userPlan==='pro'||userPlan==='vip';
+  let html = '';
+  if(a.interviewable.length){
+    html+='<div style="margin-bottom:14px;"><div style="font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gr);margin-bottom:8px;">Useful in interviews</div>'
+      +a.interviewable.map(s=>'<div style="font-size:12.5px;color:var(--ink2);padding:7px 0;border-bottom:1px solid var(--bd);display:flex;gap:8px;line-height:1.5;"><span style="color:var(--gr);flex-shrink:0;">✓</span>'+s+'</div>').join('')
+      +'</div>';
+  }
+  if(a.prefs.length){
+    html+='<div style="margin-bottom:14px;"><div style="font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ac);margin-bottom:8px;">How Fitted is filtering your feed</div>'
+      +a.prefs.map(s=>'<div style="font-size:12.5px;color:var(--ink2);padding:7px 0;border-bottom:1px solid var(--bd);display:flex;gap:8px;line-height:1.5;"><span style="color:var(--ac);flex-shrink:0;">◎</span>'+s+'</div>').join('')
+      +'</div>';
+  }
+  if(a.insights.length){
+    html+='<div style="margin-bottom:14px;"><div style="font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:8px;">Tips</div>'
+      +a.insights.map(s=>'<div style="font-size:12.5px;color:var(--ink2);padding:7px 0;border-bottom:1px solid var(--bd);display:flex;gap:8px;line-height:1.5;"><span style="color:var(--ink4);flex-shrink:0;">→</span>'+s+'</div>').join('')
+      +'</div>';
+  }
+  if(!isPro){
+    html+='<div style="background:var(--gds);border-radius:var(--rs);padding:12px 14px;text-align:center;margin-top:8px;">'
+      +'<div style="font-size:13px;font-weight:500;color:var(--gd);margin-bottom:4px;">✦ Pro — Ask me questions</div>'
+      +'<div style="font-size:12px;color:var(--ink3);margin-bottom:10px;line-height:1.5;">Fitted will ask you targeted questions to build a richer profile — better matches, better tips, better prep.</div>'
+      +'<button onclick="closeVibesAnalysis();openSubscription()" style="padding:7px 16px;background:var(--gd);color:#fff;border:none;border-radius:var(--rs);font-family:\'DM Sans\',sans-serif;font-size:12px;font-weight:500;cursor:pointer;">Unlock with Pro</button>'
+      +'</div>';
+  }
+  const content = document.getElementById('vibesAnalysisContent');
+  if(content) content.innerHTML = html;
+  const modal = document.getElementById('vibesAnalysisModal');
+  if(modal) modal.classList.add('open');
+}
+function closeVibesAnalysis(){
+  const modal = document.getElementById('vibesAnalysisModal');
+  if(modal) modal.classList.remove('open');
+}
+// openVibesAnalysis is an alias for the button
+function openVibesAnalysis(){ toggleVibesAnalysis(); }
+
+// ── PERSONAL FIT % in Match tab (#5) ────────────────
+function getPersonalFitScore(job){
+  const raw = document.getElementById('vText')?.value?.trim()||'';
+  if(!raw) return null;
+  const t = raw.toLowerCase();
+  let score = 60;
+  if(t.includes('remote')&&job.type==='Remote') score+=12;
+  if(t.includes('hybrid')&&job.type==='Hybrid') score+=10;
+  const dreamCos=['ralph lauren','sézane','sezane','aritzia','reformation','hermès','hermes','marine layer','ferrari'];
+  if(dreamCos.some(c=>job.company.toLowerCase().includes(c))) score+=15;
+  if(t.includes('brand')&&job.tags.includes('brand')) score+=8;
+  if(t.includes('marketing')&&job.tags.includes('marketing')) score+=8;
+  if(t.includes('comms')&&job.tags.includes('comms')) score+=8;
+  return Math.min(99, score);
+}
+
+// ── CHATBOT PRO GATING (#7b) ─────────────────────────
+function initChat(){
+  const j=activeJob;if(!j)return;
+  if(chatJobId!==j.id){chatJobId=j.id;if(!chatHistory[j.id])chatHistory[j.id]=[];}
+  document.getElementById('jdChatInput').value='';
+  rerenderChat();
+  updateChatProGating();
+  const sugg=document.getElementById('jdChatSuggestions');
+  sugg.innerHTML=chatHistory[j.id].length===0
+    ?CHAT_SUGGESTIONS.map(s=>'<button class="jd-chat-chip" onclick="sendChatMsg(\''+s.replace(/'/g,"\\'")+'\')">'+s+'</button>').join(''):'' ;
+}
+
+function updateChatProGating(){
+  const isPro=userPlan==='pro'||userPlan==='vip';
+  const inputRow=document.getElementById('jdChatInputRow');
+  const lockRow=document.getElementById('jdChatLock');
+  if(inputRow) inputRow.style.display=isPro?'flex':'none';
+  if(lockRow) lockRow.style.display=isPro?'none':'flex';
+}
+
+// ── BADGES fix (Tracker badge instead of Applied count) ──
+function badges(){
+  document.getElementById('bdgB').textContent=jobs.filter(j=>!appliedSet.has(j.id)&&!disliked.has(j.id)).length;
+  document.getElementById('bdgS').textContent=starred.size;
+  document.getElementById('bdgA').textContent=Object.keys(trackerData).length||'';
+}
+
+// ── LOCALSTORAGE: userProfile + feedbackList saved in main saveState below
+
+// Build dislike options
+document.getElementById('dislikeOptions').innerHTML = DISLIKE_REASONS.map(r=>
+  '<div class="dislike-opt" data-reason="'+r.id+'" onclick="toggleDislikeOpt(this)">'+r.label+'</div>'
+).join('');
+
+// Build chip quick-add suggestions
+document.getElementById('chipSuggestions').innerHTML = CHIP_SUGGESTIONS.map(s=>
+  '<button class="chip" style="font-size:11.5px;padding:4px 10px;" onclick="quickAddChip(\''+s+'\')">'+s+'</button>'
+).join('');
+
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    if(document.getElementById('vibesAnalysisModal').classList.contains('open'))closeVibesAnalysis();
+    else if(document.getElementById('renamePastedModal').classList.contains('open'))closeRenamePasted();
+    else if(document.getElementById('onboardingModal').classList.contains('open'))skipOnboarding();
+    else if(document.getElementById('feedbackModal').classList.contains('open'))closeFeedback();
+    else if(document.getElementById('addChipModal').classList.contains('open'))closeAddChip();
+    else if(document.getElementById('dislikeModal').classList.contains('open'))closeDislike();
+    else if(document.getElementById('subModal').classList.contains('open'))closeSubscription();
+    else if(document.getElementById('renameModal').classList.contains('open'))closeRename();
+    else if(document.getElementById('jdOverlay').classList.contains('open'))closeDetail();
+    else if(document.getElementById('kanbanOverlay').classList.contains('open'))closeTracker();
+    else if(document.getElementById('pov').classList.contains('open'))closePaste();
+  }
+});
+
+
+renderLocs();
+renderChips();
+renderFeed();
+badges();
+updateTrackerBadge();
+updateProUI();
+renderResumes();
+renderPortfolio();
+
+// Show onboarding if first time
+setTimeout(()=>{
+  if(!userProfile.onboarded && !hadSavedState){
+    openOnboarding();
+  } else if(hadSavedState && userProfile.name){
+    document.getElementById('userGreeting') && (document.getElementById('userGreeting').textContent='Hi, '+userProfile.name.split(' ')[0]+' 👋');
+  } else if(!userProfile.onboarded && hadSavedState){
+    // Has data but never onboarded — remind gently after 30 seconds
+    setTimeout(()=>{
+      const hint=document.createElement('div');
+      hint.style.cssText='position:fixed;bottom:20px;right:20px;background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r);padding:14px 18px;font-size:13px;color:var(--ink2);box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:200;cursor:pointer;max-width:260px;line-height:1.5;';
+      hint.innerHTML='<strong style="display:block;margin-bottom:4px;">👋 Set up your profile</strong>Add your name and email to personalize fitted. <span style="color:var(--ac);display:block;margin-top:8px;font-size:12px;">Tap to set up →</span>';
+      hint.onclick=()=>{hint.remove();openOnboarding();};
+      document.body.appendChild(hint);
+      setTimeout(()=>hint.remove(),8000);
+    },30000);
+  }
+  // Welcome back message
+  if(hadSavedState && (resumes.length>0||jobs.length>0||Object.keys(trackerData).length>0)){
+    const toast=document.createElement('div');
+    toast.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--sf);border:1px solid var(--bd2);border-radius:20px;padding:8px 18px;font-size:12.5px;color:var(--ink3);box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:200;pointer-events:none;';
+    toast.textContent='✓ Your data has been restored';
+    document.body.appendChild(toast);
+    setTimeout(()=>toast.remove(),2800);
+  }
+},200);
+
+const LS_KEY = 'fitted_v1';
+
+function saveState(){
+  try {
+    const state = {
+      jobs:          jobs.filter(j=>j.pasted),
+      starred:       [...starred],
+      appliedSet:    [...appliedSet],
+      locs,
+      notes,
+      trackerData,
+      disliked:      [...disliked],
+      dislikePrefs,
+      userPlan,
+      chipDefs,
+      promoCodes:    Object.fromEntries(Object.entries(PROMO_CODES).map(([k,v])=>[k,{...v}])),
+      portfolioItems,
+      resumeMeta:    resumes.map(r=>({id:r.id,file:r.file,label:r.label,analyzing:false,jobCount:r.jobCount,fileUrl:null,dataUrl:r.dataUrl||null})),
+      activeR,
+      vibesRaw:      document.getElementById('vText')?.value || '',
+      payMin:        document.getElementById('payMin')?.value || '',
+      userProfile,
+      feedbackList,
+    };
+    localStorage.setItem(LS_KEY, JSON.stringify(state));
+  } catch(e){ console.warn('Fitted: could not save state', e); }
+}
+
+function loadState(){
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if(!raw) return false;
+    const s = JSON.parse(raw);
+
+    if(s.jobs)        jobs        = s.jobs;
+    if(s.starred)     starred     = new Set(s.starred);
+    if(s.appliedSet)  appliedSet  = new Set(s.appliedSet);
+    if(s.locs)        locs        = s.locs;
+    if(s.notes)       notes       = s.notes;
+    if(s.trackerData) trackerData = s.trackerData;
+    if(s.disliked)    disliked    = new Set(s.disliked);
+    if(s.dislikePrefs)dislikePrefs= s.dislikePrefs;
+    if(s.userPlan)    userPlan    = s.userPlan;
+    if(s.chipDefs)    chipDefs    = s.chipDefs;
+
+    // Restore promo codes (so used codes stay used)
+    if(s.promoCodes){
+      Object.entries(s.promoCodes).forEach(([k,v])=>{
+        if(PROMO_CODES[k]) PROMO_CODES[k].used = v.used;
+      });
+    }
+
+    if(s.portfolioItems) portfolioItems = s.portfolioItems;
+
+    // Restore resumes (with dataUrl so View button works across sessions)
+    if(s.resumeMeta) resumes = s.resumeMeta;
+    if(s.activeR !== undefined) activeR = s.activeR;
+
+    // Restore vibes and pay target after DOM is ready
+    setTimeout(()=>{
+      if(s.vibesTags && s.vibesTags !== '<span class="vempty">Tell us about yourself — we\'ll match you better.</span>'){
+        const vtags = document.getElementById('vtags');
+        if(vtags) vtags.innerHTML = s.vibesTags;
+        if(s.vibesRaw || s.vibesText){ const vt = document.getElementById('vText'); if(vt) vt.value = s.vibesRaw || s.vibesText; }
+      }
+      if(s.payMin){ const pm = document.getElementById('payMin'); if(pm) pm.value = s.payMin; }
+    }, 100);
+
+    return true;
+  } catch(e){ console.warn('Fitted: could not load state', e); return false; }
+}
+
+// Patch all state-mutating functions to schedule a save after they run
+const _origRenderFeed   = renderFeed;
+const _origMarkApplied  = markApplied;
+const _origToggleStar   = toggleStar;
+const _origConfirmDislike = confirmDislike;
+const _origAddToTracker = addToTracker;
+const _origRemoveFromTracker = removeFromTracker;
+const _origSaveVibes    = saveVibes;
+const _origAddLoc       = addLoc;
+const _origToggleLoc    = toggleLoc;
+const _origActivatePro  = activatePro;
+const _origCheckPromo   = checkPromoCode;
+const _origConfirmRename= confirmRename;
+const _origConfirmAdd   = confirmAddChip;
+const _origRemoveChip   = removeChip;
+
+renderFeed = function(...a){ _origRenderFeed(...a); scheduleSave(); };
+markApplied = function(...a){ _origMarkApplied(...a); scheduleSave(); };
+toggleStar = function(...a){ _origToggleStar(...a); scheduleSave(); };
+confirmDislike = function(...a){ _origConfirmDislike(...a); scheduleSave(); };
+addToTracker = function(...a){ _origAddToTracker(...a); scheduleSave(); };
+removeFromTracker = function(...a){ _origRemoveFromTracker(...a); scheduleSave(); };
+saveVibes = function(...a){ _origSaveVibes(...a); scheduleSave(); };
+addLoc = function(...a){ _origAddLoc(...a); scheduleSave(); };
+toggleLoc = function(...a){ _origToggleLoc(...a); scheduleSave(); };
+activatePro = function(...a){ _origActivatePro(...a); scheduleSave(); };
+checkPromoCode = function(...a){ _origCheckPromo(...a); scheduleSave(); };
+confirmRename = function(...a){ _origConfirmRename(...a); scheduleSave(); };
+confirmAddChip = function(...a){ _origConfirmAdd(...a); scheduleSave(); };
+removeChip = function(...a){ _origRemoveChip(...a); scheduleSave(); };
+
+// Save notes as user types
+document.addEventListener('input', function(e){
+  if(e.target && e.target.id === 'notesArea'){
+    if(activeJob) notes[activeJob.id] = e.target.value;
+    scheduleSave();
+  }
+  if(e.target && e.target.id === 'payMin') scheduleSave();
+});
+
+// Save tracker edits (deadline/notes via editTrackerCard)
+const _origEditTracker = editTrackerCard;
+editTrackerCard = function(...a){ _origEditTracker(...a); scheduleSave(); };
+
+// ── INIT ──────────────────────────────────────────
+// Fresh start for brand-new users — clears any stale data from dev/testing
+if(!localStorage.getItem('fitted_initialized')){
+  localStorage.clear();
+  localStorage.setItem('fitted_initialized','1');
+}
+
+const hadSavedState = loadState();
+
+// Restore vibes text and analysis button from localStorage
+setTimeout(()=>{
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){
+      const s = JSON.parse(raw);
+      if(s.vibesRaw || s.vibesText){
+        const val = s.vibesRaw || s.vibesText;
+        const vt = document.getElementById('vText');
+        if(vt) vt.value = val;
+        const btn = document.getElementById('vAnalysisBtn');
+        if(btn) btn.style.display = 'inline-flex';
+        vibesAnalysis = analyzeVibes(val);
+      }
+      if(s.userProfile) Object.assign(userProfile, s.userProfile);
+      if(s.feedbackList) feedbackList = s.feedbackList;
+    }
+  }catch(e){}
+}, 100);
+
+renderLocs();
+renderChips();
+renderFeed();
+badges();
+updateTrackerBadge();
+updateProUI();
+renderResumes();
+renderPortfolio();
+
+// ── PWA INSTALL PROMPT ─────────────────────────────
+let deferredInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  // Show install banner after 3 seconds if not already installed
+  if(!localStorage.getItem('fitted_pwa_dismissed')){
+    setTimeout(showInstallBanner, 3000);
+  }
+});
+
+function showInstallBanner(){
+  if(document.getElementById('pwaBanner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'pwaBanner';
+  banner.className = 'pwa-banner';
+  banner.innerHTML = `
+    <div class="pwa-banner-logo">fitted<span>.</span></div>
+    <div class="pwa-banner-text">
+      <div class="pwa-banner-title">Install fitted.</div>
+      <div class="pwa-banner-sub">Add to your home screen for quick access</div>
+    </div>
+    <div class="pwa-banner-actions">
+      <button class="pwa-banner-install" onclick="installPWA()">Install</button>
+      <button class="pwa-banner-dismiss" onclick="dismissInstallBanner()" title="Dismiss">×</button>
+    </div>`;
+  document.body.appendChild(banner);
+}
+
+function installPWA(){
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.then(choice => {
+      if(choice.outcome === 'accepted') dismissInstallBanner();
+      deferredInstallPrompt = null;
+    });
+  }
+}
+
+function dismissInstallBanner(){
+  const b = document.getElementById('pwaBanner');
+  if(b) b.remove();
+  localStorage.setItem('fitted_pwa_dismissed', '1');
+}
+
+// ── iOS: show install instructions (Safari doesn't support beforeinstallprompt)
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isInStandaloneMode = window.navigator.standalone === true;
+if(isIOS && !isInStandaloneMode && !localStorage.getItem('fitted_ios_dismissed')){
+  setTimeout(()=>{
+    const banner = document.createElement('div');
+    banner.id = 'iosBanner';
+    banner.className = 'pwa-banner';
+    banner.style.bottom = '20px';
+    banner.innerHTML = `
+      <div style="flex:1;">
+        <div class="pwa-banner-title" style="margin-bottom:4px;">Add fitted. to your Home Screen</div>
+        <div class="pwa-banner-sub" style="line-height:1.6;">Tap the <strong>Share</strong> button <span style="font-size:14px;">⎙</span> at the bottom of Safari, then tap <strong>"Add to Home Screen"</strong></div>
+      </div>
+      <button class="pwa-banner-dismiss" onclick="this.closest('#iosBanner').remove();localStorage.setItem('fitted_ios_dismissed','1')">×</button>`;
+    document.body.appendChild(banner);
+  }, 4000);
+}
+
+// Show a subtle welcome-back message if state was restored
+if(hadSavedState && (resumes.length > 0 || jobs.length > 0 || Object.keys(trackerData).length > 0)){
+  setTimeout(()=>{
+    const hint = document.createElement('div');
+    hint.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--sf);border:1px solid var(--bd2);border-radius:20px;padding:8px 18px;font-size:12.5px;color:var(--ink3);box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:200;pointer-events:none;animation:fadeIn .3s ease;';
+    hint.textContent = '✓ Your data has been restored';
+    document.body.appendChild(hint);
+    setTimeout(()=>hint.remove(), 2800);
+  }, 600);
+}
+</script>
+<!-- VIBES ANALYSIS MODAL (What fitted. thinks about you) -->
+<div class="ov" id="vibesAnalysisModal" onclick="if(event.target===this)closeVibesAnalysis()">
+  <div class="modal sm" style="width:460px;max-height:80vh;overflow-y:auto;">
+    <div class="mtitle" style="font-size:18px;margin-bottom:4px;">What fitted. thinks about you</div>
+    <div class="msub" style="margin-bottom:16px;">Based on what you wrote in About Me</div>
+    <div id="vibesAnalysisContent" style="padding:4px 0;"></div>
+    <div class="mfoot" style="margin-top:16px;">
+      <button class="bp" onclick="closeVibesAnalysis()">Done</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
