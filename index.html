@@ -891,26 +891,12 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 
 <!-- FEEDBACK MODAL -->
 <div class="ov" id="feedbackModal" onclick="if(event.target===this)closeFeedback()">
-  <div class="modal sm" style="width:440px;">
-    <div class="mtitle" style="font-size:18px;margin-bottom:4px;">Send feedback</div>
-    <div class="msub">Tell us what's working, what's broken, or what you'd love to see. Every message gets read.</div>
-    <div id="feedbackForm">
-      <textarea id="feedbackText" class="mta" placeholder="What's on your mind? Feature requests, bugs, general thoughts — all welcome." style="min-height:120px;"></textarea>
-      <div style="font-size:12px;color:var(--a2);margin-top:4px;min-height:16px;" id="feedbackHint"></div>
-      <div style="margin-top:10px;">
-        <div style="font-size:12px;font-weight:500;color:var(--ink3);margin-bottom:4px;">Your email (optional — only if you want a reply)</div>
-        <input type="email" id="feedbackEmail" class="minput" placeholder="you@email.com" style="font-size:13px;padding:8px 10px;">
-      </div>
-      <div class="mfoot" style="margin-top:14px;">
-        <button class="bg2" onclick="closeFeedback()">Cancel</button>
-        <button class="bp" onclick="openGoogleForm()">Open feedback form →</button>
-      </div>
-    </div>
-    <div id="feedbackSent" style="display:none;text-align:center;padding:20px 0;">
-      <div style="font-size:28px;margin-bottom:10px;">✓</div>
-      <div style="font-size:14px;font-weight:500;color:var(--ink);margin-bottom:6px;">Thanks for your feedback!</div>
-      <div style="font-size:12.5px;color:var(--ink3);margin-bottom:16px;">Every message gets read. If you left your email, we'll be in touch.</div>
-      <button class="bp" onclick="closeFeedback()">Done</button>
+  <div class="modal sm" style="width:400px;">
+    <div class="mtitle" style="font-size:18px;margin-bottom:6px;">Share your feedback</div>
+    <div class="msub" style="line-height:1.6;margin-bottom:20px;">We'd love to hear what you think — bugs, feature ideas, what you love, what's confusing. Tap below to open our quick form. It takes less than a minute and every response gets read personally.</div>
+    <div class="mfoot">
+      <button class="bg2" onclick="closeFeedback()">Cancel</button>
+      <button class="bp" onclick="openGoogleForm()">Open feedback form →</button>
     </div>
   </div>
 </div>
@@ -2376,8 +2362,6 @@ function skipOnboarding(){
 let feedbackList = [];
 
 function openFeedback(){
-  document.getElementById('feedbackSent').style.display='none';
-  document.getElementById('feedbackForm').style.display='block';
   document.getElementById('feedbackModal').classList.add('open');
 }
 function closeFeedback(){ document.getElementById('feedbackModal').classList.remove('open'); }
@@ -2553,11 +2537,9 @@ function confirmRenamePasted(){
 // ── GOOGLE FORM FEEDBACK ─────────────────────────────
 // openFeedback and closeFeedback defined above in feedback section
 function openGoogleForm(){
-  // Replace this URL with your actual Google Form link once you create it at forms.google.com
   const GOOGLE_FORM_URL = 'https://forms.gle/9yn4ibFdDc1cEhy57';
   window.open(GOOGLE_FORM_URL, '_blank');
-  document.getElementById('feedbackSent').style.display='block';
-  document.getElementById('feedbackForm').style.display='none';
+  closeFeedback();
 }
 
 // ── VIBES ANALYSIS TOGGLE (expands below) ────────────
