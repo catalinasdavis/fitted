@@ -1224,6 +1224,7 @@ let chatJobId = null;
 // Tracker state: jobId -> {col, resumeUsed, deadline, notes}
 let trackerData = {};
 let dragJobId = null;
+let kanbanLongPressTimer = null;
 
 // ══════════════════════════════════════════════════
 //  HELPERS
@@ -1396,6 +1397,7 @@ function updateTrackerBadge(){
   else badge.style.display='none';
 }
 
+// FIXED: Kanban mobile + Rejected buttons
 function renderKanban(){
   const body=document.getElementById('kanbanBody');
   body.innerHTML='';
@@ -1417,9 +1419,8 @@ function renderKanban(){
       e.preventDefault();zone.classList.remove('over');
       if(dragJobId&&trackerData[dragJobId]){
         trackerData[dragJobId].col=col.id;
-        // If moved to applied, also add to appliedSet
-        if(col.id==='applied')appliedSet.add(dragJobId);
-        renderKanban();renderFeed();badges();
+        if(col.id==='applied') appliedSet.add(dragJobId);
+        renderKanban();renderFeed();badges();scheduleSave();
       }
     });
     if(colJobs.length===0){
@@ -1430,10 +1431,21 @@ function renderKanban(){
         const days=daysUntil(td.deadline);
         const card=document.createElement('div');
         card.className='kanban-card';
-        card.draggable=true;
-        card.addEventListener('dragstart',()=>{dragJobId=j.id;card.classList.add('dragging');});
-        card.addEventListener('dragend',()=>card.classList.remove('dragging'));
+        card.draggable=!isMobile();
+        // Desktop drag
+        if(!isMobile()){
+          card.addEventListener('dragstart',()=>{dragJobId=j.id;card.classList.add('dragging');});
+          card.addEventListener('dragend',()=>card.classList.remove('dragging'));
+        }
+        // Mobile: long-press to show move menu
+        card.addEventListener('touchstart',()=>{
+          kanbanLongPressTimer=setTimeout(()=>showKanbanMoveMenu(j.id,col.id),600);
+        },{passive:true});
+        card.addEventListener('touchend',()=>clearTimeout(kanbanLongPressTimer));
+        card.addEventListener('touchmove',()=>clearTimeout(kanbanLongPressTimer));
+
         const typeClass=j.type==='Remote'?'rem':j.type==='Hybrid'?'hyb':'ons';
+        // FIXED: Build action buttons safely using data attributes (not inline onclick with closure vars)
         card.innerHTML=
           '<div class="kc-title">'+j.title+'</div>'
           +'<div class="kc-co"><strong>'+j.company+'</strong> · '+j.location+'</div>'
@@ -1445,16 +1457,79 @@ function renderKanban(){
           +'</div>'
           +(td.notes?'<div style="font-size:11.5px;color:var(--ink3);margin-top:8px;line-height:1.5;background:var(--sf2);border-radius:var(--rx);padding:6px 8px;">'+escapeHtml(td.notes)+'</div>':'')
           +'<div class="kc-actions">'
-          +'<button class="kc-btn" onclick="openDetail(jobs.find(x=>x.id===\''+j.id+'\'))">View</button>'
-          +'<button class="kc-btn" onclick="editTrackerCard(\''+j.id+'\')">Edit</button>'
-          +'<button class="kc-btn danger" onclick="removeFromTracker(\''+j.id+'\')">Remove</button>'
+          +'<button class="kc-btn" data-action="view" data-jid="'+j.id+'">View</button>'
+          +'<button class="kc-btn" data-action="edit" data-jid="'+j.id+'">Edit</button>'
+          +'<button class="kc-btn danger" data-action="remove" data-jid="'+j.id+'">Remove</button>'
           +'</div>';
+
+        // Attach action listeners after innerHTML so they always work (fixes Rejected column bug)
+        card.querySelectorAll('.kc-btn[data-action]').forEach(btn=>{
+          btn.addEventListener('click', e=>{
+            e.stopPropagation();
+            const jid = btn.dataset.jid;
+            const action = btn.dataset.action;
+            if(action==='view'){
+              const found=jobs.find(x=>x.id===jid);
+              if(found) openDetail(found);
+            } else if(action==='edit'){
+              editTrackerCard(jid);
+            } else if(action==='remove'){
+              removeFromTracker(jid);
+            }
+          });
+        });
+
         zone.appendChild(card);
       });
     }
     colEl.appendChild(zone);
     body.appendChild(colEl);
   });
+}
+
+// FIXED: Mobile long-press move menu for Kanban
+function showKanbanMoveMenu(jobId, currentColId){
+  // Remove any existing menu
+  document.getElementById('kanbanMoveMenu')?.remove();
+
+  const sheet = document.createElement('div');
+  sheet.id = 'kanbanMoveMenu';
+  sheet.style.cssText = 'position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(0,0,0,.4);animation:fadeIn .15s ease;';
+
+  const menu = document.createElement('div');
+  menu.style.cssText = 'background:var(--sf);border-radius:16px 16px 0 0;padding:16px 0 32px;';
+
+  const j = jobs.find(x=>x.id===jobId);
+  const title = j ? j.title : 'This job';
+
+  let html = '<div style="font-size:13px;font-weight:600;color:var(--ink);padding:0 20px 14px;border-bottom:1px solid var(--bd);margin-bottom:8px;">'+escapeHtml(title)+'</div>';
+
+  KANBAN_COLS.forEach(col=>{
+    if(col.id === currentColId) return; // skip current column
+    html += '<button onclick="moveKanbanJob(\''+jobId+'\',\''+col.id+'\')" style="display:block;width:100%;padding:14px 20px;border:none;background:none;text-align:left;font-family:\'DM Sans\',sans-serif;font-size:14px;color:var(--ink2);cursor:pointer;">Move to <strong style="color:'+col.color+'">'+col.label+'</strong></button>';
+  });
+
+  html += '<div style="height:1px;background:var(--bd);margin:8px 0;"></div>';
+  html += '<button onclick="const f=jobs.find(x=>x.id===\''+jobId+'\');if(f){closeKanbanMoveMenu();setTimeout(()=>openDetail(f),100);}" style="display:block;width:100%;padding:14px 20px;border:none;background:none;text-align:left;font-family:\'DM Sans\',sans-serif;font-size:14px;color:var(--ac);cursor:pointer;">View details</button>';
+  html += '<button onclick="removeFromTracker(\''+jobId+'\');closeKanbanMoveMenu();" style="display:block;width:100%;padding:14px 20px;border:none;background:none;text-align:left;font-family:\'DM Sans\',sans-serif;font-size:14px;color:var(--a2);cursor:pointer;">Remove from tracker</button>';
+
+  menu.innerHTML = html;
+  sheet.appendChild(menu);
+  sheet.addEventListener('click', e=>{ if(e.target===sheet) closeKanbanMoveMenu(); });
+  document.body.appendChild(sheet);
+}
+
+function closeKanbanMoveMenu(){
+  document.getElementById('kanbanMoveMenu')?.remove();
+}
+
+function moveKanbanJob(jobId, colId){
+  if(trackerData[jobId]){
+    trackerData[jobId].col = colId;
+    if(colId==='applied') appliedSet.add(jobId);
+    renderKanban();renderFeed();badges();scheduleSave();
+  }
+  closeKanbanMoveMenu();
 }
 
 function removeFromTracker(jobId){
@@ -2153,12 +2228,59 @@ function reEvaluateAllJobs(){
   }
 }
 
+// FIXED: Much smarter guessTitle — matches common resume filename patterns across all fields
 function guessTitle(fn){
-  const n=fn.toLowerCase();
-  if(n.includes('brand')||n.includes('marketing'))return'Brand & Marketing';
-  if(n.includes('comms')||n.includes('communication'))return'Communications';
-  if(n.includes('sales')||n.includes('biz')||n.includes('business'))return'Business Dev';
-  return'General / Master';
+  const n = fn.toLowerCase().replace(/[-_.\s]+/g, ' ').replace(/\.(pdf|docx?|txt)$/,'');
+
+  // Marketing / Brand
+  if(/\b(brand|marketing|content|social media|influencer|campaign|creative|comms?|communications?|pr|public relations|copywriting)\b/.test(n))
+    return 'Brand & Marketing';
+
+  // Business Dev / Sales
+  if(/\b(biz ?dev|business dev|sales|partnerships?|outreach|account|pipeline|crm|revenue|growth|sdr|bdr|adr)\b/.test(n))
+    return 'Business Dev';
+
+  // Tech & Operations
+  if(/\b(tech|operations?|ops|project ?mgmt|program|coordinator|systems?|data|analyst|sql|product|pm)\b/.test(n))
+    return 'Tech & Operations';
+
+  // Creative & Design
+  if(/\b(design|graphic|visual|creative|ux|ui|art|portfolio|figma|adobe|illustration)\b/.test(n))
+    return 'Brand & Marketing'; // maps to closest resume keyword set
+
+  // Healthcare & Science
+  if(/\b(health|medical|clinical|nursing|patient|pharma|biology|chem|lab|science|research|md|rn|np|pa)\b/.test(n))
+    return 'Healthcare & Science';
+
+  // Legal & Policy
+  if(/\b(legal|law|policy|compliance|regulatory|jd|counsel|paralegal|government|gov)\b/.test(n))
+    return 'Legal & Policy';
+
+  // Engineering & Architecture
+  if(/\b(engineer|engineering|architecture|arch|civil|structural|mechanical|electrical|cad|revit|autocad)\b/.test(n))
+    return 'Engineering & Architecture';
+
+  // Finance & Accounting
+  if(/\b(finance|financial|accounting|cpa|cfa|banking|investment|audit|budget|mba|econ)\b/.test(n))
+    return 'Finance & Accounting';
+
+  // Human Resources
+  if(/\b(hr|human ?resources?|recruiting|talent|people ?ops|onboarding|hris|dei)\b/.test(n))
+    return 'Human Resources';
+
+  // Nonprofit & Education
+  if(/\b(nonprofit|ngo|education|teaching|teacher|program|community|outreach|social ?impact|grant)\b/.test(n))
+    return 'Nonprofit & Education';
+
+  // Pharmacy & Research
+  if(/\b(pharmd|pharmacy|pharmacol|drug|biochem|molecular|clinical ?trial|fda|regulatory)\b/.test(n))
+    return 'Pharmacy & Research';
+
+  // Communications standalone
+  if(/\b(comms|communication|newsletter|editorial|writing|media|journalism)\b/.test(n))
+    return 'Communications';
+
+  return 'General / Master';
 }
 
 function renderResumes(){
@@ -2210,12 +2332,22 @@ function startRename(e,id){
   setTimeout(()=>{document.getElementById('renameInput').focus();document.getElementById('renameInput').select();},50);
 }
 
+// FIXED: confirmRename — updates label then re-evaluates all jobs so matches reflect new resume type
 function confirmRename(){
   const modal=document.getElementById('renameModal');
   const id=parseInt(modal.dataset.rid);
   const val=document.getElementById('renameInput').value.trim();
-  if(val){const r=resumes.find(x=>x.id===id);if(r)r.label=val;}
-  modal.classList.remove('open');renderResumes();renderFeed();
+  if(val){
+    const r=resumes.find(x=>x.id===id);
+    if(r){
+      r.label=val;
+      r.jobCount=(INDEED_JOBS[val]||[]).length;
+    }
+  }
+  modal.classList.remove('open');
+  reEvaluateAllJobs(); // re-score all jobs against new label
+  renderResumes();
+  scheduleSave();
 }
 function closeRename(){document.getElementById('renameModal').classList.remove('open');}
 
