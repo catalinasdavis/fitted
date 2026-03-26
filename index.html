@@ -1067,6 +1067,7 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 </div>
 
 <script>
+// fitted. v2 — fresh start + smart re-eval + quiz onboarding + mobile responsive
 // ── scheduleSave defined FIRST — called by many functions below ──────────────
 let saveTimer = null;
 function scheduleSave(){
@@ -2162,9 +2163,11 @@ function guessTitle(fn){
 
 function renderResumes(){
   const rl=document.getElementById('rList'),hint=document.getElementById('rHint'),allWrap=document.getElementById('rAllWrap'),allBtn=document.getElementById('rAll');
-  if(!resumes.length){rl.innerHTML='';hint.style.display='block';allWrap.style.display='none';return;}
+  const btn=document.getElementById('findJobsBtn');
+  if(!resumes.length){rl.innerHTML='';hint.style.display='block';allWrap.style.display='none';if(btn)btn.disabled=true;return;}
   hint.style.display='none';
   const ready=resumes.filter(r=>!r.analyzing);
+  if(btn) btn.disabled=ready.length===0;
   allWrap.style.display=ready.length>=2?'block':'none';
   if(allBtn)allBtn.className='ri-all'+(activeR===null?' act':'');
   const trashIcon='<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 3.5H11M4.5 3.5V2.5C4.5 2 5 1.5 5.5 1.5H7.5C8 1.5 8.5 2 8.5 2.5V3.5M5 6V10M8 6V10M2.5 3.5L3 11C3 11.5 3.5 12 4 12H9C9.5 12 10 11.5 10 11L10.5 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>';
@@ -2278,7 +2281,7 @@ function toggleDislikeOpt(el){
 // ══════════════════════════════════════════════════
 // Valid promo codes (one-time use per code)
 const PROMO_CODES = {
-  'CATALINA-VIP': {used: false, label: 'Catalina VIP'},
+  'CATALINA-VIP': {used: false, label: 'Catalina VIP', reusable: true},
   'AUSTYN-VIP':   {used: false, label: 'Austyn VIP'},
   'ROXANNE-VIP':  {used: false, label: 'Roxanne VIP'},
   'DAD-VIP':      {used: false, label: 'Dad VIP'},
@@ -2306,9 +2309,9 @@ function checkPromoCode(){
   if(!raw){ fb.textContent='Please enter a code.'; fb.className='promo-feedback err'; return; }
   const code = PROMO_CODES[raw];
   if(!code){ fb.textContent='That code isn\'t valid. Check the spelling and try again.'; fb.className='promo-feedback err'; return; }
-  if(code.used){ fb.textContent='This code has already been used and can\'t be shared.'; fb.className='promo-feedback err'; return; }
+  if(code.used && !code.reusable){ fb.textContent='This code has already been used and can\'t be shared.'; fb.className='promo-feedback err'; return; }
   // Valid — activate pro
-  code.used = true;
+  if(!code.reusable) code.used = true;
   userPlan = 'vip';
   fb.textContent='✓ Code accepted! You now have free Pro access. Welcome to Fitted Pro.';
   fb.className='promo-feedback ok';
@@ -2985,12 +2988,15 @@ function loadState(){
     if(s.resumeMeta) resumes = s.resumeMeta;
     if(s.activeR !== undefined) activeR = s.activeR;
 
-    // Restore vibes and pay target after DOM is ready
+    // Restore vibes text and pay target after DOM is ready
     setTimeout(()=>{
-      if(s.vibesTags && s.vibesTags !== '<span class="vempty">Tell us about yourself — we\'ll match you better.</span>'){
-        const vtags = document.getElementById('vtags');
-        if(vtags) vtags.innerHTML = s.vibesTags;
-        if(s.vibesRaw || s.vibesText){ const vt = document.getElementById('vText'); if(vt) vt.value = s.vibesRaw || s.vibesText; }
+      if(s.vibesRaw || s.vibesText){
+        const val = s.vibesRaw || s.vibesText;
+        const vt = document.getElementById('vText');
+        if(vt){ vt.value = val; }
+        const btn = document.getElementById('vAnalysisBtn');
+        if(btn && val.trim()) btn.style.display = 'inline-flex';
+        if(val.trim()) vibesAnalysis = analyzeVibes(val);
       }
       if(s.payMin){ const pm = document.getElementById('payMin'); if(pm) pm.value = s.payMin; }
     }, 100);
@@ -3052,20 +3058,12 @@ if(!localStorage.getItem('fitted_initialized')){
 
 const hadSavedState = loadState();
 
-// Restore vibes text and analysis button from localStorage
+// Restore userProfile and feedbackList (not in main loadState)
 setTimeout(()=>{
   try{
     const raw = localStorage.getItem(LS_KEY);
     if(raw){
       const s = JSON.parse(raw);
-      if(s.vibesRaw || s.vibesText){
-        const val = s.vibesRaw || s.vibesText;
-        const vt = document.getElementById('vText');
-        if(vt) vt.value = val;
-        const btn = document.getElementById('vAnalysisBtn');
-        if(btn) btn.style.display = 'inline-flex';
-        vibesAnalysis = analyzeVibes(val);
-      }
       if(s.userProfile) Object.assign(userProfile, s.userProfile);
       if(s.feedbackList) feedbackList = s.feedbackList;
     }
