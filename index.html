@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="fitted.">
-<meta name="theme-color" content="#f4f2ed">
+<meta name="theme-color" content="#2f3e5c">
 <meta name="description" content="Get a career tailor made for you. AI-powered job matching, resume analysis, and interview prep.">
 <title>fitted. — get a career tailor made for you</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -619,17 +619,24 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 <!-- PWA Manifest injected inline -->
 <script>
 (function(){
+  // Icon: brand navy #2f3e5c background, off-white #f4f2ed serif f.
+  const iconSvg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
+    <rect width='512' height='512' fill='%232f3e5c' rx='100'/>
+    <text x='148' y='385' font-family='Georgia,serif' font-size='340' font-weight='700' fill='%23f4f2ed' letter-spacing='-8'>f</text>
+    <circle cx='342' cy='392' r='34' fill='%23f4f2ed'/>
+  </svg>`;
+
   const manifest = {
     name: 'fitted.',
     short_name: 'fitted.',
     description: 'Get a career tailor made for you',
     start_url: '.',
     display: 'standalone',
-    background_color: '#f4f2ed',
-    theme_color: '#f4f2ed',
+    background_color: '#2f3e5c',
+    theme_color: '#2f3e5c',
     orientation: 'portrait-primary',
     icons: [
-      { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%232d5be3'/><text x='256' y='360' font-family='Georgia,serif' font-size='320' fill='%23f4f2ed' text-anchor='middle'>f.</text></svg>", sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
+      { src: 'data:image/svg+xml,' + iconSvg, sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
     ]
   };
   const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
@@ -638,10 +645,10 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
   link.rel = 'manifest'; link.href = url;
   document.head.appendChild(link);
 
-  // Apple touch icon (inline SVG as data URL)
+  // Apple touch icon — Safari uses this for Add to Home Screen
   const appleIcon = document.createElement('link');
   appleIcon.rel = 'apple-touch-icon';
-  appleIcon.href = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%232d5be3' rx='80'/><text x='256' y='360' font-family='Georgia,serif' font-size='320' fill='%23f4f2ed' text-anchor='middle'>f.</text></svg>";
+  appleIcon.href = 'data:image/svg+xml,' + iconSvg;
   document.head.appendChild(appleIcon);
 })();
 </script>
