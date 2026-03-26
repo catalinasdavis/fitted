@@ -167,24 +167,16 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 /* ── MOBILE RESPONSIVE ─────────────────────────────── */
 @media (max-width: 768px) {
 
-  /* Single column — feed takes full width */
-  .app {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: 54px 1fr 56px !important;
-    height: 100dvh;
-    overflow: hidden;
-  }
-
   /* Top nav — tighten up */
   .topnav { padding: 0 12px; gap: 8px; }
   .logo { font-size: 19px; }
-  .sw { display: none; } /* hide search bar on mobile */
+  .sw { display: none; }
   #userGreeting { display: none !important; }
 
   /* Left nav — hidden by default, slides in as drawer */
   .leftnav {
     position: fixed !important;
-    top: 54px; left: 0; bottom: 56px;
+    top: 54px; left: 0;
     width: 260px;
     z-index: 50;
     transform: translateX(-100%);
@@ -193,14 +185,12 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
     grid-row: unset !important;
     grid-column: unset !important;
   }
-  .leftnav.mobile-open {
-    transform: translateX(0);
-  }
+  .leftnav.mobile-open { transform: translateX(0); }
 
   /* Right panel — hidden by default, slides in from right */
   .rp {
     position: fixed !important;
-    top: 54px; right: 0; bottom: 56px;
+    top: 54px; right: 0;
     width: 280px;
     z-index: 50;
     transform: translateX(100%);
@@ -209,37 +199,58 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
     grid-row: unset !important;
     grid-column: unset !important;
   }
-  .rp.mobile-open {
-    transform: translateX(0);
-  }
-
-  /* Feed takes full width */
-  .feed {
-    grid-column: 1 !important;
-    grid-row: 2 !important;
-    padding: 14px 14px;
-  }
+  .rp.mobile-open { transform: translateX(0); }
 
   /* Overlay backdrop when drawer is open */
   .mobile-backdrop {
     display: none;
     position: fixed;
-    inset: 54px 0 56px 0;
+    top: 54px; left: 0; right: 0;
     background: rgba(0,0,0,.35);
     z-index: 49;
   }
   .mobile-backdrop.show { display: block; }
 
-  /* Bottom nav bar — shown on mobile */
+  /* Bottom nav bar — fixed to bottom, always visible even in Safari browser */
   .mobile-bottom-nav {
     display: flex !important;
-    grid-row: 3;
-    grid-column: 1;
+    position: fixed !important;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(56px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
     background: var(--sf);
     border-top: 1px solid var(--bd);
-    z-index: 40;
-    position: relative;
+    z-index: 100;
   }
+
+  /* Shrink the app grid to leave room for fixed bottom nav */
+  .app {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 54px 1fr !important;
+    height: calc(100dvh - 56px - env(safe-area-inset-bottom, 0px));
+    overflow: hidden;
+  }
+
+  /* Feed needs bottom padding so content isn't hidden behind nav */
+  .feed {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    padding: 14px 14px 20px;
+  }
+
+  /* Drawers stop above the bottom nav */
+  .leftnav {
+    bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  .rp {
+    bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  .mobile-backdrop {
+    bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
   .mob-nav-btn {
     flex: 1;
     display: flex;
@@ -247,7 +258,7 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
     align-items: center;
     justify-content: center;
     gap: 3px;
-    padding: 8px 4px;
+    padding: 8px 4px 6px;
     border: none;
     background: none;
     cursor: pointer;
