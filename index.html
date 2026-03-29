@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="fitted.">
-<meta name="theme-color" content="#2f3e5c">
+<meta name="theme-color" content="#f4f2ed">
 <meta name="description" content="Get a career tailor made for you. AI-powered job matching, resume analysis, and interview prep.">
 <title>fitted. — get a career tailor made for you</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
   --r:14px;--rs:8px;--rx:6px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;overflow:hidden;}
+html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;}
 
 /* ── MAIN LAYOUT ── */
 .app{display:grid;grid-template-columns:230px 1fr 270px;grid-template-rows:54px calc(100vh - 54px);height:100vh;}
@@ -160,146 +160,6 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 .vta{width:100%;min-height:88px;padding:8px;border:1px solid var(--bd2);border-radius:var(--rx);font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--ink);background:var(--bg);resize:vertical;outline:none;line-height:1.55;}
 .vibes-save-ind{font-size:11px;color:var(--ink4);height:14px;display:block;margin-top:3px;transition:color .2s;}
 .vibes-save-ind.ok{color:var(--gr);}
-
-/* Bottom nav hidden on desktop — must come BEFORE @media block */
-.mobile-bottom-nav { display: none; }
-
-/* ── MOBILE RESPONSIVE ─────────────────────────────── */
-@media (max-width: 768px) {
-
-  /* Top nav — tighten up */
-  .topnav { padding: 0 12px; gap: 8px; }
-  .logo { font-size: 19px; }
-  .sw { display: none; }
-  #userGreeting { display: none !important; }
-
-  /* Left nav — hidden by default, slides in as drawer */
-  .leftnav {
-    position: fixed !important;
-    top: 54px; left: 0;
-    width: 260px;
-    z-index: 50;
-    transform: translateX(-100%);
-    transition: transform .25s ease;
-    box-shadow: 4px 0 24px rgba(0,0,0,.12);
-    grid-row: unset !important;
-    grid-column: unset !important;
-  }
-  .leftnav.mobile-open { transform: translateX(0); }
-
-  /* Right panel — hidden by default, slides in from right */
-  .rp {
-    position: fixed !important;
-    top: 54px; right: 0;
-    width: 280px;
-    z-index: 50;
-    transform: translateX(100%);
-    transition: transform .25s ease;
-    box-shadow: -4px 0 24px rgba(0,0,0,.12);
-    grid-row: unset !important;
-    grid-column: unset !important;
-  }
-  .rp.mobile-open { transform: translateX(0); }
-
-  /* Overlay backdrop when drawer is open */
-  .mobile-backdrop {
-    display: none;
-    position: fixed;
-    top: 54px; left: 0; right: 0;
-    background: rgba(0,0,0,.35);
-    z-index: 49;
-  }
-  .mobile-backdrop.show { display: block; }
-
-  /* Bottom nav bar — fixed to bottom, always visible even in Safari browser */
-  .mobile-bottom-nav {
-    display: flex !important;
-    position: fixed !important;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: calc(56px + env(safe-area-inset-bottom, 0px));
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-    background: var(--sf);
-    border-top: 1px solid var(--bd);
-    z-index: 100;
-  }
-
-  /* Shrink the app grid to leave room for fixed bottom nav */
-  .app {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: 54px 1fr !important;
-    height: calc(100dvh - 56px - env(safe-area-inset-bottom, 0px));
-    overflow: hidden;
-  }
-
-  /* Feed needs bottom padding so content isn't hidden behind nav */
-  .feed {
-    grid-column: 1 !important;
-    grid-row: 2 !important;
-    padding: 14px 14px 20px;
-  }
-
-  /* Drawers stop above the bottom nav */
-  .leftnav {
-    bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
-  }
-  .rp {
-    bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
-  }
-  .mobile-backdrop {
-    bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
-  }
-
-  .mob-nav-btn {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    padding: 8px 4px 6px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    color: var(--ink3);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    transition: color .15s;
-  }
-  .mob-nav-btn.act { color: var(--ac); }
-  .mob-nav-btn svg { flex-shrink: 0; }
-
-  /* Job card tweaks */
-  .jcard { padding: 14px; }
-  .jcard-title { font-size: 14px; }
-
-  /* Collapse toggle buttons — hide on mobile (handled by bottom nav) */
-  #toggleLeftBtn, #toggleRightBtn { display: none !important; }
-
-  /* Job detail overlay — full screen on mobile */
-  .jd-overlay { padding: 0 !important; }
-  .jd-wrap {
-    border-radius: 0 !important;
-    height: 100dvh !important;
-    max-height: 100dvh !important;
-  }
-  .jd-right { display: none !important; }
-  .jd-body { flex-direction: column; }
-  .jd-left { border-right: none !important; }
-  .jd-tabs { padding: 0 14px; }
-  .jd-tab-content { padding: 16px 16px; }
-  .jd-header { padding: 16px 16px 12px; }
-
-  /* Kanban — horizontal scroll */
-  .kanban-body { padding: 14px; }
-  .kanban-col { min-width: 220px; }
-
-  /* Modals — full width on small screens */
-  .modal { width: calc(100vw - 32px) !important; max-width: 100% !important; }
-}
-
 .vta:focus{border-color:var(--ac);}
 .vsave{margin-top:7px;width:100%;}
 .loclist{display:flex;flex-direction:column;gap:8px;}
@@ -624,35 +484,33 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 .pwa-banner-dismiss{padding:6px 8px;background:none;border:none;cursor:pointer;color:var(--ink4);font-size:16px;line-height:1;}
 </style>
 
-<!-- PWA Manifest + Icons (real PNG, brand colors) -->
-<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABI0lEQVR42mNkQAL6djH/GegALh5awghjM9HbcnS7mOhtObojGAfCcmTAxDDAYNQBLIQUeDiZMgR52TDISIky8PNxw8UT8roYbt97SlsHxIS4MGQm+DIwMDAwnL14i6GqbR6DhJgQw6zeQvqEgJ+7JZy96+BZhi9fvzPcuf+UwSmohD5pQEiQF87++vUH/RMhIwMjzRMh1oIo2MeWoSgjBKuGO/efMsTndtHWATCwd003AwcHGwMDAwNDTft8hv1HL4wWRKMOGHUAfRzgYmfEcHTLRHgWZGBgYGipTGQ4umUig56WEu0LokFVHZMDjm6ZCGdb++TTNw0gW46NP5oLaO4A9DgnlAZG+wVMyB1FeoOLh5YwMqH3VulpOUoU0NMRyHYBAHwLV/vOH+E6AAAAAElFTkSuQmCC">
-<link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAF7klEQVR42u3da2iVdRzA8d9ztrl5maWtxGZ2WUpXLSXKigkhRRZGtxeREdKNelH4Juj2oogKgm4QRRD1wsLCIkIQKQssu1hERlmMsix1mc7pdM15ttnb6Mbcno7nOf/P5+04j/Oc3/f8/tvOzrI4DGa3Lz4Y8Bcb1i7LKv1vZgaelIPIDD0px5AZelKOoWT4KZo8Zy0z+KS8DUqGn5S3QWbwSXkblAw/KW+DkuEn5QhKhp+UIygZflKOoGT4STmCkuEn5QhK7iJSVvLsT8pboGT4STkCRyAcgTz7k+oWKBl+Uo7AEQhHIEg+AMcfUjwG2QDYAJB0AI4/pHoMsgGwAUAAkKDM+R8bAAQAAgABgABAACAAEAAIAAQAAoCaUJ/yf37qlMkxs+24mN56TBw/7ZhoOeqImHRkc0yaOCEaGxuioaE+GhrqY2hwKMoDA1EuD0a5PBAHyuXo2dcXe3r2xe49vbG7Z1/s6t4bndu7Ymvnztj2a1fs2dtrugRQXcY2Nca8c06L+fNmxVlntEXL5COGtybr66K+vi7GNv05nv++Te/v++Onn3+Njk1bouOHLdGxaWts2twZBw6UTV0VSeLVoCef2BrXLmqPi+fPjTFjGg7b5/HGyg/iiedXmDoboDKmTW2JO5Ysivnnz/ZIk04AWZbFdVddFLfecFk01Nd5lEkngLFNjfHwPUvivLmnenRJK4CJzePiiYduj1NnTPfIklYADfV18eh9N+c+/J9v6Ig1a7+Ir779MXZ190RfX39MbB4frVNbYs6sGbHoknkx5ehJJkkAh9edt1wVZ53Rltv1du3eG489szzWrf/6bx/r6u6Jru6e+Grjpli24t1YfM2CuOn6S6OUZSaqYGriJ8Fnn3lyXLnwgtyu17e/P5Y+8Nw/Dv9fDQwMxsvLV8cjT75imgRQeVmWxdLbro4sx2ffp154M77/cesh3WbVe5/Fync+MVECqKz2886MthOOze16ndu7YtWa9SO67YuvrIrywKCpEkDlXLnwwlyv9/bqj2NwcGhEt/1t5+74aBjHJgSQi8lHNsfc2TNyveanX3w3qtt/uP4bUyWAyjh3zilRKuX3X9jX2xcdP2wZ1TU2dmw2VQKojFmnt+V6vV+27YiDB0f32sAt23aM+AhF5RX65wAzT2rN9XpbO3eO+hoDA4PRfsVSk2UD/P9ap7bker3tO7pNhACKoalpTDRPGJfrNfv6+k2EAIph/Lim3K/Z77e1BFCYDdA4Jvdr7u8/YCIEUJCv3uvy/0WXoSF/K0QAIAAQAAgABAACgNpTle8Mt6B9Tjx4942FuiP37O2Nhdfda6JsABAACAAEAAIAAUDVKewfyDh+2pR49fl8v+34+LOvx1ur1pkKGwAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgAMhmty8+WI2f2OrXHosJ48dW9Z13/6MvxfvrvjRFNgAIAAQAAgABgACgqlXtt0GpvHUrn/7Xj11w+V0CIK2hTyEGRyDDX7Hb2QAUevBrcRvYAIa/qq4nAAoz/LUQgQBImgA8+ye9BQRg+JOOQAA4AoEAcPxJ8BgkAGwAEAAIAAQAAgABUHiVfrly0V4eLQBsABAAjkGJHX8EIIKkh18AOAK5C2yBVJ/9BSCCpIc/wtuiJG00L12ulTfHsgFsg2SH3wZg2BvBe4NCDXIEQgCQbAAb1i7L3A2kaMPaZZkNgCMQCABSDcDXAaR4/rcBsAHcBQjAMYgEjz82ADaAuwABOAaR4PHnHzeACEhl+B2BcAQabilQa8/+/7kBRECtD78jEI5AIy0Hiv7sP6wNIAJqdfiHfQQSAbU4/If0NYAIqLXhP+QvgkVALQ3/IQcgAmpp+CMiRjXM3lSLog7+iDeAbUCtDP+oN4BtQFEHP5cNYBtQ5OHPdQPYCBRl6CsSgBgowqnisBxbBEG1HKP/AMRfzQ/VCAL8AAAAAElFTkSuQmCC">
-<link rel="icon" type="image/png" sizes="512x512" href="data:image/png;base64,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">
-<link rel="apple-touch-icon" sizes="192x192" href="data:image/png;base64,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">
-<link rel="apple-touch-icon" sizes="512x512" href="data:image/png;base64,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">
+<!-- PWA Manifest injected inline -->
 <script>
 (function(){
-  const icon512 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAARJElEQVR42u3de2yd91nA8ecc27Fjx3aaOBevadKlSZakCl7X29JsaWk3lm1lEV3VVTSCqoJOYqxhgLQJJkAaI+My1AsDMRgwVthgU6m2dgW0diykg7TQJG1H0i433Nxj52LHjp3kHPNHyFRVTqDJsf2+7+/zkapO2qXn/Z23fb7vc+yzUlAzXSvXjDgFgLGzZf2jJadQGw7SkAcQBwIAwx5AFAgAAx8AQSAADH0AxIAAMPQBEAMCwOAHQAgIAEMfADEgAAx+AISAADD4ARACAsDgB0AICACDHwAhIAAMfgCEQG2VDX8ASG8mlRwyAKS3DcjFCzX4ARACtZX5jwAMfwDyJg+zq+wAASC9GVZyaAAwtrL4kUDmNgCGPwC2AYkFgOEPgAgYHyWHAgDjKwsfCUz4BsDwB8A2ILEAMPwBEAGJBYDhD4AImLhZWE7tggFABExAABj+ADDxs7Fc9AsEABEwgQFg+ANAdmZluWgXBAAiIAMBYPgDQPZmZznvFwAAIiBDAWD4A0B2Z2k5by8YAERAhjcAAEB21TwAPP0DQPZnaznrLxAAqP2MLWf1hQEAYzdr/QwAACSoJgHg6R8A8rUFKGflhQAA4zd7yxP9AgCA8Z/BfgYAABJ00QHg6R8A8rsFsAEAABsAT/8AkMIWoDxefyEAIDsR4CMAAEjQmwoAT/8AUIwtgA0AANgAePoHgBS2ADYAAGAD4OkfAFLYAtgAAIANgKd/AEhhC2ADAAA2AJ7+ASCFLYANAADYAAAASQeA9T8A5NuFZrkNAADYAHj6B4AUtgA2AABgAwAAJBkA1v8AUCyjzXYbAACwAQAAkgsA638AKKY3zngbAABIfQMAAAgAAKDoAeDzfwAottfPehsAAEh5AwAACAAAQAAAAIULAD8ACABpODfzbQAAINUNAAAgAAAAAQAACAAAQAAAAPlT8iuAAGADAAAIAABAAAAAAgAAEAAAgAAAAAQAACAAAAABAAAIAABAAAAAAgAAEAAAgAAAAAQAACAAAAABAAACAAAQAACAAAAABAAAIAAAAAEAAAgAACBL6h0BRTBpUkPMmnFZzJjeHh3T2qNjentc1tYSba0t0draHG2tzdE8uSmaGhticlNjNDY2REN9fdTVlaOuXI5yXTlKEVGpVKNSrUa1Wj37ryvVOFOpxPDw6Tg5NBxDQ6fi5PCps38eGo6BwaE43jcQff2Dcbx/IPr6B+J439k/eo70xcmhYW8OIADgUs2Y3h7z53XG/HmdceXc2TGnc0Zc3tkRHdPaolQqXfrfEPV1UR91NXu9A4NDcbj3ePQcOX72z73HYv/BI7F3f0/sPdAbBw8fjWq16o0FBACcM7mpMZYteWtcvfjKWLpobixdNC+mtk/J1TW0NDdFS3NTXHnFrFH//TNnKnHg8NHYd6Anuvccil3dB/73j/3R1z/oJgDGTKlr5ZoRx0AWlMvlWLbkrbH8uiXxjmULY/HCuVFXl+6PqfQe7Yvd3Qdix3/vj1e2vxbbtr8W3a8djOqIv2UBAUDONTTUx/Jrl8SPv+vt8c5rl0Zba7NDuYChoVPx6s498cr212LrD7vjxf/aFfsP9joYQACQD11XXxUffO+NcfPyH4spLZMdyKVsCo70xYtbd8aLP9gZL27dFT/cuScqFT9XAAgAMqKluSk++J4bY/X7V5z3M3Eu3ece+Vp865/+zUEAF+SHABlzHdPa467VN8fqVTd52gcQABTd1PYp8TN3vTfu+MC7oqHBrQYgACi0SZMa4p47bo177rwtJjc1OhAAAUDRrbjh6vil+z8cb5k93WEACACKrq21OT7x0TvjJ2651mEACABScMM1i+PTv3xPTL+szWEACACKrlwqxX0/vSp+9u73RbkG38MPgAAg45onN8ZnPnlvvPO6pQ4DQACQgpkdU+MPfuujcdWVb3EYAAKAFMzp7IhH1n08ZnZMdRgAAoAUzJszKx7+nY9Fx7T2Ql9n75G+eH7zK7F9197o3nso9uzriRODJ+PkyeEYGj4dDfV10djYEK1TmmNmx9SYPXNaLLpqTixecEUsXTQv6uvr3CyAAKAYZs24LB76bHGHf1//YDz5nY3x1NPPxY7d+y74nx0+VY3hU6ejr38w9u7viYiIp55+LiLO/v8d3PiOxbHq1utj+fVX++FIQACQX+2tLfHgZ34hZkwv3vA/MXAyvvQ3T8Xj//j9OHXq9CX/7w0MDsUzGzbHMxs2R+esaXHvR94XH3jPDVEul91IQKb4pxIXVFdXjs/+2n0xd87Mwl3b0/+6KT5y/2/H33/zezUZ/m+0/+CRWPfwV+PeB34/Xt2xx80ECADy44Gf+6m4ZtmCQl1TtVqNR/788fiN3/2rOHb8xJj/9Xbs3hf3/8ofxte/+T03FJAZPgLgvG5Z0RV3/uTKwg3/3/y9L8czGzaP61/39JlKPPjFx+JQz7H42H2r3VyADQDZ1DGtPT75i3cX7ro+9/DXxn34v97fPvZMfPErT7rBAAFANn3qgbujrbW5UNf02JMb4snvbJzw1/Hlv/vnH/3WAIAAIDNuWdEVywv2Fb+7ug/EI196PDOv5/N/8o0f/QohgABgwjU1Toq1P39H4a7r83/89TH5Sf+LdXJoONY99FU3HCAAyIa7Vt9cuK/5/f7zP4hNL2/P3Ova9PL2WP/vL7npAAHAxGprbY57Pnxb4a7rzx79dmZf25/+9RMxMjLi5gMEABP49P+hm2NKy+RCXdPL23Zn+kt4dncfiI0vbHPzAQKAidHUOCnuuP3dhbuuf/j2hsy/xm98a70bEBAATIz333ZDtLe2FOqahoZPxXcn8Hf+/7+e27QtjvcPuAkBAcD4W73qpsJd0/ObXonhDP3k//lUKtX4l2e3uAkBAcD4etuCK2Lh/MsLd115+gn7jf+51Y0ICADG16pbry/kdW18IT9D9YWXtkfVbwMAAoDxUiqV4pabugp3XfsPHoneI325eb39JwZjx659bkhAADA+liycW7gv/omIeGnrrty95ld37nFDAgKA8VG07/w/5+VtOQyAHQIAEACMk+vevqiQ17Vz9/7cvebd3QfckIAAYOw1NU2KpYvmFfLadu85mLvXvO9gr5sSEACMvSUL50Z9fV3hrquvfzCOHuvP3es+ePhoVKtVNyYwLuodQbqK+vTfvfdQLl93pVKNd3/oE25MwAaAsbV44dxCXtehnmPeXAABwPnMn9dZyOs63CsAAAQAo7/x5XJc3tlRyGvr6T3uDQYQAIzm8tnTo6GAPwAYEdGTo28ABBAAjKvZs6YV9tr6Twx6gwEEAKOZOX1qYa9tYHDIGwwgABjNjAJ+//85JwZOeoMBBACjmdrWIgAABACpmTKlubDXNjx82hsMIAAYTWvL5MJeW8XX6QIIAEbX1DSpsNd25kzFGwwgABhNUb8DICLiTEUAAAgARlVfV9wAqFR8BAAgABhVXV1x3/qRkRFvMIAAYDSlUskhAAgAAEAAAAACAAAQAACAAAAABAAAIAAAAAEAAAgAAEAAAAACAAAQAACAAAAABAAAIAAAAAEAAAgAABAAAIAAAACKrtS1cs2IY8iWa5YtiD9a93EHUWCfXveX8d1nNzsIwAYAABAAAIAAAAAEAAAgAAAAAQAACAAAQAAAAAIAAAQAACAAAAABAAAIAABAAAAAAgAAEAAAgAAAAAQAADCuSl0r14w4hvT8xYO/Gm9bcEUhr23F7Wu9wQA2AACAAAAABAAACAAAQAAAAAIAABAAAIAAAAAEAAAgAAAAAQAACAAAQAAAAAIAABAAAIAAAAAEAAAgAAAAAQAACAAAEAAAgAAAAAQAACAAAAABAAAIAABAAAAAAgAAEAAAgAAAAAQAACAAAAABAAAIAABAAAAAAgAAEAAAIAAAAAEAAAgAAEAAAAACAAAQAACAAAAABAAAIAAAAAEAAAgAAEAAAAACAAAQAACAAAAABAAAIAAAQAAAAAIAABAAAIAAAAAEAAAgAAAAAQAACAAAQAAAAAIAABAAAIAAAAAEAAAgAAAAAQAACAAAQAAAgAAAAAQAACAAAAABAAAIAABAAAAAAgAAEAAAgAAAAAQAACAAAAABAAAIAABAAAAAAgAAEAAAgAAAAAQAAAgAAEAAAAACAAAQAACAAAAABAAAIAAAAAEAAAgAAEAAAAACAAAQAACAAAAABAAAIAAAAAEAAAgAABAAAIAAAAAEAAAgAAAAAQAACAAAQAAAAAIAABAAAIAAAAAEAAAgAAAAAQAACAAAQAAAAAIAABAAACAAAAABAAAIAACgUEpdK9eMOIbsmT+vM77yhU85iJz5jy2vxtpf/4KDAGwAAAABAAAIAABAAAAAAgAAEAAAgAAAAAQAACAAAAABAAAIAAAQAACAAAAABAAAIAAAAAEAAAgAAEAAAACZVOpauWbEMQCADQAAUHD1jgBgYjz7xENv+r+z4va1Do6a8BEAQIYHviBAAAAY+mIAAQBg8AsBBABA8oNfCCAAABIe/EIAAQCQ8OAXAlyI7wEASGD45/H1IgAADFMRQI35CAAg0QHqIwEbAAASfHq2DRAAACQ6LEWAAAAg0SEpAgQAAIkORxEgAAAAAQDg6d/1IgAADEPXjQAAMARdPwIAABAAAJ5+nQMCAAAQAACeep0HAgAAEAAAnnadCwIAABAAAJ5ynQ8CAAAQAACAAAC4AOtt5yQAAAABAAAIAABAAADkn8+1nZcAAAAEAAAgAAAAAQAACAAAQAAAAAIAABAAAIAAAAAEAAAgAAAAAQAACACAS7Ti9rUOwXkJAABAAAAAAgAAEAAABeFzbeckAAAAAQAACACAwrLedj4CAAAQAACecp0LAgAAEAAAnnadBwIAABAAAJ56nQMCAAAQAACefl0/AgDAEHTdCAAAw9D1IgAAAAEA4KnYdSIAAAxH14cAADAkXRcCAMCwNPwZRalr5ZoRxwDw5jz7xEMGPzYAALYBXjcCAEAEeL1knI8AAGogyx8JGPwIAICEQsDgRwAAJBQCBj8CACChEDD4EQAAicSAoY8AAEggCAx8BAAAcNHKW9Y/WnIMAJCOLesfLfkiIABIcQPgCABAAAAAAgAAEAAAgAAAAHIcAH4VEADScG7m2wAAQKobAABAAAAAAgAAKGwA+EFAACi21896GwAASHkDAAAIAAAglQDwcwAAUExvnPE2AACQ+gYAAEg0AHwMAADFMtpstwEAABsAACDZAPAxAAAUw/lmug0AANgA2AIAQNGf/m0AAMAGAAAQAOFjAADIq/9rhtsAAIANgC0AABT96d8GAABsAGwBACCFp38bAACwAbAFAIAUnv5tAADABsAWAABSePq3AQAAGwBbAABI4en/ojcAIgAA8jv8LzoAAIB8u+gAsAUAgHw+/dsAAIANgC0AAKTw9F+TDYAIAIB8Df+aBIAIAIB8Df+aBQAAkC81CwBbAADIx9N/zTcAIgAAsj/8ax4AIgAAsj/8xyQAAIDsG5MAsAUAgGzP1HLeXjAAGP4ZDgARAADZnaHlvF8AABj+GQwAEQAA2ZuZ5aJdEAAY/hkKABEAANmZkeWiXyAAGP4ZCAARAAATPxPLqV0wAKQ+/Cc0AEQAAIb/xCmnfgAAkOLsy9Tw7Vq5ZsRtAYDBn8AGwDYAAMM/8QAQAQAY/uMj08PWRwIAGPyJbABsAwAw/BMPABEAgOE/NnI1XH0kAIDBn2AACAEADP7aKDtoAEhvJuV+kNoGAGDwJxgAQgAAgz/hABACABj8CQeAEADA4E84AIQAAAZ/wgEgBgAw9BMPACEAQOqDP+kAEAMApP6dMr5QRwwAGPoCAEEAYOALAEQBgGEvABAHAIZ8MfwPMAeQn6VCjMUAAAAASUVORK5CYII=';
-  const icon192 = 'data:image/png;base64,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';
   const manifest = {
     name: 'fitted.',
     short_name: 'fitted.',
     description: 'Get a career tailor made for you',
-    start_url: '/fitted/',
+    start_url: '.',
     display: 'standalone',
-    background_color: '#2f3e5c',
-    theme_color: '#2f3e5c',
+    background_color: '#f4f2ed',
+    theme_color: '#f4f2ed',
     orientation: 'portrait-primary',
     icons: [
-      { src: icon192, sizes: '192x192', type: 'image/png', purpose: 'any' },
-      { src: icon512, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
+      { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%232d5be3'/><text x='256' y='360' font-family='Georgia,serif' font-size='320' fill='%23f4f2ed' text-anchor='middle'>f.</text></svg>", sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
     ]
   };
   const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
   const link = document.createElement('link');
-  link.rel = 'manifest';
-  link.href = URL.createObjectURL(blob);
+  link.rel = 'manifest'; link.href = url;
   document.head.appendChild(link);
+
+  // Apple touch icon (inline SVG as data URL)
+  const appleIcon = document.createElement('link');
+  appleIcon.rel = 'apple-touch-icon';
+  appleIcon.href = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%232d5be3' rx='80'/><text x='256' y='360' font-family='Georgia,serif' font-size='320' fill='%23f4f2ed' text-anchor='middle'>f.</text></svg>";
+  document.head.appendChild(appleIcon);
 })();
 </script>
 </head>
@@ -804,13 +662,6 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
       <input type="file" id="portfolioFileInput" accept="*/*" style="display:none" onchange="handlePortfolioUpload(this)">
       <div id="portfolioList"><div class="portfolio-empty">Nothing added yet.</div></div>
     </div>
-  </div>
-
-  <!-- Reset button — bottom of right panel -->
-  <div style="margin-top:auto;padding-top:20px;border-top:1px solid var(--bd);margin-top:24px;">
-    <button onclick="confirmResetData()" style="background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11.5px;color:var(--ink4);padding:4px 0;width:100%;text-align:left;transition:color .15s;" onmouseover="this.style.color='var(--a2)'" onmouseout="this.style.color='var(--ink4)'">
-      ↺ Reset all my data
-    </button>
   </div>
 </aside>
 </div>
@@ -1040,12 +891,26 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 
 <!-- FEEDBACK MODAL -->
 <div class="ov" id="feedbackModal" onclick="if(event.target===this)closeFeedback()">
-  <div class="modal sm" style="width:400px;">
-    <div class="mtitle" style="font-size:18px;margin-bottom:6px;">Share your feedback</div>
-    <div class="msub" style="line-height:1.6;margin-bottom:20px;">We'd love to hear what you think — bugs, feature ideas, what you love, what's confusing. Tap below to open our quick form. It takes less than a minute and every response gets read personally.</div>
-    <div class="mfoot">
-      <button class="bg2" onclick="closeFeedback()">Cancel</button>
-      <button class="bp" onclick="openGoogleForm()">Open feedback form →</button>
+  <div class="modal sm" style="width:440px;">
+    <div class="mtitle" style="font-size:18px;margin-bottom:4px;">Send feedback</div>
+    <div class="msub">Tell us what's working, what's broken, or what you'd love to see. Every message gets read.</div>
+    <div id="feedbackForm">
+      <textarea id="feedbackText" class="mta" placeholder="What's on your mind? Feature requests, bugs, general thoughts — all welcome." style="min-height:120px;"></textarea>
+      <div style="font-size:12px;color:var(--a2);margin-top:4px;min-height:16px;" id="feedbackHint"></div>
+      <div style="margin-top:10px;">
+        <div style="font-size:12px;font-weight:500;color:var(--ink3);margin-bottom:4px;">Your email (optional — only if you want a reply)</div>
+        <input type="email" id="feedbackEmail" class="minput" placeholder="you@email.com" style="font-size:13px;padding:8px 10px;">
+      </div>
+      <div class="mfoot" style="margin-top:14px;">
+        <button class="bg2" onclick="closeFeedback()">Cancel</button>
+        <button class="bp" onclick="openGoogleForm()">Open feedback form →</button>
+      </div>
+    </div>
+    <div id="feedbackSent" style="display:none;text-align:center;padding:20px 0;">
+      <div style="font-size:28px;margin-bottom:10px;">✓</div>
+      <div style="font-size:14px;font-weight:500;color:var(--ink);margin-bottom:6px;">Thanks for your feedback!</div>
+      <div style="font-size:12.5px;color:var(--ink3);margin-bottom:16px;">Every message gets read. If you left your email, we'll be in touch.</div>
+      <button class="bp" onclick="closeFeedback()">Done</button>
     </div>
   </div>
 </div>
@@ -1067,7 +932,6 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 </div>
 
 <script>
-// fitted. v2 — fresh start + smart re-eval + quiz onboarding + mobile responsive
 // ── scheduleSave defined FIRST — called by many functions below ──────────────
 let saveTimer = null;
 function scheduleSave(){
@@ -1110,91 +974,10 @@ const INDEED_JOBS = {
 };
 
 const RESUME_KEYWORDS = {
-  'Brand & Marketing':        ['brand','marketing','campaign','creative','content','storytelling','lifestyle','aesthetic','visual','launch','influencer','product','consumer','social media','canva','copywriting'],
-  'Communications':           ['communications','comms','social media','community','engagement','writing','editorial','messaging','voice','copy','audience','newsletter','pr','public relations'],
-  'Business Dev':             ['business development','partnerships','outreach','pipeline','prospecting','sales','b2b','clients','accounts','crm','revenue','growth','salesforce','cold outreach'],
-  'Tech & Operations':        ['operations','project management','sql','data','analysis','process','systems','tableau','asana','logistics','coordination','cross-functional','workflow','kpi'],
-  'Creative & Design':        ['design','graphic','adobe','figma','illustrator','photoshop','typography','brand identity','visual','art direction','creative','layout','portfolio','ux','ui'],
-  'Healthcare & Science':     ['clinical','patient','medical','healthcare','hipaa','emr','epic','laboratory','research','biology','chemistry','pharmacy','clinical trials','fda','protocol'],
-  'Legal & Policy':           ['legal','law','compliance','regulatory','policy','westlaw','contracts','litigation','counsel','government','legislation','research','analysis','brief'],
-  'Engineering & Architecture':['engineering','architecture','autocad','revit','structural','civil','mechanical','project','technical','design','construction','pe','cad','infrastructure'],
-  'Finance & Accounting':     ['finance','accounting','financial modeling','excel','bloomberg','gaap','investment','banking','analysis','budget','forecasting','quickbooks','audit','m&a'],
-  'Human Resources':          ['human resources','hr','recruiting','onboarding','talent','hris','workday','employee relations','benefits','compensation','dei','people operations','ats'],
-  'Nonprofit & Education':    ['nonprofit','education','program','community','outreach','grant','volunteer','social impact','advocacy','coordination','curriculum','teaching','impact'],
-  'Pharmacy & Research':      ['pharmacy','pharmacology','drug','clinical','research','fda','pubmed','patient counseling','medication','biochemistry','pharmaceutical','regulatory','lab'],
-  'General / Master':         ['brand','marketing','communications','content','social','creative','strategy','coordinator','associate','lifestyle','customer','retail','operations','analysis'],
-};
-
-
-// ══════════════════════════════════════════════════
-//  DEMO PROFILES — 12 personas, quiz-routed
-// ══════════════════════════════════════════════════
-const DEMO_PROFILES = {
-  'marketing': { resumeLabel:'Brand & Marketing', name:'Jamie Solis', title:'Marketing & Communications Associate', summary:'Recent communications graduate with internship experience in social media and brand marketing. Looking for entry-level brand or marketing coordinator roles.', education:'B.A. Communications — UC San Diego, 2023', skills:['Canva','Instagram','TikTok','Copywriting','Content Calendar Management','Email Marketing','Customer Communication'], jobs:[
-    {id:'d_m1',title:'Marketing Coordinator',company:'Glossier',location:'Remote',type:'Remote',pay:48,pl:'$45–52k/yr',match:71,tags:['remote','brand','marketing'],posted:'2 days ago',isNew:true,logo:'Gl',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-marketing-coordinator-glossier-jobs.html',desc:'Support brand and marketing campaigns, content scheduling, and community engagement.'},
-    {id:'d_m2',title:'Brand Coordinator',company:'Aritzia',location:'Remote',type:'Remote',pay:50,pl:'$46–55k/yr',match:68,tags:['remote','brand'],posted:'4 days ago',isNew:false,logo:'Az',lb:'#f0ece8',lf:'#4a3828',url:'https://www.indeed.com/q-brand-coordinator-aritzia-jobs.html',desc:'Coordinate brand initiatives and support marketing campaigns for a leading fashion brand.'},
-    {id:'d_m3',title:'Social Media Coordinator',company:'Reformation',location:'Los Angeles, CA',type:'Hybrid',pay:52,pl:'$48–56k/yr',match:74,tags:['hybrid','comms','marketing'],posted:'1 week ago',isNew:false,logo:'Rf',lb:'#f5ede6',lf:'#7a3d20',url:'https://www.indeed.com/q-social-media-coordinator-reformation-jobs.html',desc:'Own day-to-day social media for Instagram, TikTok, and Pinterest channels.'},
-    {id:'d_m4',title:'Content & Communications Associate',company:'Patagonia',location:'Remote',type:'Remote',pay:50,pl:'$47–53k/yr',match:66,tags:['remote','comms','brand'],posted:'3 days ago',isNew:true,logo:'Pa',lb:'#e8f0e8',lf:'#1a501a',url:'https://www.indeed.com/q-content-associate-patagonia-jobs.html',desc:'Support communications with content creation, editorial coordination, and brand storytelling.'},
-    {id:'d_m5',title:'Marketing Assistant',company:'Ralph Lauren',location:'New York, NY',type:'Hybrid',pay:55,pl:'$50–60k/yr',match:69,tags:['hybrid','brand','marketing'],posted:'5 days ago',isNew:false,logo:'RL',lb:'#1a1a1f',lf:'#f4f2ed',url:'https://www.indeed.com/q-marketing-assistant-ralph-lauren-jobs.html',desc:'Support marketing campaigns, asset management, and cross-functional coordination at an iconic luxury brand.'},
-  ]},
-  'business': { resumeLabel:'Business Dev', name:'Marcus Webb', title:'Business Development & Sales', summary:'Business graduate with 1 year of SDR experience and strong track record in outreach and pipeline management. Seeking a BDR or account executive role.', education:'B.S. Business Administration — Arizona State University, 2022', skills:['Salesforce CRM','Cold Outreach','LinkedIn Sales Navigator','Excel','Pipeline Management','Client Communication','Negotiation','HubSpot'], jobs:[
-    {id:'d_b1',title:'Business Development Representative',company:'Salesforce',location:'Remote',type:'Remote',pay:65,pl:'$60–70k/yr + commission',match:73,tags:['remote','bizdev'],posted:'1 day ago',isNew:true,logo:'Sf',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-business-development-representative-salesforce-jobs.html',desc:'Drive pipeline growth through strategic outbound prospecting and qualify enterprise accounts.'},
-    {id:'d_b2',title:'Account Executive',company:'HubSpot',location:'Remote',type:'Remote',pay:75,pl:'$70–80k/yr + OTE',match:68,tags:['remote','bizdev'],posted:'3 days ago',isNew:false,logo:'Hs',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-account-executive-hubspot-jobs.html',desc:'Own full sales cycle for SMB clients from discovery through close.'},
-    {id:'d_b3',title:'Partnerships Associate',company:'Stripe',location:'Remote',type:'Remote',pay:72,pl:'$65–78k/yr',match:65,tags:['remote','bizdev'],posted:'5 days ago',isNew:false,logo:'St',lb:'#eae8f5',lf:'#3a2880',url:'https://www.indeed.com/q-partnerships-associate-stripe-jobs.html',desc:'Identify, develop, and manage strategic technology and channel partnerships.'},
-    {id:'d_b4',title:'Sales Associate',company:'LinkedIn',location:'New York, NY',type:'Hybrid',pay:68,pl:'$62–75k/yr',match:67,tags:['hybrid','bizdev'],posted:'4 days ago',isNew:false,logo:'Li',lb:'#e8f0f8',lf:'#1a5080',url:'https://www.indeed.com/q-sales-associate-linkedin-jobs.html',desc:'Grow LinkedIn\'s talent solutions business by building relationships with HR leaders.'},
-  ]},
-  'tech': { resumeLabel:'Tech & Operations', name:'Priya Nair', title:'Senior Operations Manager', summary:'MBA-trained operations leader with 4+ years driving process improvement. Seeking director-level or senior ops leadership roles.', education:'B.S. Information Systems — Georgia Tech, 2019 | MBA — Emory Goizueta, 2023', skills:['SQL','Tableau','Asana','Process Improvement','Cross-Functional Leadership','Data Analysis','Excel (Advanced)','Lean Six Sigma'], jobs:[
-    {id:'d_t1',title:'Director of Operations',company:'Airbnb',location:'Remote',type:'Remote',pay:140,pl:'$130–155k/yr',match:72,tags:['remote'],posted:'2 days ago',isNew:true,logo:'Ab',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-director-operations-airbnb-jobs.html',desc:'Lead operational strategy and process optimization for the host experience team.'},
-    {id:'d_t2',title:'Senior Operations Manager',company:'Amazon',location:'Seattle, WA',type:'Hybrid',pay:125,pl:'$115–135k/yr',match:70,tags:['hybrid'],posted:'1 week ago',isNew:false,logo:'Am',lb:'#fdf3e3',lf:'#b8750a',url:'https://www.indeed.com/q-senior-operations-manager-amazon-jobs.html',desc:'Drive efficiency and continuous improvement across fulfillment operations.'},
-    {id:'d_t3',title:'Strategy & Operations Lead',company:'Google',location:'New York, NY',type:'Hybrid',pay:145,pl:'$135–160k/yr',match:68,tags:['hybrid'],posted:'4 days ago',isNew:false,logo:'Go',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-strategy-operations-lead-google-jobs.html',desc:'Design and implement operational frameworks that scale global initiatives.'},
-    {id:'d_t4',title:'Operations Program Manager',company:'Microsoft',location:'Remote',type:'Remote',pay:130,pl:'$120–140k/yr',match:66,tags:['remote'],posted:'3 days ago',isNew:false,logo:'Ms',lb:'#e8f0f8',lf:'#1a5080',url:'https://www.indeed.com/q-operations-program-manager-microsoft-jobs.html',desc:'Manage complex cross-functional operations programs for the cloud business unit.'},
-  ]},
-  'creative': { resumeLabel:'Brand & Marketing', name:'River Castillo', title:'Graphic Designer & Visual Creative', summary:'BFA-trained graphic designer with agency and freelance experience in brand identity and digital design. Seeking junior art director or brand designer roles.', education:'B.F.A. Graphic Design — RISD, 2024', skills:['Adobe Illustrator','Photoshop','InDesign','Figma','After Effects','Typography','Brand Identity','Art Direction'], jobs:[
-    {id:'d_c1',title:'Junior Art Director',company:'Ogilvy',location:'New York, NY',type:'Hybrid',pay:65,pl:'$60–72k/yr',match:73,tags:['hybrid','brand'],posted:'2 days ago',isNew:true,logo:'Og',lb:'#1a1a1f',lf:'#f4f2ed',url:'https://www.indeed.com/q-junior-art-director-ogilvy-jobs.html',desc:'Concept and execute campaigns for global clients across digital, print, and experiential channels.'},
-    {id:'d_c2',title:'Brand Designer',company:'Spotify',location:'Remote',type:'Remote',pay:80,pl:'$75–88k/yr',match:69,tags:['remote','brand'],posted:'5 days ago',isNew:false,logo:'Sp',lb:'#e8f5e8',lf:'#1a7a1a',url:'https://www.indeed.com/q-brand-designer-spotify-jobs.html',desc:'Shape Spotify\'s visual identity across campaigns, products, and brand moments.'},
-    {id:'d_c3',title:'Graphic Designer',company:'Pentagram',location:'New York, NY',type:'On-site',pay:62,pl:'$58–68k/yr',match:70,tags:[],posted:'1 week ago',isNew:false,logo:'Pg',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-graphic-designer-pentagram-jobs.html',desc:'Work on brand identity, publication, and environmental design projects.'},
-    {id:'d_c4',title:'Visual Designer',company:'Airbnb',location:'Remote',type:'Remote',pay:85,pl:'$78–92k/yr',match:65,tags:['remote','brand'],posted:'3 days ago',isNew:false,logo:'Ab',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-visual-designer-airbnb-jobs.html',desc:'Craft visual experiences for marketing campaigns and brand storytelling across global markets.'},
-  ]},
-  'healthcare-clinical': { resumeLabel:'Healthcare & Science', name:'Danielle Park', title:'Physician — Internal Medicine', summary:'Board-certified internal medicine physician completing residency. Exploring pharmaceutical industry, medical affairs, digital health, or hospital administration roles.', education:'B.S. Biology — U of Michigan, 2015 | M.D. — Johns Hopkins, 2019 | Residency — Mayo Clinic, 2022', skills:['Patient Care','Clinical Documentation','Epic EMR','Medical Research','HIPAA','Clinical Trials','PubMed','Medical Writing'], jobs:[
-    {id:'d_hc1',title:'Medical Science Liaison',company:'Pfizer',location:'Remote',type:'Remote',pay:160,pl:'$150–175k/yr',match:76,tags:['remote'],posted:'1 day ago',isNew:true,logo:'Pf',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-medical-science-liaison-pfizer-jobs.html',desc:'Serve as a scientific expert for healthcare professionals, communicating clinical data and supporting medical education.'},
-    {id:'d_hc2',title:'Clinical Operations Manager',company:'Johnson & Johnson',location:'New Brunswick, NJ',type:'Hybrid',pay:145,pl:'$135–158k/yr',match:70,tags:['hybrid'],posted:'4 days ago',isNew:false,logo:'JJ',lb:'#e8f0f8',lf:'#1a5080',url:'https://www.indeed.com/q-clinical-operations-manager-johnson-johnson-jobs.html',desc:'Lead clinical study execution and site management for J&J\'s pharmaceutical pipeline.'},
-    {id:'d_hc3',title:'Medical Director',company:'Teladoc Health',location:'Remote',type:'Remote',pay:200,pl:'$185–220k/yr',match:68,tags:['remote'],posted:'1 week ago',isNew:false,logo:'Td',lb:'#e8f5e8',lf:'#1a7a1a',url:'https://www.indeed.com/q-medical-director-teladoc-jobs.html',desc:'Provide clinical leadership for Teladoc\'s virtual care platform, setting clinical protocols.'},
-  ]},
-  'healthcare-support': { resumeLabel:'Healthcare & Science', name:'Chris Odum', title:'Certified Medical Assistant', summary:'CMA with 4 years of hands-on clinical experience in a high-volume family practice. Seeking advancement into care coordinator or practice management roles.', education:'A.S. Medical Assisting — Community College of Denver, 2020 | CMA — AAMA', skills:['Phlebotomy','Epic EHR','Patient Intake','Insurance Verification','Medication Reconciliation','Clinical Documentation','HIPAA','Care Coordination'], jobs:[
-    {id:'d_hs1',title:'Care Coordinator',company:'UCHealth',location:'Denver, CO',type:'On-site',pay:48,pl:'$44–52k/yr',match:74,tags:[],posted:'2 days ago',isNew:true,logo:'UC',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-care-coordinator-uchealth-jobs.html',desc:'Coordinate care transitions and patient follow-up for a primary care network.'},
-    {id:'d_hs2',title:'Medical Office Supervisor',company:'Kaiser Permanente',location:'Aurora, CO',type:'On-site',pay:55,pl:'$50–60k/yr',match:69,tags:[],posted:'5 days ago',isNew:false,logo:'KP',lb:'#e8f5e8',lf:'#1a7a1a',url:'https://www.indeed.com/q-medical-office-supervisor-kaiser-jobs.html',desc:'Oversee daily clinical operations, staff scheduling, and patient experience.'},
-    {id:'d_hs3',title:'Patient Services Coordinator',company:'DaVita',location:'Remote',type:'Remote',pay:45,pl:'$42–48k/yr',match:65,tags:['remote'],posted:'1 week ago',isNew:false,logo:'Dv',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-patient-services-coordinator-davita-jobs.html',desc:'Support patients with scheduling, insurance coordination, and care team communication.'},
-  ]},
-  'legal': { resumeLabel:'Legal & Policy', name:'Owen Fletcher', title:'Associate Attorney', summary:'Georgetown Law graduate with 2 years of litigation experience. Transitioning into in-house counsel, compliance, or policy roles.', education:'B.A. Political Science — Georgetown, 2018 | J.D. — Georgetown Law, 2021', skills:['Westlaw','LexisNexis','Contract Review','Legal Research','Regulatory Compliance','Policy Writing','Litigation Support','Negotiation'], jobs:[
-    {id:'d_l1',title:'In-House Counsel',company:'Apple',location:'Cupertino, CA',type:'Hybrid',pay:175,pl:'$165–190k/yr',match:72,tags:['hybrid'],posted:'2 days ago',isNew:true,logo:'Ap',lb:'#1a1a1f',lf:'#f4f2ed',url:'https://www.indeed.com/q-in-house-counsel-apple-jobs.html',desc:'Provide legal support on commercial contracts, regulatory matters, and strategic transactions.'},
-    {id:'d_l2',title:'Compliance Manager',company:'JPMorgan Chase',location:'New York, NY',type:'Hybrid',pay:155,pl:'$145–165k/yr',match:68,tags:['hybrid'],posted:'4 days ago',isNew:false,logo:'JP',lb:'#e8f0f8',lf:'#1a5080',url:'https://www.indeed.com/q-compliance-manager-jpmorgan-jobs.html',desc:'Lead compliance program oversight ensuring regulatory adherence across products and operations.'},
-    {id:'d_l3',title:'Policy Counsel',company:'Google',location:'Washington, DC',type:'Hybrid',pay:165,pl:'$155–180k/yr',match:66,tags:['hybrid'],posted:'1 week ago',isNew:false,logo:'Go',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-policy-counsel-google-jobs.html',desc:'Shape engagement with regulatory and legislative processes on behalf of Google.'},
-  ]},
-  'engineering': { resumeLabel:'Engineering & Architecture', name:'Sofia Reyes', title:'Structural Engineer', summary:'Licensed structural engineer with master\'s degree and 3+ years infrastructure experience. Seeking senior engineering or project management roles.', education:'B.S. Civil Engineering — UT Austin, 2019 | M.S. Structural Engineering — UT Austin, 2021 | PE License, 2023', skills:['AutoCAD','Revit','SAP2000','Structural Analysis','Project Management','Technical Documentation','Construction Administration'], jobs:[
-    {id:'d_e1',title:'Senior Structural Engineer',company:'Skanska',location:'Dallas, TX',type:'Hybrid',pay:115,pl:'$108–125k/yr',match:74,tags:['hybrid'],posted:'3 days ago',isNew:true,logo:'Sk',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-senior-structural-engineer-skanska-jobs.html',desc:'Lead structural engineering for complex commercial and infrastructure projects.'},
-    {id:'d_e2',title:'Project Engineer',company:'HDR Engineering',location:'Austin, TX',type:'Hybrid',pay:105,pl:'$98–115k/yr',match:70,tags:['hybrid'],posted:'5 days ago',isNew:false,logo:'HD',lb:'#e8f0e8',lf:'#1a501a',url:'https://www.indeed.com/q-project-engineer-hdr-jobs.html',desc:'Manage engineering deliverables and client coordination for transportation infrastructure projects.'},
-    {id:'d_e3',title:'Structural Design Engineer',company:'Thornton Tomasetti',location:'New York, NY',type:'On-site',pay:110,pl:'$102–120k/yr',match:67,tags:[],posted:'1 week ago',isNew:false,logo:'TT',lb:'#f5ede6',lf:'#7a3d20',url:'https://www.indeed.com/q-structural-engineer-thornton-tomasetti-jobs.html',desc:'Design structural systems for high-rise residential, commercial, and cultural buildings.'},
-  ]},
-  'finance': { resumeLabel:'Finance & Accounting', name:'David Kim', title:'Finance & Corporate Strategy', summary:'Wharton MBA with investment banking experience. Targeting VP-level roles in corporate finance, strategy, or business development.', education:'B.S. Finance — NYU Stern, 2018 | MBA — The Wharton School, 2023', skills:['Financial Modeling','M&A Analysis','Bloomberg Terminal','Excel (Advanced)','Strategic Planning','Valuation','Corporate Finance','Capital Markets'], jobs:[
-    {id:'d_f1',title:'VP Corporate Development',company:'Meta',location:'Menlo Park, CA',type:'Hybrid',pay:210,pl:'$195–230k/yr',match:73,tags:['hybrid'],posted:'2 days ago',isNew:true,logo:'Mb',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-vp-corporate-development-meta-jobs.html',desc:'Lead M&A strategy and execution, identifying and closing strategic acquisitions.'},
-    {id:'d_f2',title:'Director of Finance & Strategy',company:'Spotify',location:'New York, NY',type:'Hybrid',pay:195,pl:'$180–210k/yr',match:70,tags:['hybrid'],posted:'4 days ago',isNew:false,logo:'Sp',lb:'#e8f5e8',lf:'#1a7a1a',url:'https://www.indeed.com/q-director-finance-strategy-spotify-jobs.html',desc:'Partner with the executive team on long-range financial planning and strategic growth initiatives.'},
-    {id:'d_f3',title:'Senior Finance Manager',company:'Apple',location:'Cupertino, CA',type:'On-site',pay:185,pl:'$175–200k/yr',match:67,tags:[],posted:'1 week ago',isNew:false,logo:'Ap',lb:'#1a1a1f',lf:'#f4f2ed',url:'https://www.indeed.com/q-senior-finance-manager-apple-jobs.html',desc:'Lead financial planning and analysis for a major Apple business division.'},
-  ]},
-  'hr': { resumeLabel:'Human Resources', name:'Amara Johnson', title:'HR Coordinator', summary:'HR coordinator with 2 years of experience in recruiting, onboarding, and employee relations. Seeking an HR generalist or senior coordinator role.', education:'B.S. Psychology & HR Management — Michigan State University, 2022', skills:['Workday','ATS (Greenhouse)','Onboarding','Benefits Administration','Employee Relations','Recruiting','DEI Initiatives','HRIS'], jobs:[
-    {id:'d_hr1',title:'HR Generalist',company:'Airbnb',location:'Remote',type:'Remote',pay:85,pl:'$78–92k/yr',match:73,tags:['remote'],posted:'1 day ago',isNew:true,logo:'Ab',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-hr-generalist-airbnb-jobs.html',desc:'Support employee relations, performance management, and HR program delivery across global remote teams.'},
-    {id:'d_hr2',title:'Senior HR Coordinator',company:'Salesforce',location:'Remote',type:'Remote',pay:78,pl:'$72–85k/yr',match:70,tags:['remote'],posted:'4 days ago',isNew:false,logo:'Sf',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-senior-hr-coordinator-salesforce-jobs.html',desc:'Own HR operations including onboarding, offboarding, and compliance administration.'},
-    {id:'d_hr3',title:'Talent Acquisition Specialist',company:'Amazon',location:'Seattle, WA',type:'Hybrid',pay:80,pl:'$75–88k/yr',match:67,tags:['hybrid'],posted:'5 days ago',isNew:false,logo:'Am',lb:'#fdf3e3',lf:'#b8750a',url:'https://www.indeed.com/q-talent-acquisition-specialist-amazon-jobs.html',desc:'Lead full-cycle recruiting for technical and business roles across multiple business units.'},
-  ]},
-  'nonprofit': { resumeLabel:'General / Master', name:'Theo Martinez', title:'Program Coordinator', summary:'Career changer with retail management experience and completed AmeriCorps year. Seeking nonprofit program coordinator or community outreach roles.', education:'B.A. Sociology — Boston University, 2017 | AmeriCorps Service Year — City Year Boston, 2023', skills:['Program Coordination','Community Outreach','Volunteer Management','Grant Writing','Impact Reporting','Team Leadership','Event Planning','Budget Management'], jobs:[
-    {id:'d_n1',title:'Program Manager',company:'Teach For America',location:'Remote',type:'Remote',pay:65,pl:'$60–72k/yr',match:72,tags:['remote'],posted:'2 days ago',isNew:true,logo:'TF',lb:'#fdf0ec',lf:'#c44520',url:'https://www.indeed.com/q-program-manager-teach-for-america-jobs.html',desc:'Lead program design and implementation for a regional corps of educators.'},
-    {id:'d_n2',title:'Community Engagement Manager',company:'YMCA',location:'Boston, MA',type:'On-site',pay:58,pl:'$54–63k/yr',match:68,tags:[],posted:'5 days ago',isNew:false,logo:'YM',lb:'#e8f5e8',lf:'#1a7a1a',url:'https://www.indeed.com/q-community-engagement-manager-ymca-jobs.html',desc:'Design and oversee community programs and volunteer initiatives serving thousands annually.'},
-    {id:'d_n3',title:'Development Associate',company:'United Way',location:'Remote',type:'Remote',pay:55,pl:'$50–60k/yr',match:64,tags:['remote'],posted:'1 week ago',isNew:false,logo:'UW',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-development-associate-united-way-jobs.html',desc:'Support fundraising and donor relations through grant writing and campaign coordination.'},
-  ]},
-  'pharmacy': { resumeLabel:'Pharmacy & Research', name:'Nina Patel', title:'Clinical Pharmacist — Industry Transition', summary:'PharmD with 4 years clinical experience. Transitioning into pharmaceutical industry, medical affairs, or drug development.', education:'B.S. Biochemistry — Purdue, 2015 | Pharm.D. — UIC College of Pharmacy, 2019', skills:['Pharmacology','Drug Interaction Analysis','Patient Counseling','FDA Regulations','Clinical Trials','PubMed','Pharmacovigilance','Medical Writing','Regulatory Affairs'], jobs:[
-    {id:'d_ph1',title:'Medical Affairs Manager',company:'AbbVie',location:'Remote',type:'Remote',pay:155,pl:'$145–168k/yr',match:75,tags:['remote'],posted:'1 day ago',isNew:true,logo:'Av',lb:'#eaeffe',lf:'#2d5be3',url:'https://www.indeed.com/q-medical-affairs-manager-abbvie-jobs.html',desc:'Bridge clinical and commercial teams by communicating scientific data and supporting HCP education.'},
-    {id:'d_ph2',title:'Clinical Research Manager',company:'Moderna',location:'Cambridge, MA',type:'Hybrid',pay:145,pl:'$135–158k/yr',match:71,tags:['hybrid'],posted:'3 days ago',isNew:false,logo:'Mo',lb:'#e8f0f8',lf:'#1a5080',url:'https://www.indeed.com/q-clinical-research-manager-moderna-jobs.html',desc:'Lead clinical trial operations and regulatory submissions from Phase I through approval.'},
-    {id:'d_ph3',title:'Regulatory Affairs Specialist',company:'FDA',location:'Silver Spring, MD',type:'Hybrid',pay:125,pl:'$118–135k/yr',match:68,tags:['hybrid'],posted:'1 week ago',isNew:false,logo:'Fd',lb:'#e8f5e8',lf:'#1a7a1a',url:'https://www.indeed.com/q-regulatory-affairs-specialist-fda-jobs.html',desc:'Review drug applications and ensure safety, efficacy, and regulatory compliance for new approvals.'},
-  ]},
+  'Brand & Marketing':  ['brand','marketing','campaign','creative','content','storytelling','lifestyle','aesthetic','visual','launch','influencer','product','consumer'],
+  'Communications':     ['communications','comms','social media','community','engagement','writing','editorial','messaging','voice','copy','audience','newsletter'],
+  'Business Dev':       ['business development','partnerships','outreach','pipeline','prospecting','sales','b2b','clients','accounts','crm','revenue','growth'],
+  'General / Master':   ['brand','marketing','communications','content','social','creative','strategy','coordinator','associate','lifestyle','customer','retail'],
 };
 
 // Kanban columns
@@ -1224,7 +1007,6 @@ let chatJobId = null;
 // Tracker state: jobId -> {col, resumeUsed, deadline, notes}
 let trackerData = {};
 let dragJobId = null;
-let kanbanLongPressTimer = null;
 
 // ══════════════════════════════════════════════════
 //  HELPERS
@@ -1397,7 +1179,6 @@ function updateTrackerBadge(){
   else badge.style.display='none';
 }
 
-// FIXED: Kanban mobile + Rejected buttons
 function renderKanban(){
   const body=document.getElementById('kanbanBody');
   body.innerHTML='';
@@ -1419,8 +1200,9 @@ function renderKanban(){
       e.preventDefault();zone.classList.remove('over');
       if(dragJobId&&trackerData[dragJobId]){
         trackerData[dragJobId].col=col.id;
-        if(col.id==='applied') appliedSet.add(dragJobId);
-        renderKanban();renderFeed();badges();scheduleSave();
+        // If moved to applied, also add to appliedSet
+        if(col.id==='applied')appliedSet.add(dragJobId);
+        renderKanban();renderFeed();badges();
       }
     });
     if(colJobs.length===0){
@@ -1431,21 +1213,10 @@ function renderKanban(){
         const days=daysUntil(td.deadline);
         const card=document.createElement('div');
         card.className='kanban-card';
-        card.draggable=!isMobile();
-        // Desktop drag
-        if(!isMobile()){
-          card.addEventListener('dragstart',()=>{dragJobId=j.id;card.classList.add('dragging');});
-          card.addEventListener('dragend',()=>card.classList.remove('dragging'));
-        }
-        // Mobile: long-press to show move menu
-        card.addEventListener('touchstart',()=>{
-          kanbanLongPressTimer=setTimeout(()=>showKanbanMoveMenu(j.id,col.id),600);
-        },{passive:true});
-        card.addEventListener('touchend',()=>clearTimeout(kanbanLongPressTimer));
-        card.addEventListener('touchmove',()=>clearTimeout(kanbanLongPressTimer));
-
+        card.draggable=true;
+        card.addEventListener('dragstart',()=>{dragJobId=j.id;card.classList.add('dragging');});
+        card.addEventListener('dragend',()=>card.classList.remove('dragging'));
         const typeClass=j.type==='Remote'?'rem':j.type==='Hybrid'?'hyb':'ons';
-        // FIXED: Build action buttons safely using data attributes (not inline onclick with closure vars)
         card.innerHTML=
           '<div class="kc-title">'+j.title+'</div>'
           +'<div class="kc-co"><strong>'+j.company+'</strong> · '+j.location+'</div>'
@@ -1457,79 +1228,16 @@ function renderKanban(){
           +'</div>'
           +(td.notes?'<div style="font-size:11.5px;color:var(--ink3);margin-top:8px;line-height:1.5;background:var(--sf2);border-radius:var(--rx);padding:6px 8px;">'+escapeHtml(td.notes)+'</div>':'')
           +'<div class="kc-actions">'
-          +'<button class="kc-btn" data-action="view" data-jid="'+j.id+'">View</button>'
-          +'<button class="kc-btn" data-action="edit" data-jid="'+j.id+'">Edit</button>'
-          +'<button class="kc-btn danger" data-action="remove" data-jid="'+j.id+'">Remove</button>'
+          +'<button class="kc-btn" onclick="openDetail(jobs.find(x=>x.id===\''+j.id+'\'))">View</button>'
+          +'<button class="kc-btn" onclick="editTrackerCard(\''+j.id+'\')">Edit</button>'
+          +'<button class="kc-btn danger" onclick="removeFromTracker(\''+j.id+'\')">Remove</button>'
           +'</div>';
-
-        // Attach action listeners after innerHTML so they always work (fixes Rejected column bug)
-        card.querySelectorAll('.kc-btn[data-action]').forEach(btn=>{
-          btn.addEventListener('click', e=>{
-            e.stopPropagation();
-            const jid = btn.dataset.jid;
-            const action = btn.dataset.action;
-            if(action==='view'){
-              const found=jobs.find(x=>x.id===jid);
-              if(found) openDetail(found);
-            } else if(action==='edit'){
-              editTrackerCard(jid);
-            } else if(action==='remove'){
-              removeFromTracker(jid);
-            }
-          });
-        });
-
         zone.appendChild(card);
       });
     }
     colEl.appendChild(zone);
     body.appendChild(colEl);
   });
-}
-
-// FIXED: Mobile long-press move menu for Kanban
-function showKanbanMoveMenu(jobId, currentColId){
-  // Remove any existing menu
-  document.getElementById('kanbanMoveMenu')?.remove();
-
-  const sheet = document.createElement('div');
-  sheet.id = 'kanbanMoveMenu';
-  sheet.style.cssText = 'position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(0,0,0,.4);animation:fadeIn .15s ease;';
-
-  const menu = document.createElement('div');
-  menu.style.cssText = 'background:var(--sf);border-radius:16px 16px 0 0;padding:16px 0 32px;';
-
-  const j = jobs.find(x=>x.id===jobId);
-  const title = j ? j.title : 'This job';
-
-  let html = '<div style="font-size:13px;font-weight:600;color:var(--ink);padding:0 20px 14px;border-bottom:1px solid var(--bd);margin-bottom:8px;">'+escapeHtml(title)+'</div>';
-
-  KANBAN_COLS.forEach(col=>{
-    if(col.id === currentColId) return; // skip current column
-    html += '<button onclick="moveKanbanJob(\''+jobId+'\',\''+col.id+'\')" style="display:block;width:100%;padding:14px 20px;border:none;background:none;text-align:left;font-family:\'DM Sans\',sans-serif;font-size:14px;color:var(--ink2);cursor:pointer;">Move to <strong style="color:'+col.color+'">'+col.label+'</strong></button>';
-  });
-
-  html += '<div style="height:1px;background:var(--bd);margin:8px 0;"></div>';
-  html += '<button onclick="const f=jobs.find(x=>x.id===\''+jobId+'\');if(f){closeKanbanMoveMenu();setTimeout(()=>openDetail(f),100);}" style="display:block;width:100%;padding:14px 20px;border:none;background:none;text-align:left;font-family:\'DM Sans\',sans-serif;font-size:14px;color:var(--ac);cursor:pointer;">View details</button>';
-  html += '<button onclick="removeFromTracker(\''+jobId+'\');closeKanbanMoveMenu();" style="display:block;width:100%;padding:14px 20px;border:none;background:none;text-align:left;font-family:\'DM Sans\',sans-serif;font-size:14px;color:var(--a2);cursor:pointer;">Remove from tracker</button>';
-
-  menu.innerHTML = html;
-  sheet.appendChild(menu);
-  sheet.addEventListener('click', e=>{ if(e.target===sheet) closeKanbanMoveMenu(); });
-  document.body.appendChild(sheet);
-}
-
-function closeKanbanMoveMenu(){
-  document.getElementById('kanbanMoveMenu')?.remove();
-}
-
-function moveKanbanJob(jobId, colId){
-  if(trackerData[jobId]){
-    trackerData[jobId].col = colId;
-    if(colId==='applied') appliedSet.add(jobId);
-    renderKanban();renderFeed();badges();scheduleSave();
-  }
-  closeKanbanMoveMenu();
 }
 
 function removeFromTracker(jobId){
@@ -1960,32 +1668,127 @@ function sendChatMsg(text){
   loading.innerHTML='<div class="jd-chat-bubble loading">Thinking…</div>';
   msgs.appendChild(loading);msgs.scrollTop=msgs.scrollHeight;
   setTimeout(()=>{
-    const response=generateChatResponse(text,j);
+    const history = chatHistory[j.id].slice(0,-1);
+    const response=generateChatResponse(text, j, history);
     document.getElementById('chatLoading')?.remove();
     chatHistory[j.id].push({role:'bot',text:response});rerenderChat();
   },800);
 }
 
-function generateChatResponse(text,job){
-  const t=text.toLowerCase();const co=job.company;const score=job.match;
-  const resumeLabel=job.resumeLabel||(resumes.length?resumes[0].label:null);
-  if(t.includes('company')||t.includes('know about')||t.includes('research')||t.includes('culture')||t.includes('reviews'))
-    return 'For '+co+', I\'d check their LinkedIn page, Glassdoor reviews, and any recent press coverage. Key things to look for: how employees describe the culture, average tenure, and what leadership is actually like day-to-day. Want help turning anything you find into specific interview talking points?';
-  if(t.includes('resume')||t.includes('tailor')||t.includes('tweak')||t.includes('update'))
-    return 'For this role, I\'d use your '+(resumeLabel||'uploaded resume')+' as the base. The biggest opportunity is mirroring the company\'s exact language from the job description — their keywords, their priorities, their tone. Check the Tailor My Resume tab for specific bullet-level suggestions.';
-  if(t.includes('cover letter'))
-    return 'The best cover letter openings start with a specific story — not "I am excited to apply." Think about the one experience you\'ve had that\'s most relevant to what '+co+' does. Open with that moment, in one or two sentences. Want help drafting it? Tell me what experience you want to lead with and I\'ll write the opening.';
-  if(t.includes('question')||t.includes('interview')||t.includes('ask')||t.includes('prep'))
-    return 'Likely questions for this role:\n\n1. "Tell me about a time you represented a brand in a high-stakes situation."\n2. "How do you translate customer insights into action?"\n3. "What do you know about our brand and why does it resonate with you?"\n4. "Walk me through communicating complex information clearly."\n5. "Where do you see yourself in three years?"\n\nCheck the Interview Prep tab for guidance on how to answer each one.';
-  if(t.includes('salary')||t.includes('pay')||t.includes('negotiat')||t.includes('compensation'))
-    return 'For a role like this, the listed range is '+job.pl+'. Don\'t name a number first — if they ask, say "I\'m open based on the full compensation package, could you share the budgeted range?" Once they give a number, aim for the top third. Never accept on the spot — it\'s always fine to say you\'d like 24 hours. Check the Salary Negotiation section at the bottom of Interview Prep for full scripts.';
-  if(t.includes('good fit')||t.includes('should i apply')||t.includes('worth it'))
-    return 'At '+score+'%, this is a '+(score>=85?'strong fit — apply with confidence. Your background maps well to what they\'re asking for.':score>=70?'solid fit. There\'s a gap or two, but nothing that should stop you from applying. Tailor your resume to their language and you\'ll be competitive.':'partial fit. It\'s a stretch, but stretches are worth applying to if you genuinely want the role. The key is making your application hyper-specific to their language and showing you\'ve done the research.');
-  if(t.includes('deadline')||t.includes('closing')||t.includes('when'))
-    return 'I don\'t have the exact closing date for this listing. For any job posted more than a week ago, I\'d apply within 48 hours — strong candidates get moved on quickly. You can add a deadline to the card in your Tracker.';
-  if(t.includes('follow')||t.includes('email')||t.includes('reach out'))
-    return 'After applying, wait 5–7 business days before following up. Check the Email Drafts tab for a ready-to-send follow-up. Keep it short: express continued interest, mention one specific thing about the role, and ask if they need anything else from you.';
-  return 'Good question about this role at '+co+'. The key is positioning your specific experience as proof you can do what they need — use their exact language, name real examples, and show you\'ve actually looked at their brand. What specifically are you trying to figure out?';
+// IMPROVED CHATBOT — match pushback detection + varied responses + learning context
+function generateChatResponse(text, job, history){
+  const t = text.toLowerCase().trim();
+  const co = job.company;
+  const title = job.title;
+  const score = job.match;
+  const pay = job.pl;
+  const loc = job.location;
+  const type = job.type;
+  const resumeLabel = job.resumeLabel || (resumes.length ? resumes[0].label : null);
+  const aboutMe = (document.getElementById('vText')?.value || '').trim();
+  const allUserMessages = (history||[]).filter(m=>m.role==='user').map(m=>m.text.toLowerCase()).join(' ');
+  const isFollowUp = history && history.length > 2;
+
+  // IMPROVED CHATBOT — MATCH PUSHBACK: build honest score explanation
+  function buildScoreExplanation(){
+    const parts = [];
+    if(resumeLabel) parts.push('your resume is labeled ' + resumeLabel);
+    const tl = title.toLowerCase();
+    if((tl.includes('ops')||tl.includes('operations')||tl.includes('coordinator')) && resumeLabel && resumeLabel.includes('Marketing'))
+      parts.push('the role emphasizes operations but your resume leans brand/marketing');
+    if((tl.includes('sales')||tl.includes('bdr')||tl.includes('sdr')) && resumeLabel && !resumeLabel.includes('Business'))
+      parts.push('it is a sales-track role and your resume does not signal that directly');
+    return parts.length ? parts.join(', ') : 'the keyword overlap between your ' + (resumeLabel||'resume') + ' and this job description is not hitting all signals yet';
+  }
+
+  // IMPROVED CHATBOT — MATCH PUSHBACK: detect when user questions their score
+  const isPushback = /\b(why|only|fit|qualified|requirements|linkedin|thought i|should be|not accurate|too low|better than|more qualified|deserve|higher|wrong)\b/.test(t)
+    && (t.includes('%')||t.includes('score')||t.includes('match')||t.includes('fit')||t.includes('qualified')||t.includes('linkedin')||/\d+%/.test(t));
+  const isScoreQ = /\b(why|how|what|explain|understand)\b/.test(t) && (t.includes('score')||t.includes('match')||t.includes('%')||t.includes('fit'));
+  const isDisagree = t.includes('thought i')||t.includes('i thought')||t.includes('better qualified')||t.includes('more qualified')||t.includes('not accurate')||t.includes('should be higher')||t.includes('too low')||t.includes('linkedin says')||(t.includes('i have')&&t.includes('requirement'));
+
+  if(isPushback || isScoreQ || isDisagree){
+    const explanation = buildScoreExplanation();
+    const responses = [
+      'Fair pushback. Your ' + score + '% comes from ' + explanation + '. The score is pattern-matching keywords — it does not know what you know about your own experience. If you have done the work, the resume just needs to say it louder. Want me to suggest specific edits?',
+      'The score measures keyword overlap between your resume and this job description. The main drag: ' + explanation + '. That is usually a few targeted bullet rewrites to fix. Want to work through that?',
+      'I hear you — ' + score + '% feels low if you know you are qualified. Here is what is driving it: ' + explanation + '. LinkedIn and fitted. measure different things. Want me to show you which keywords would push this score up?',
+      'Your gut might be right — scores can undercount experience that is not labeled the way an ATS expects. The specific issue: ' + explanation + '. Fastest fix: go to the Tailor My Resume tab and swap in the exact phrases ' + co + ' uses. That alone can shift a score 10-15 points.',
+    ];
+    if(t.includes('linkedin')) return responses[2];
+    if(t.includes('thought i')||t.includes('i thought')||t.includes('better qualified')) return responses[2];
+    if(isFollowUp) return responses[3];
+    return responses[Math.floor(Math.random() * responses.length)];
+  }
+
+  // ── Greetings ──────────────────────────────────────
+  if(/^(hi|hey|hello|hiya|sup|yo)\b/.test(t))
+    return 'Hey! Looking at this ' + title + ' role at ' + co + ' with you. Ask me anything — should you apply, resume, interview prep, cover letter, salary.';
+
+  // ── What can you help with ──────────────────────────
+  if(t.includes('what can you')||t.includes('how can you')||(t.includes('help')&&t.length<25))
+    return 'For this ' + title + ' role at ' + co + ', I can help with:\n\n- Should you apply? — straight answer\n- Why your score is what it is — and how to raise it\n- Resume — what to change specifically\n- Cover letter — opening that does not sound generic\n- Interview prep — likely questions for this company\n- Salary — exact scripts for negotiation\n- Follow-up — what to send and when\n\nWhat is the most useful place to start?';
+
+  // ── Should I apply ──────────────────────────────────
+  if(t.includes('should i apply')||t.includes('worth applying')||t.includes('good fit')||t.includes('worth it')||t.includes('apply or not'))
+    return score >= 74
+      ? 'Yes — at ' + score + '% this is a strong match. Apply today, not next week. Go to the Tailor My Resume tab to tighten up your bullet points first, then hit Apply.'
+      : score >= 62
+      ? 'Go for it. At ' + score + '% there is a gap but nothing disqualifying. Spend 15 minutes on the Tailor My Resume tab first.'
+      : 'It is a stretch at ' + score + '%, but worth doing if you want the role. A sharp tailored application beats a high match score every time.';
+
+  // ── How likely / chances ────────────────────────────
+  if(t.includes('how likely')||t.includes('my chances')||t.includes('chance')||t.includes('odds')||t.includes('realistic'))
+    return score >= 74
+      ? 'Genuinely good. At ' + score + '% you are clearing most ATS filters. The question is how well your application speaks ' + co + ' language.'
+      : score >= 62
+      ? 'Competitive. At ' + score + '% the gap is usually presentation, not experience. ' + buildScoreExplanation() + '. A tailored resume closes that fast.'
+      : 'Honest answer: at ' + score + '% it is a stretch. ' + buildScoreExplanation() + '. A cover letter showing you actually know ' + co + ' can overcome a lot.';
+
+  // ── Company research ────────────────────────────────
+  if(t.includes('company')||t.includes('know about')||t.includes('research')||t.includes('culture')||t.includes('glassdoor')||t.includes('reviews')||t.includes('work there'))
+    return 'Before your interview at ' + co + ':\n\nGlassdoor — read recent reviews, not the average score. Look for patterns about management and growth.\n\nLinkedIn — check average tenure. Under 2 years is a red flag.\n\nTheir website and socials — know one recent campaign or launch. Dropping something specific in the interview separates you immediately.\n\nWant help turning anything you find into a talking point?';
+
+  // ── Resume ──────────────────────────────────────────
+  if(t.includes('resume')||t.includes('tailor')||t.includes('cv')||t.includes('bullet')||t.includes('tweak')||t.includes('rewrite'))
+    return 'The Tailor My Resume tab has specific suggestions for this role.\n\nThe rule: find the 3-4 phrases ' + co + ' repeats most in the job posting and make sure those exact phrases are in your resume — not synonyms, the actual words. You have ' + (resumeLabel||'your resume') + ' loaded. What part feels weakest?';
+
+  // ── Cover letter ────────────────────────────────────
+  if(t.includes('cover letter')||t.includes('cover ltr'))
+    return 'Worst opening: "I am excited to apply for the ' + title + ' position at ' + co + '."\n\nBest opening: a one or two sentence story — a result, something you built, a problem you solved — then connect it to what ' + co + ' needs.\n\nTell me one experience you would want to lead with and I will help you write the opening.';
+
+  // ── Interview ───────────────────────────────────────
+  if(t.includes('interview')||t.includes('prep')||t.includes('practice')||(t.includes('question')&&!t.includes('score')))
+    return 'For a ' + title + ' role at ' + co + ':\n\n"Tell me about yourself" — 90 seconds max, end with why ' + co + ' specifically.\n\n"Why do you want to work here?" — have one specific thing about ' + co + ' ready.\n\nBehavioral questions — prepare 3 STAR stories (Situation, Task, Action, Result).\n\n"What are your weaknesses?" — pick something real, always follow with what you are doing about it.\n\nThe Interview Prep tab has more. Want help building a specific answer?';
+
+  // ── Salary ──────────────────────────────────────────
+  if(t.includes('salary')||t.includes('negotiat')||t.includes('compensation')||t.includes('money')||t.includes('offer')||(t.includes('pay')&&!t.includes('payoff')))
+    return 'This role is listed at ' + pay + '.\n\nDo not name a number first. When they ask: "I am flexible based on the full package — could you share the budgeted range?"\n\nOnce they give a number, aim for the top 20% of their range. Never accept on the spot.\n\nWhat stage are you at — applying, or do you have an offer?';
+
+  // ── Follow up ───────────────────────────────────────
+  if(t.includes('follow')||t.includes('heard back')||t.includes('waiting')||t.includes('no response')||t.includes('reach out'))
+    return 'After applying, wait 5-7 days before following up.\n\n3 sentences max: express continued interest, name one specific thing about ' + co + ', ask if they need anything else.\n\nAfter an interview, 48 hours is right — not 24 (too eager) and not 5 days (looks disinterested).';
+
+  // ── Remote / location ───────────────────────────────
+  if(t.includes('remote')||t.includes('location')||t.includes('hybrid')||t.includes('office')||t.includes('commut'))
+    return 'This role is ' + type + ' in ' + loc + '. ' + (type==='Remote'?'Full remote — check the fine print, some companies have state restrictions or occasional in-person requirements.':type==='Hybrid'?'"Hybrid" means something different everywhere. It is fine to ask in the recruiter screen: "What does the hybrid schedule actually look like day-to-day?"':'On-site at ' + loc + '. If location is a concern, get to the point where they want you first, then ask about flexibility.') + '\n\nIs location a concern for this one?';
+
+  // ── Nervousness ─────────────────────────────────────
+  if(t.includes('nervous')||t.includes('scared')||t.includes('anxious')||t.includes('not qualified')||t.includes('not good enough'))
+    return 'Most people who get jobs are not the most qualified — they are the most prepared. You are at ' + score + '% on paper. The gap between that and getting the offer is how well you know ' + co + ' and how clearly you can tell your story. What would make you feel more prepared right now?';
+
+  // ── Thanks ──────────────────────────────────────────
+  if(t.includes('thank')||t.includes('thanks')||t.includes('helpful')||t.includes('appreciate'))
+    return score >= 74 ? 'Of course. You are a strong fit — go apply.' : 'Of course. You have a real shot — go put in the application.';
+
+  // IMPROVED CHATBOT — smart fallback with score context
+  const smartFallbacks = [
+    'I want to give you a useful answer — can you be more specific? Are you trying to figure out the score, how to position yourself, what ' + co + ' is like, or something about the application?',
+    'Good thing to think about for a ' + score + '% match at ' + co + '. Are you looking at this from an "am I qualified" angle, or more of a "how do I actually get this job" angle?',
+    'What is the specific thing you most want to figure out about this ' + title + ' role — the application strategy, the interview, the company, or the process?',
+    co + ' roles like this come down to a few things. What is your specific concern — the match score, your resume, the company, or the process?',
+  ];
+  return smartFallbacks[Math.floor(Math.random() * smartFallbacks.length)];
 }
 
 // ══════════════════════════════════════════════════
@@ -2180,18 +1983,6 @@ function handleUpload(input){
     reEvaluateAllJobs();
     renderResumes();
     scheduleSave();
-
-    // If there's still a demo resume, prompt to remove it
-    const hasDemo = resumes.some(r=>r.isDemo);
-    if(hasDemo){
-      setTimeout(()=>{
-        const toast = document.createElement('div');
-        toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r);padding:14px 18px;font-size:13px;color:var(--ink2);box-shadow:0 4px 24px rgba(0,0,0,.12);z-index:300;display:flex;align-items:center;gap:12px;white-space:nowrap;animation:fadeIn .3s ease;';
-        toast.innerHTML = '✓ Resume uploaded! <button onclick="removeDemoResume();this.closest(\'div\').remove()" style="background:var(--ac);color:#fff;border:none;border-radius:var(--rs);padding:5px 12px;font-family:\'DM Sans\',sans-serif;font-size:12px;cursor:pointer;margin-left:4px;">Remove demo</button><button onclick="this.closest(\'div\').remove()" style="background:none;border:none;cursor:pointer;color:var(--ink4);font-size:16px;padding:0 0 0 6px;">×</button>';
-        document.body.appendChild(toast);
-        setTimeout(()=>{ if(toast.parentNode) toast.remove(); }, 8000);
-      }, 500);
-    }
   },2000);
   input.value='';
 }
@@ -2210,8 +2001,6 @@ function reEvaluateAllJobs(){
       // Base score from keyword hits, capped at realistic range
       let score=Math.min(78, 38+hits.length*4);
       // Boost for dream companies
-      const dreamCos=['ralph lauren','sézane','sezane','aritzia','reformation','hermès','hermes','marine layer','ferrari'];
-      if(dreamCos.some(dc=>job.company.toLowerCase().includes(dc))) score=Math.min(score+6,80);
       scores[r.label]=score;
       if(score>bestScore){bestScore=score;bestLabel=r.label;bestId=r.id;}
     });
@@ -2228,68 +2017,19 @@ function reEvaluateAllJobs(){
   }
 }
 
-// FIXED: Much smarter guessTitle — matches common resume filename patterns across all fields
 function guessTitle(fn){
-  const n = fn.toLowerCase().replace(/[-_.\s]+/g, ' ').replace(/\.(pdf|docx?|txt)$/,'');
-
-  // Marketing / Brand
-  if(/\b(brand|marketing|content|social media|influencer|campaign|creative|comms?|communications?|pr|public relations|copywriting)\b/.test(n))
-    return 'Brand & Marketing';
-
-  // Business Dev / Sales
-  if(/\b(biz ?dev|business dev|sales|partnerships?|outreach|account|pipeline|crm|revenue|growth|sdr|bdr|adr)\b/.test(n))
-    return 'Business Dev';
-
-  // Tech & Operations
-  if(/\b(tech|operations?|ops|project ?mgmt|program|coordinator|systems?|data|analyst|sql|product|pm)\b/.test(n))
-    return 'Tech & Operations';
-
-  // Creative & Design
-  if(/\b(design|graphic|visual|creative|ux|ui|art|portfolio|figma|adobe|illustration)\b/.test(n))
-    return 'Brand & Marketing'; // maps to closest resume keyword set
-
-  // Healthcare & Science
-  if(/\b(health|medical|clinical|nursing|patient|pharma|biology|chem|lab|science|research|md|rn|np|pa)\b/.test(n))
-    return 'Healthcare & Science';
-
-  // Legal & Policy
-  if(/\b(legal|law|policy|compliance|regulatory|jd|counsel|paralegal|government|gov)\b/.test(n))
-    return 'Legal & Policy';
-
-  // Engineering & Architecture
-  if(/\b(engineer|engineering|architecture|arch|civil|structural|mechanical|electrical|cad|revit|autocad)\b/.test(n))
-    return 'Engineering & Architecture';
-
-  // Finance & Accounting
-  if(/\b(finance|financial|accounting|cpa|cfa|banking|investment|audit|budget|mba|econ)\b/.test(n))
-    return 'Finance & Accounting';
-
-  // Human Resources
-  if(/\b(hr|human ?resources?|recruiting|talent|people ?ops|onboarding|hris|dei)\b/.test(n))
-    return 'Human Resources';
-
-  // Nonprofit & Education
-  if(/\b(nonprofit|ngo|education|teaching|teacher|program|community|outreach|social ?impact|grant)\b/.test(n))
-    return 'Nonprofit & Education';
-
-  // Pharmacy & Research
-  if(/\b(pharmd|pharmacy|pharmacol|drug|biochem|molecular|clinical ?trial|fda|regulatory)\b/.test(n))
-    return 'Pharmacy & Research';
-
-  // Communications standalone
-  if(/\b(comms|communication|newsletter|editorial|writing|media|journalism)\b/.test(n))
-    return 'Communications';
-
-  return 'General / Master';
+  const n=fn.toLowerCase();
+  if(n.includes('brand')||n.includes('marketing'))return'Brand & Marketing';
+  if(n.includes('comms')||n.includes('communication'))return'Communications';
+  if(n.includes('sales')||n.includes('biz')||n.includes('business'))return'Business Dev';
+  return'General / Master';
 }
 
 function renderResumes(){
   const rl=document.getElementById('rList'),hint=document.getElementById('rHint'),allWrap=document.getElementById('rAllWrap'),allBtn=document.getElementById('rAll');
-  const btn=document.getElementById('findJobsBtn');
-  if(!resumes.length){rl.innerHTML='';hint.style.display='block';allWrap.style.display='none';if(btn)btn.disabled=true;return;}
+  if(!resumes.length){rl.innerHTML='';hint.style.display='block';allWrap.style.display='none';return;}
   hint.style.display='none';
   const ready=resumes.filter(r=>!r.analyzing);
-  if(btn) btn.disabled=ready.length===0;
   allWrap.style.display=ready.length>=2?'block':'none';
   if(allBtn)allBtn.className='ri-all'+(activeR===null?' act':'');
   const trashIcon='<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 3.5H11M4.5 3.5V2.5C4.5 2 5 1.5 5.5 1.5H7.5C8 1.5 8.5 2 8.5 2.5V3.5M5 6V10M8 6V10M2.5 3.5L3 11C3 11.5 3.5 12 4 12H9C9.5 12 10 11.5 10 11L10.5 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>';
@@ -2297,19 +2037,14 @@ function renderResumes(){
   const pencilIcon='<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M7.5 1.5L9.5 3.5L3.5 9.5H1.5V7.5L7.5 1.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>';
   rl.innerHTML=resumes.map(r=>{
     const isAct=activeR===r.id;
-    const demoTag = r.isDemo ? '<span style="font-size:10px;font-weight:600;background:var(--gds);color:var(--gd);padding:1px 6px;border-radius:10px;margin-left:5px;letter-spacing:.03em;">DEMO</span>' : '';
     return '<button class="ri'+(isAct?' act':'')+'" onclick="setResume('+r.id+')">'
       +'<div class="ri-top"><div class="rdot'+(isAct?' act':'')+'"></div>'
-      +'<div class="rname">'+(r.analyzing?'<span class="apill"><span class="spin">↻</span> Reading…</span>':(r.label||r.file))+demoTag+'</div>'
+      +'<div class="rname">'+(r.analyzing?'<span class="apill"><span class="spin">↻</span> Reading…</span>':r.label)+'</div>'
       +'<button class="ri-del" onclick="deleteResume(event,'+r.id+')" title="Delete">'+trashIcon+'</button></div>'
       +(!r.analyzing?'<div class="ri-row2">'
-        +(r.isDemo
-          ? '<button class="ri-rename-btn" onclick="removeDemoResume(event)" style="color:var(--a2);">✕ Remove demo</button>'
-          : '<button class="ri-rename-btn" onclick="startRename(event,'+r.id+')">'+pencilIcon+' Rename</button>')
+        +'<button class="ri-rename-btn" onclick="startRename(event,'+r.id+')">'+pencilIcon+' Rename</button>'
         +'</div>':'')
-      +(r.analyzing?'':r.isDemo
-        ? '<div class="ri-meta" style="color:var(--ink4);font-style:italic;">Demo profile — upload your real resume to replace</div>'
-        : '<div class="ri-meta">'+r.jobCount+' role'+(r.jobCount!==1?'s':'')+' on Indeed</div>')
+      +(r.analyzing?'':'<div class="ri-meta">'+r.jobCount+' role'+(r.jobCount!==1?'s':'')+' on Indeed</div>')
       +'</button>';
   }).join('');
 }
@@ -2332,22 +2067,12 @@ function startRename(e,id){
   setTimeout(()=>{document.getElementById('renameInput').focus();document.getElementById('renameInput').select();},50);
 }
 
-// FIXED: confirmRename — updates label then re-evaluates all jobs so matches reflect new resume type
 function confirmRename(){
   const modal=document.getElementById('renameModal');
   const id=parseInt(modal.dataset.rid);
   const val=document.getElementById('renameInput').value.trim();
-  if(val){
-    const r=resumes.find(x=>x.id===id);
-    if(r){
-      r.label=val;
-      r.jobCount=(INDEED_JOBS[val]||[]).length;
-    }
-  }
-  modal.classList.remove('open');
-  reEvaluateAllJobs(); // re-score all jobs against new label
-  renderResumes();
-  scheduleSave();
+  if(val){const r=resumes.find(x=>x.id===id);if(r)r.label=val;}
+  modal.classList.remove('open');renderResumes();renderFeed();
 }
 function closeRename(){document.getElementById('renameModal').classList.remove('open');}
 
@@ -2413,21 +2138,32 @@ function toggleDislikeOpt(el){
 // ══════════════════════════════════════════════════
 // Valid promo codes (one-time use per code)
 const PROMO_CODES = {
-  'CATALINA-VIP': {used: false, label: 'Catalina VIP', reusable: true},
-  'AUSTYN-VIP':   {used: false, label: 'Austyn VIP'},
-  'ROXANNE-VIP':  {used: false, label: 'Roxanne VIP'},
-  'DAD-VIP':      {used: false, label: 'Dad VIP'},
-  'DAISY-VIP':    {used: false, label: 'Daisy VIP'},
-  'NEIL-VIP':     {used: false, label: 'Neil VIP'},
-  'AVERY-VIP':    {used: false, label: 'Avery VIP'},
-  'LIZ-VIP':      {used: false, label: 'Liz VIP'},
-  'JANET-VIP':    {used: false, label: 'Janet VIP'},
-  'ROSE-VIP':     {used: false, label: 'Rose VIP'},
-  'JENNY-VIP':    {used: false, label: 'Jenny VIP'},
+  'CATALINA-VIP': {used: false, label: 'Catalina', reusable: true},
+  'AUSTYN-VIP':   {used: false, label: 'Austyn'},
+  'ROXANNE-VIP':  {used: false, label: 'Roxanne'},
+  'JANET-VIP':    {used: false, label: 'Janet'},
+  'DAD-VIP':      {used: false, label: 'Dad'},
+  'DAISY-VIP':    {used: false, label: 'Daisy'},
+  'NEIL-VIP':     {used: false, label: 'Uncle Neil'},
+  'GRANDMA-VIP':  {used: false, label: 'Grandma'},
+  'GRANDPA-VIP':  {used: false, label: 'Grandpa'},
+  'ROSE-VIP':     {used: false, label: 'Rose'},
+  'JENNY-VIP':    {used: false, label: 'Jenny'},
+  'LIZ-VIP':      {used: false, label: 'Liz'},
+  'VIOLET-VIP':   {used: false, label: 'Violet'},
+  'AVERY-VIP':    {used: false, label: 'Avery'},
+  'AMA-VIP':      {used: false, label: 'Ama'},
+  'AGON-VIP':     {used: false, label: 'Agon'},
   'FAM2026-A':    {used: false, label: 'Family Code A'},
   'FAM2026-B':    {used: false, label: 'Family Code B'},
   'FAM2026-C':    {used: false, label: 'Family Code C'},
   'FAM2026-D':    {used: false, label: 'Family Code D'},
+  'FRIEND-001':   {used: false, label: 'Friend Code 1'},
+  'FRIEND-002':   {used: false, label: 'Friend Code 2'},
+  'FRIEND-003':   {used: false, label: 'Friend Code 3'},
+  'FRIEND-004':   {used: false, label: 'Friend Code 4'},
+  'FRIEND-005':   {used: false, label: 'Friend Code 5'},
+  'FRIEND-006':   {used: false, label: 'Friend Code 6'},
 };
 
 let userPlan = 'free'; // 'free', 'pro', 'vip'
@@ -2441,9 +2177,9 @@ function checkPromoCode(){
   if(!raw){ fb.textContent='Please enter a code.'; fb.className='promo-feedback err'; return; }
   const code = PROMO_CODES[raw];
   if(!code){ fb.textContent='That code isn\'t valid. Check the spelling and try again.'; fb.className='promo-feedback err'; return; }
-  if(code.used && !code.reusable){ fb.textContent='This code has already been used and can\'t be shared.'; fb.className='promo-feedback err'; return; }
+  if(code.used){ fb.textContent='This code has already been used and can\'t be shared.'; fb.className='promo-feedback err'; return; }
   // Valid — activate pro
-  if(!code.reusable) code.used = true;
+  code.used = true;
   userPlan = 'vip';
   fb.textContent='✓ Code accepted! You now have free Pro access. Welcome to Fitted Pro.';
   fb.className='promo-feedback ok';
@@ -2548,11 +2284,11 @@ function renderCareerPathTab(job){
   const el=document.getElementById('jdTabContent');
   const isPro=userPlan==='pro'||userPlan==='vip';
   const cp=[
-    {stage:'now',   title:'Where you are',       role:'Sales Associate / Brand Ambassador',   yrs:'0–1 yr',     sal:'$20–28/hr',  dot:'now'},
-    {stage:'next',  title:'This role',            role:job.title,                              yrs:'1–2 yrs',    sal:job.pl,       dot:'next'},
-    {stage:'next',  title:'2 years out',          role:'Brand Manager / Marketing Manager',    yrs:'2–4 yrs',    sal:'$55–75k/yr', dot:'next'},
-    {stage:'future',title:'5 years out',          role:'Senior Brand Strategist / Director',   yrs:'5+ yrs',     sal:'$80–120k/yr',dot:'future'},
-    {stage:'future',title:'North Star',           role:'Brand Marketing Manager, Olympics',    yrs:'6–10 yrs',   sal:'$100–150k/yr',dot:'future'},
+    {stage:'now',   title:'Where you are',       role:'Current role / most recent experience',     yrs:'0–1 yr',     sal:'Varies',         dot:'now'},
+    {stage:'next',  title:'This role',            role:job.title,                                    yrs:'1–2 yrs',    sal:job.pl,           dot:'next'},
+    {stage:'next',  title:'2 years out',          role:'Senior Coordinator / Manager',               yrs:'2–4 yrs',    sal:'$55–75k/yr',     dot:'next'},
+    {stage:'future',title:'5 years out',          role:'Senior Manager / Director',                  yrs:'5+ yrs',     sal:'$80–120k/yr',    dot:'future'},
+    {stage:'future',title:'North Star',           role:'Head of [Your Field] — dream company',       yrs:'6–10 yrs',   sal:'$100–150k/yr',   dot:'future'},
   ];
   const pathHTML=cp.map((n,i)=>'<div class="career-path-node">'
     +'<div style="display:flex;flex-direction:column;align-items:center">'
@@ -2735,13 +2471,11 @@ function closeOnboarding(){
     if(g){g.textContent='Hi, '+name.split(' ')[0]+' 👋';g.style.display='inline';}
   }
   scheduleSave();
-  launchQuizAfterOnboarding();
 }
 function skipOnboarding(){
   userProfile.onboarded = true;
   document.getElementById('onboardingModal').classList.remove('open');
   scheduleSave();
-  launchQuizAfterOnboarding();
 }
 
 // ══════════════════════════════════════════════════
@@ -2750,6 +2484,8 @@ function skipOnboarding(){
 let feedbackList = [];
 
 function openFeedback(){
+  document.getElementById('feedbackSent').style.display='none';
+  document.getElementById('feedbackForm').style.display='block';
   document.getElementById('feedbackModal').classList.add('open');
 }
 function closeFeedback(){ document.getElementById('feedbackModal').classList.remove('open'); }
@@ -2902,14 +2638,7 @@ function addLoc(){const inp=document.getElementById('locIn'),val=inp.value.trim(
 // ══════════════════════════════════════════════════
 //  KEYBOARD / CLOSE HANDLERS
 // ══════════════════════════════════════════════════
-// ── RESET ALL DATA ───────────────────────────────────
-function confirmResetData(){
-  if(confirm('This will delete all your resumes, saved jobs, tracker data, and settings. This cannot be undone.\n\nAre you sure?')){
-    localStorage.clear();
-    location.reload();
-  }
-}
-
+// ── PASTED JOB RENAME ─────────────────────────────
 let renamePastedJobId = null;
 function openRenamePasted(jobId){
   renamePastedJobId = jobId;
@@ -2932,9 +2661,11 @@ function confirmRenamePasted(){
 // ── GOOGLE FORM FEEDBACK ─────────────────────────────
 // openFeedback and closeFeedback defined above in feedback section
 function openGoogleForm(){
-  const GOOGLE_FORM_URL = 'https://forms.gle/9yn4ibFdDc1cEhy57';
+  // Replace this URL with your actual Google Form link once you create it at forms.google.com
+  const GOOGLE_FORM_URL = 'https://forms.gle/REPLACE_WITH_YOUR_FORM_ID';
   window.open(GOOGLE_FORM_URL, '_blank');
-  closeFeedback();
+  document.getElementById('feedbackSent').style.display='block';
+  document.getElementById('feedbackForm').style.display='none';
 }
 
 // ── VIBES ANALYSIS TOGGLE (expands below) ────────────
@@ -2988,8 +2719,6 @@ function getPersonalFitScore(job){
   let score = 60;
   if(t.includes('remote')&&job.type==='Remote') score+=12;
   if(t.includes('hybrid')&&job.type==='Hybrid') score+=10;
-  const dreamCos=['ralph lauren','sézane','sezane','aritzia','reformation','hermès','hermes','marine layer','ferrari'];
-  if(dreamCos.some(c=>job.company.toLowerCase().includes(c))) score+=15;
   if(t.includes('brand')&&job.tags.includes('brand')) score+=8;
   if(t.includes('marketing')&&job.tags.includes('marketing')) score+=8;
   if(t.includes('comms')&&job.tags.includes('comms')) score+=8;
@@ -3037,8 +2766,7 @@ document.getElementById('chipSuggestions').innerHTML = CHIP_SUGGESTIONS.map(s=>
 
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){
-    if(document.getElementById('quizModal').classList.contains('open'))closeQuiz();
-    else if(document.getElementById('vibesAnalysisModal').classList.contains('open'))closeVibesAnalysis();
+    if(document.getElementById('vibesAnalysisModal').classList.contains('open'))closeVibesAnalysis();
     else if(document.getElementById('renamePastedModal').classList.contains('open'))closeRenamePasted();
     else if(document.getElementById('onboardingModal').classList.contains('open'))skipOnboarding();
     else if(document.getElementById('feedbackModal').classList.contains('open'))closeFeedback();
@@ -3061,6 +2789,33 @@ updateTrackerBadge();
 updateProUI();
 renderResumes();
 renderPortfolio();
+
+// Show onboarding if first time
+setTimeout(()=>{
+  if(!userProfile.onboarded && !hadSavedState){
+    openOnboarding();
+  } else if(hadSavedState && userProfile.name){
+    document.getElementById('userGreeting') && (document.getElementById('userGreeting').textContent='Hi, '+userProfile.name.split(' ')[0]+' 👋');
+  } else if(!userProfile.onboarded && hadSavedState){
+    // Has data but never onboarded — remind gently after 30 seconds
+    setTimeout(()=>{
+      const hint=document.createElement('div');
+      hint.style.cssText='position:fixed;bottom:20px;right:20px;background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r);padding:14px 18px;font-size:13px;color:var(--ink2);box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:200;cursor:pointer;max-width:260px;line-height:1.5;';
+      hint.innerHTML='<strong style="display:block;margin-bottom:4px;">👋 Set up your profile</strong>Add your name and email to personalize fitted. <span style="color:var(--ac);display:block;margin-top:8px;font-size:12px;">Tap to set up →</span>';
+      hint.onclick=()=>{hint.remove();openOnboarding();};
+      document.body.appendChild(hint);
+      setTimeout(()=>hint.remove(),8000);
+    },30000);
+  }
+  // Welcome back message
+  if(hadSavedState && (resumes.length>0||jobs.length>0||Object.keys(trackerData).length>0)){
+    const toast=document.createElement('div');
+    toast.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--sf);border:1px solid var(--bd2);border-radius:20px;padding:8px 18px;font-size:12.5px;color:var(--ink3);box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:200;pointer-events:none;';
+    toast.textContent='✓ Your data has been restored';
+    document.body.appendChild(toast);
+    setTimeout(()=>toast.remove(),2800);
+  }
+},200);
 
 const LS_KEY = 'fitted_v1';
 
@@ -3120,15 +2875,12 @@ function loadState(){
     if(s.resumeMeta) resumes = s.resumeMeta;
     if(s.activeR !== undefined) activeR = s.activeR;
 
-    // Restore vibes text and pay target after DOM is ready
+    // Restore vibes and pay target after DOM is ready
     setTimeout(()=>{
-      if(s.vibesRaw || s.vibesText){
-        const val = s.vibesRaw || s.vibesText;
-        const vt = document.getElementById('vText');
-        if(vt){ vt.value = val; }
-        const btn = document.getElementById('vAnalysisBtn');
-        if(btn && val.trim()) btn.style.display = 'inline-flex';
-        if(val.trim()) vibesAnalysis = analyzeVibes(val);
+      if(s.vibesTags && s.vibesTags !== '<span class="vempty">Tell us about yourself — we\'ll match you better.</span>'){
+        const vtags = document.getElementById('vtags');
+        if(vtags) vtags.innerHTML = s.vibesTags;
+        if(s.vibesRaw || s.vibesText){ const vt = document.getElementById('vText'); if(vt) vt.value = s.vibesRaw || s.vibesText; }
       }
       if(s.payMin){ const pm = document.getElementById('payMin'); if(pm) pm.value = s.payMin; }
     }, 100);
@@ -3190,12 +2942,20 @@ if(!localStorage.getItem('fitted_initialized')){
 
 const hadSavedState = loadState();
 
-// Restore userProfile and feedbackList (not in main loadState)
+// Restore vibes text and analysis button from localStorage
 setTimeout(()=>{
   try{
     const raw = localStorage.getItem(LS_KEY);
     if(raw){
       const s = JSON.parse(raw);
+      if(s.vibesRaw || s.vibesText){
+        const val = s.vibesRaw || s.vibesText;
+        const vt = document.getElementById('vText');
+        if(vt) vt.value = val;
+        const btn = document.getElementById('vAnalysisBtn');
+        if(btn) btn.style.display = 'inline-flex';
+        vibesAnalysis = analyzeVibes(val);
+      }
       if(s.userProfile) Object.assign(userProfile, s.userProfile);
       if(s.feedbackList) feedbackList = s.feedbackList;
     }
@@ -3286,324 +3046,7 @@ if(hadSavedState && (resumes.length > 0 || jobs.length > 0 || Object.keys(tracke
     setTimeout(()=>hint.remove(), 2800);
   }, 600);
 }
-
-// ── SHOW ONBOARDING OR QUIZ ────────────────────────
-setTimeout(()=>{
-  const hasJobs = jobs.length > 0;
-  const hasDemoFlag = localStorage.getItem('fitted_quiz_done');
-
-  if(!userProfile.onboarded && !hadSavedState){
-    // Brand new user — show onboarding first, quiz launches after
-    openOnboarding();
-  } else if(!hasDemoFlag && !hasJobs){
-    // Returning user OR someone who skipped onboarding but has no jobs yet
-    // Show quiz so they get demo content
-    openQuiz();
-  } else if(hadSavedState && userProfile.name){
-    const g = document.getElementById('userGreeting');
-    if(g){ g.textContent = 'Hi, '+userProfile.name.split(' ')[0]+' 👋'; g.style.display='inline'; }
-  } else if(!userProfile.onboarded && hadSavedState){
-    setTimeout(()=>{
-      const hint = document.createElement('div');
-      hint.style.cssText = 'position:fixed;bottom:20px;right:20px;background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r);padding:14px 18px;font-size:13px;color:var(--ink2);box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:200;cursor:pointer;max-width:260px;line-height:1.5;';
-      hint.innerHTML = '<strong style="display:block;margin-bottom:4px;">👋 Set up your profile</strong>Add your name and email to personalize fitted. <span style="color:var(--ac);display:block;margin-top:8px;font-size:12px;">Tap to set up →</span>';
-      hint.onclick = ()=>{ hint.remove(); openOnboarding(); };
-      document.body.appendChild(hint);
-      setTimeout(()=>hint.remove(), 8000);
-    }, 30000);
-  }
-}, 300);
-
-// ══════════════════════════════════════════════════
-//  QUIZ & DEMO PROFILE LOADER
-// ══════════════════════════════════════════════════
-let quizAnswers = {stage: null, field: null, priority: null};
-
-function openQuiz(){
-  document.getElementById('quizModal').classList.add('open');
-  showQuizStep(1);
-}
-function closeQuiz(){ document.getElementById('quizModal').classList.remove('open'); }
-
-function showQuizStep(step){
-  document.querySelectorAll('.quiz-step').forEach(s=>s.classList.remove('active'));
-  const stepId = step === '2b' ? 'qStep2b' : 'qStep'+step;
-  const el = document.getElementById(stepId);
-  if(el) el.classList.add('active');
-  // Update progress dots
-  const stepNum = step === '2b' ? 2 : Number(step);
-  document.querySelectorAll('.quiz-progress-dot').forEach((d,i)=>{
-    d.classList.toggle('done', i < stepNum);
-  });
-}
-
-function selectQuiz(step, value){
-  // Highlight selected
-  const stepId = step === '2b' ? 'qStep2b' : 'qStep'+step;
-  document.querySelectorAll('#'+stepId+' .quiz-opt').forEach(b=>b.classList.remove('selected'));
-  event.currentTarget.classList.add('selected');
-
-  if(step === 1){
-    quizAnswers.stage = value;
-    setTimeout(()=>showQuizStep(2), 250);
-  } else if(step === 2){
-    if(value === 'healthcare'){
-      setTimeout(()=>showQuizStep('2b'), 250);
-    } else {
-      quizAnswers.field = value;
-      setTimeout(()=>showQuizStep(3), 250);
-    }
-  } else if(step === '2b'){
-    quizAnswers.field = value;
-    setTimeout(()=>showQuizStep(3), 250);
-  } else if(step === 3){
-    quizAnswers.priority = value;
-    setTimeout(()=>{ closeQuiz(); loadDemoProfile(); }, 300);
-  }
-}
-
-function quizBack(toStep){
-  showQuizStep(toStep);
-}
-
-function skipQuiz(){
-  closeQuiz();
-  localStorage.setItem('fitted_quiz_done', '1');
-  if(!quizAnswers.field) quizAnswers.field = 'marketing';
-  loadDemoProfile();
-}
-
-function loadDemoProfile(){
-  const field = quizAnswers.field || 'marketing';
-  const profile = DEMO_PROFILES[field];
-  if(!profile) return;
-
-  // Create demo resume
-  const demoId = 'demo_' + field;
-  const demoResume = {
-    id: demoId,
-    file: profile.name + ' — Demo Resume.pdf',
-    label: profile.resumeLabel,
-    analyzing: false,
-    jobCount: profile.jobs.length,
-    fileUrl: null,
-    dataUrl: null,
-    isDemo: true,
-  };
-
-  // Remove any existing demo resumes
-  resumes = resumes.filter(r => !r.isDemo);
-  resumes.unshift(demoResume);
-  activeR = demoId;
-
-  // Load demo jobs, tagged as demo
-  const demoJobs = profile.jobs.map(j=>({...j, isDemo:true}));
-  // Remove old demo jobs, keep pasted/real
-  jobs = jobs.filter(j=>!j.isDemo);
-  jobs = [...demoJobs, ...jobs];
-
-  // Apply priority sorting hint
-  if(quizAnswers.priority === 'pay') jobs.sort((a,b)=>b.pay-a.pay);
-  else if(quizAnswers.priority === 'remote') jobs.sort((a,b)=>(a.type==='Remote'?0:1)-(b.type==='Remote'?0:1));
-
-  renderResumes();
-  renderFeed();
-  badges();
-  document.getElementById('findJobsBtn').disabled = false;
-
-  // Mark quiz as done
-  localStorage.setItem('fitted_quiz_done', '1');
-
-  // Show welcome toast
-  setTimeout(()=>{
-    const toast = document.createElement('div');
-    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--sf);border:1px solid var(--bd2);border-radius:20px;padding:10px 20px;font-size:13px;color:var(--ink2);box-shadow:0 4px 24px rgba(0,0,0,.12);z-index:300;pointer-events:none;animation:fadeIn .3s ease;text-align:center;white-space:nowrap;';
-    toast.innerHTML = '🎉 Welcome! Here\'s a demo profile to explore — upload your real resume when you\'re ready.';
-    document.body.appendChild(toast);
-    setTimeout(()=>toast.remove(), 4000);
-  }, 400);
-
-  scheduleSave();
-}
-
-// Show quiz after onboarding instead of going straight to empty app
-function launchQuizAfterOnboarding(){
-  setTimeout(()=>openQuiz(), 400);
-}
-
-function removeDemoResume(e){
-  if(e) e.stopPropagation();
-  resumes = resumes.filter(r => !r.isDemo);
-  jobs = jobs.filter(j => !j.isDemo);
-  activeR = resumes.length ? resumes[0].id : null;
-  renderResumes();
-  renderFeed();
-  badges();
-  scheduleSave();
-}
-
-function isMobile(){ return window.innerWidth <= 768; }
-
-function toggleMobileLeft(){
-  if(!isMobile()) return;
-  const nav = document.querySelector('.leftnav');
-  const rp  = document.querySelector('.rp');
-  const bd  = document.getElementById('mobileBackdrop');
-  const btn = document.getElementById('mobNavMenu');
-  const isOpen = nav.classList.contains('mobile-open');
-  // Close right if open
-  rp.classList.remove('mobile-open');
-  document.getElementById('mobNavProfile')?.classList.remove('act');
-  if(isOpen){
-    nav.classList.remove('mobile-open');
-    bd.classList.remove('show');
-    btn.classList.remove('act');
-  } else {
-    nav.classList.add('mobile-open');
-    bd.classList.add('show');
-    btn.classList.add('act');
-  }
-}
-
-function toggleMobileRight(){
-  if(!isMobile()) return;
-  const rp  = document.querySelector('.rp');
-  const nav = document.querySelector('.leftnav');
-  const bd  = document.getElementById('mobileBackdrop');
-  const btn = document.getElementById('mobNavProfile');
-  const isOpen = rp.classList.contains('mobile-open');
-  // Close left if open
-  nav.classList.remove('mobile-open');
-  document.getElementById('mobNavMenu')?.classList.remove('act');
-  if(isOpen){
-    rp.classList.remove('mobile-open');
-    bd.classList.remove('show');
-    btn.classList.remove('act');
-  } else {
-    rp.classList.add('mobile-open');
-    bd.classList.add('show');
-    btn.classList.add('act');
-  }
-}
-
-function closeMobileDrawers(){
-  document.querySelector('.leftnav')?.classList.remove('mobile-open');
-  document.querySelector('.rp')?.classList.remove('mobile-open');
-  document.getElementById('mobileBackdrop')?.classList.remove('show');
-  document.getElementById('mobNavMenu')?.classList.remove('act');
-  document.getElementById('mobNavProfile')?.classList.remove('act');
-  document.getElementById('mobNavJobs')?.classList.add('act');
-}
-
-// Set Jobs tab active by default on mobile
-if(isMobile()) document.getElementById('mobNavJobs')?.classList.add('act');
 </script>
-<!-- QUIZ MODAL -->
-<style>
-.quiz-step{display:none;}.quiz-step.active{display:block;}
-.quiz-q{font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink);margin-bottom:6px;line-height:1.3;}
-.quiz-sub{font-size:13px;color:var(--ink3);margin-bottom:20px;}
-.quiz-options{display:flex;flex-direction:column;gap:10px;}
-.quiz-opt{display:flex;align-items:center;gap:12px;padding:13px 16px;border:1.5px solid var(--bd2);border-radius:var(--r);cursor:pointer;transition:all .15s;background:var(--sf);text-align:left;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink2);}
-.quiz-opt:hover{border-color:var(--ac);background:var(--acs);color:var(--ac);}
-.quiz-opt.selected{border-color:var(--ac);background:var(--acs);color:var(--ac);}
-.quiz-opt-emoji{font-size:20px;flex-shrink:0;width:28px;text-align:center;}
-.quiz-progress{display:flex;gap:6px;margin-bottom:24px;}
-.quiz-progress-dot{height:4px;border-radius:20px;flex:1;background:var(--sf3);transition:background .3s;}
-.quiz-progress-dot.done{background:var(--ac);}
-.quiz-nav{display:flex;align-items:center;justify-content:space-between;margin-top:20px;}
-.quiz-back{background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink3);padding:0;}
-.quiz-back:hover{color:var(--ink);}
-.quiz-field-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-@media(max-width:480px){.quiz-field-grid{grid-template-columns:1fr;}}
-</style>
-
-<div class="ov" id="quizModal">
-  <div class="modal sm" style="width:500px;padding:28px 28px 24px;">
-
-    <!-- Progress dots -->
-    <div class="quiz-progress" id="quizProgress">
-      <div class="quiz-progress-dot done" id="qd1"></div>
-      <div class="quiz-progress-dot" id="qd2"></div>
-      <div class="quiz-progress-dot" id="qd3"></div>
-    </div>
-
-    <!-- Step 1: Career stage -->
-    <div class="quiz-step active" id="qStep1">
-      <div class="quiz-q">Where are you right now?</div>
-      <div class="quiz-sub">We'll personalize your experience based on where you are in your career.</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" onclick="selectQuiz(1,'student')"><span class="quiz-opt-emoji">🎓</span>Still in college</button>
-        <button class="quiz-opt" onclick="selectQuiz(1,'recent')"><span class="quiz-opt-emoji">📄</span>Recent grad (last 1–2 years)</button>
-        <button class="quiz-opt" onclick="selectQuiz(1,'working')"><span class="quiz-opt-emoji">💼</span>Already working, looking for something better</button>
-        <button class="quiz-opt" onclick="selectQuiz(1,'changing')"><span class="quiz-opt-emoji">🔄</span>Changing careers or industries</button>
-        <button class="quiz-opt" onclick="selectQuiz(1,'returning')"><span class="quiz-opt-emoji">⏸️</span>Returning to work after a break</button>
-      </div>
-      <div class="quiz-nav">
-        <span></span>
-        <button class="quiz-back" onclick="skipQuiz()">Skip →</button>
-      </div>
-    </div>
-
-    <!-- Step 2: Field -->
-    <div class="quiz-step" id="qStep2">
-      <div class="quiz-q">What field are you heading into?</div>
-      <div class="quiz-sub">Pick the one that fits best — you can always explore others later.</div>
-      <div class="quiz-options quiz-field-grid">
-        <button class="quiz-opt" onclick="selectQuiz(2,'marketing')"><span class="quiz-opt-emoji">📣</span>Marketing, Brand & Comms</button>
-        <button class="quiz-opt" onclick="selectQuiz(2,'business')"><span class="quiz-opt-emoji">💰</span>Business, Sales & Partnerships</button>
-        <button class="quiz-opt" onclick="selectQuiz(2,'tech')"><span class="quiz-opt-emoji">💻</span>Tech & Operations</button>
-        <button class="quiz-opt" onclick="selectQuiz(2,'creative')"><span class="quiz-opt-emoji">🎨</span>Creative & Design</button>
-        <button class="quiz-opt" onclick="selectQuiz(2,'healthcare')"><span class="quiz-opt-emoji">🏥</span>Healthcare & Science</button>
-        <button class="quiz-opt" onclick="selectQuiz(2,'legal')"><span class="quiz-opt-emoji">⚖️</span>Legal, Policy & Government</button>
-        <button class="quiz-opt" onclick="selectQuiz(2,'engineering')"><span class="quiz-opt-emoji">🏗️</span>Engineering & Architecture</button>
-        <button class="quiz-opt" onclick="selectQuiz(2,'finance')"><span class="quiz-opt-emoji">💵</span>Finance & Accounting</button>
-        <button class="quiz-opt" onclick="selectQuiz(2,'hr')"><span class="quiz-opt-emoji">🤝</span>Human Resources & People Ops</button>
-        <button class="quiz-opt" onclick="selectQuiz(2,'nonprofit')"><span class="quiz-opt-emoji">🌍</span>Nonprofit, Education & Social Impact</button>
-        <button class="quiz-opt" onclick="selectQuiz(2,'pharmacy')"><span class="quiz-opt-emoji">🔬</span>Pharmacy, Science & Research</button>
-        <button class="quiz-opt" onclick="selectQuiz(2,'unsure')"><span class="quiz-opt-emoji">🗺️</span>Not sure yet</button>
-      </div>
-      <div class="quiz-nav">
-        <button class="quiz-back" onclick="quizBack(1)">← Back</button>
-        <button class="quiz-back" onclick="skipQuiz()">Skip →</button>
-      </div>
-    </div>
-
-    <!-- Step 2b: Healthcare sub-question -->
-    <div class="quiz-step" id="qStep2b">
-      <div class="quiz-q">Which track fits you better?</div>
-      <div class="quiz-sub">This helps us show the right jobs and demo profile.</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" onclick="selectQuiz('2b','healthcare-clinical')"><span class="quiz-opt-emoji">🩺</span>Clinical / Patient care (MD, PA, NP, nursing, residency)</button>
-        <button class="quiz-opt" onclick="selectQuiz('2b','healthcare-support')"><span class="quiz-opt-emoji">🏥</span>Healthcare support / admin (MA, CNA, coordinator, technician)</button>
-        <button class="quiz-opt" onclick="selectQuiz('2b','pharmacy')"><span class="quiz-opt-emoji">🔬</span>Pharmacy, lab, or research (PharmD, PhD, biochem, clinical trials)</button>
-      </div>
-      <div class="quiz-nav">
-        <button class="quiz-back" onclick="quizBack(2)">← Back</button>
-        <button class="quiz-back" onclick="skipQuiz()">Skip →</button>
-      </div>
-    </div>
-
-    <!-- Step 3: Priority -->
-    <div class="quiz-step" id="qStep3">
-      <div class="quiz-q">What matters most to you right now?</div>
-      <div class="quiz-sub">We'll sort your job feed to match.</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" onclick="selectQuiz(3,'pay')"><span class="quiz-opt-emoji">💸</span>Finding something that pays well</button>
-        <button class="quiz-opt" onclick="selectQuiz(3,'remote')"><span class="quiz-opt-emoji">🏠</span>Working remotely or having flexibility</button>
-        <button class="quiz-opt" onclick="selectQuiz(3,'growth')"><span class="quiz-opt-emoji">📈</span>Growing fast in my career</button>
-        <button class="quiz-opt" onclick="selectQuiz(3,'change')"><span class="quiz-opt-emoji">🔀</span>Making a career change</button>
-        <button class="quiz-opt" onclick="selectQuiz(3,'explore')"><span class="quiz-opt-emoji">🗺️</span>Just figuring out what\'s out there</button>
-      </div>
-      <div class="quiz-nav">
-        <button class="quiz-back" onclick="quizBack(2)">← Back</button>
-        <button class="quiz-back" onclick="skipQuiz()">Skip →</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
 <!-- VIBES ANALYSIS MODAL (What fitted. thinks about you) -->
 <div class="ov" id="vibesAnalysisModal" onclick="if(event.target===this)closeVibesAnalysis()">
   <div class="modal sm" style="width:460px;max-height:80vh;overflow-y:auto;">
@@ -3615,24 +3058,6 @@ if(isMobile()) document.getElementById('mobNavJobs')?.classList.add('act');
     </div>
   </div>
 </div>
-<!-- MOBILE BACKDROP -->
-<div class="mobile-backdrop" id="mobileBackdrop" onclick="closeMobileDrawers()"></div>
-
-<!-- MOBILE BOTTOM NAV -->
-<nav class="mobile-bottom-nav" id="mobileBottomNav">
-  <button class="mob-nav-btn" id="mobNavJobs" onclick="closeMobileDrawers()" title="Jobs">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="5" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M7 5V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.4"/><path d="M2 10h16" stroke="currentColor" stroke-width="1.4"/></svg>
-    Jobs
-  </button>
-  <button class="mob-nav-btn" id="mobNavMenu" onclick="toggleMobileLeft()" title="Menu">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-    Menu
-  </button>
-  <button class="mob-nav-btn" id="mobNavProfile" onclick="toggleMobileRight()" title="Profile">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="3.5" stroke="currentColor" stroke-width="1.4"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-    Profile
-  </button>
-</nav>
 
 </body>
 </html>
